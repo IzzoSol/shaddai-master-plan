@@ -133,17 +133,21 @@ Sources: `SHADDAI-MASTER/FEATURES_BUILT.md`, `FEATURES_COMPLETE.md`, `SHADDAI_v5
 
 ## 2. WHAT IS NOT DONE (gaps & open items)
 
-### 2.1 Critical gaps (blockers for shipping)
-1. **PIKADON as PayBox gateway** — review logic (program IDs, malicious patterns, max spend, slippage bound, recipient) not yet wired as a gateway before PayBox. Status: PARTIAL.
-2. **zerox_scan tool** — live DexScreener fetch returning normalized JSON. Status: VISION (not built).
-3. **aura_stats on dashboard** — buried in economy.json; widget not wired. Status: PARTIAL.
-4. **PayBox guard rebuild** — current guard models PayBox as generic REST "charge" API (wrong shape). Must connect Paybox MCP, list real tools, rebuild guard. Status: disabled, wrong shape.
-5. **NFT economics** — pages exist; no economics. Needs spec (benefits, multiplier, priority) before building.
-6. **Plots (2D-world land)** — do not exist yet. Net new. Fee-pool payout formula needs spec + owner sign-off.
-7. **Firebase auth real integration** — server/index.js uses stubs (random userId). Need real Firebase admin.
-8. **Database persistence** — in-memory SQLite/JS objects; needs PostgreSQL/Redis for production.
-9. **Mobile responsiveness** — most games have 0 touch handlers; dashboard desktop-only.
-10. **Cross-realm sync (2D↔3D)** — shared backend profile (sparks + inventory + name) partially wired; cloud push/pull in 3D host pending.
+### 2.1 Critical gaps (blockers for shipping) — CORRECTED 2026-11-03
+
+> Verification pass: several items previously listed as gaps are actually DONE. Corrected below.
+
+1. **PIKADON as PayBox gateway** — ✅ DONE. `paybox-routes.js` calls `pikadon.review(b)` on POST /tip (FAIL→403, WARN→log+continue, PASS→proceed) and a basic field/amount review on /agent-tip. Status: DONE.
+2. **zerox_scan tool** — ✅ DONE. `zerox-scan.js` (DexScreener primary + Helius RPC fallback, loud fail on error) is wired as GET /api/zerox/scan in server-production.js. Status: DONE.
+3. **PayBox guard rebuild** — ✅ DONE. `paybox-guard.js` is the corrected version: 5-layer gate (disabled by default, per-call cap, daily budget, approval threshold, ledger), READ_ONLY_TOOLS vs GATED_TOOLS sets, Paybox MCP (pbx_live_* key, JSON-RPC). Status: DONE (enabled flag stays false until owner opts in).
+4. **aura_stats endpoint** — ✅ DONE (endpoint). `aura-brain.js` has stats() (boxes, chunks, dataDir, freePerDay, adapters) exposed at GET /api/aura-brain. Status: endpoint DONE; dashboard widget still not wired (frontend gap).
+5. **NFT economics** — ❌ STILL OPEN. Pages exist (nft-collection.html, collectibles-nft.html); no economics. Needs spec (benefits, multiplier, priority) before building.
+6. **Plots (2D-world land)** — ❌ STILL OPEN. Do not exist yet. Net new. Fee-pool payout formula needs spec + owner sign-off (MASTER-PROMPT-ECONOMY Deliverable 1).
+7. **Firebase auth real integration** — ❌ STILL OPEN. server/index.js (SHADDAI-MASTER) uses stubs (random userId). Need real Firebase admin. (Note: server-production.js uses softAuth with JWT/Firebase bearer.)
+8. **Database persistence** — ❌ STILL OPEN. In-memory SQLite/JS objects; needs PostgreSQL + Redis for production scale.
+9. **Mobile responsiveness** — ❌ STILL OPEN. Most games have 0 touch handlers; dashboard desktop-only. Per-game work needed.
+10. **Cross-realm sync (2D↔3D)** — 🟡 PARTIAL. Shared Sparks ledger unified (shaddai.sparks). Cloud push/pull in 3D host still pending.
+11. **aura_stats dashboard widget** — ❌ STILL OPEN. Endpoint exists; frontend widget not wired.
 
 ### 2.2 High-value open items (owner decisions needed)
 - **Founders programme numbers** — price per bracket, what they get, refund policy, cap permanence. (FLYWHEEL.md §founders)
