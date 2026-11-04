@@ -7,205 +7,204 @@
   * { box-sizing:border-box; margin:0; padding:0; }
   body { background:#06080b; color:#eaf4f0; font-family:'Courier New',monospace; overflow:hidden; }
   #canvas { position:fixed; inset:0; }
-  #hud { position:fixed; top:16px; left:16px; z-index:10; background:rgba(6,8,11,.75); border:1px solid rgba(95,224,255,.25); padding:12px 16px; border-radius:4px; backdrop-filter:blur(8px); max-width:320px; }
+  #hud { position:fixed; top:16px; left:16px; z-index:10; background:rgba(6,8,11,.8); border:1px solid rgba(95,224,255,.25); padding:12px 16px; border-radius:4px; backdrop-filter:blur(8px); max-width:340px; }
   #hud h1 { font-size:11px; letter-spacing:.35em; color:#e8c45c; text-transform:uppercase; margin-bottom:6px; }
   #hud p { font-size:9px; letter-spacing:.12em; color:#8fb2a4; line-height:1.5; }
   #hud .legend { margin-top:8px; display:flex; flex-wrap:wrap; gap:6px; }
   #hud .legend span { font-size:8px; padding:2px 6px; border:1px solid; border-radius:2px; letter-spacing:.1em; }
-  #info { position:fixed; bottom:16px; right:16px; z-index:10; background:rgba(6,8,11,.75); border:1px solid rgba(95,224,255,.25); padding:10px 14px; border-radius:4px; backdrop-filter:blur(8px); max-width:280px; font-size:9px; letter-spacing:.1em; color:#8fb2a4; line-height:1.5; }
+  #info { position:fixed; bottom:16px; right:16px; z-index:10; background:rgba(6,8,11,.8); border:1px solid rgba(95,224,255,.25); padding:10px 14px; border-radius:4px; backdrop-filter:blur(8px); max-width:300px; font-size:9px; letter-spacing:.1em; color:#8fb2a4; line-height:1.5; }
   #info b { color:#e8c45c; }
   #controls { position:fixed; bottom:16px; left:16px; z-index:10; font-size:8px; letter-spacing:.15em; color:#5fe0ff; opacity:.7; }
+  #loading { position:fixed; inset:0; z-index:20; display:flex; align-items:center; justify-content:center; background:#06080b; color:#e8c45c; font-size:12px; letter-spacing:.3em; }
 </style>
 </head>
 <body>
+<div id="loading">LOADING 3D SCENE...</div>
 <div id="canvas"></div>
 <div id="hud">
   <h1>SHADDAI — 3D Master Plan</h1>
-  <p>Interactive architecture visual. 3 layers, 7 agents, 1 economy. Drag to orbit, scroll to zoom, hover nodes for details.</p>
+  <p>Interactive architecture visual. 3 layers, 7 agents, 1 economy. Green=done, yellow=partial, red=open. Drag to orbit, scroll to zoom, hover nodes.</p>
   <div class="legend">
-    <span style="color:#00ff9c;border-color:#00ff9c">Dashboard</span>
-    <span style="color:#5fe0ff;border-color:#5fe0ff">2D World</span>
-    <span style="color:#e8c45c;border-color:#e8c45c">3D World</span>
+    <span style="color:#00ff9c;border-color:#00ff9c">Done</span>
+    <span style="color:#fbbf24;border-color:#fbbf24">Partial</span>
+    <span style="color:#ff4d6d;border-color:#ff4d6d">Open</span>
     <span style="color:#a78bfa;border-color:#a78bfa">Agents</span>
-    <span style="color:#ff5a4d;border-color:#ff5a4d">Economy</span>
-    <span style="color:#4ade80;border-color:#4ade80">Integrations</span>
+    <span style="color:#5fe0ff;border-color:#5fe0ff">Integrations</span>
   </div>
 </div>
-<div id="info">Hover a node to see its role.<br><b>Master plan:</b> SHADDAI_MASTER_PLAN_OPUS55.md</div>
-<div id="controls">ORBIT: drag · ZOOM: scroll · HOVER: inspect</div>
+<div id="info">Hover a node to see its role and status.<br><b>Master plan:</b> SHADDAI_MASTER_PLAN_OPUS55.md</div>
+<div id="controls">ORBIT: drag &nbsp; ZOOM: scroll &nbsp; HOVER: inspect</div>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
-<script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const loading = document.getElementById('loading');
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x06080b);
-scene.fog = new THREE.Fog(0x06080b, 40, 120);
+scene.fog = new THREE.Fog(0x06080b, 50, 140);
 
 const camera = new THREE.PerspectiveCamera(50, innerWidth/innerHeight, 0.1, 500);
-camera.position.set(0, 35, 60);
+camera.position.set(0, 40, 70);
 
 const renderer = new THREE.WebGLRenderer({ antialias:true });
 renderer.setSize(innerWidth, innerHeight);
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 document.getElementById('canvas').appendChild(renderer.domElement);
 
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.08;
 controls.minDistance = 20;
-controls.maxDistance = 150;
+controls.maxDistance = 180;
 
-// Lights
-scene.add(new THREE.AmbientLight(0x223344, 0.6));
-const dl = new THREE.DirectionalLight(0x5fe0ff, 0.8);
+scene.add(new THREE.AmbientLight(0x223344, 0.7));
+const dl = new THREE.DirectionalLight(0x5fe0ff, 0.9);
 dl.position.set(20, 40, 20);
 scene.add(dl);
-const pl = new THREE.PointLight(0xe8c45c, 1.2, 80);
-pl.position.set(0, 10, 0);
+const pl = new THREE.PointLight(0xe8c45c, 1.4, 90);
+pl.position.set(0, 12, 0);
 scene.add(pl);
-
-// Helper: create a node sphere
-function node(pos, color, size, label, info) {
-  const geo = new THREE.SphereGeometry(size, 24, 24);
-  const mat = new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 0.35, metalness: 0.4, roughness: 0.3 });
-  const mesh = new THREE.Mesh(geo, mat);
-  mesh.position.copy(pos);
-  mesh.userData = { label, info, color };
-  scene.add(mesh);
-  // glow
-  const glowGeo = new THREE.SphereGeometry(size*1.6, 16, 16);
-  const glowMat = new THREE.MeshBasicMaterial({ color, transparent:true, opacity:0.12 });
-  const glow = new THREE.Mesh(glowGeo, glowMat);
-  glow.position.copy(pos);
-  scene.add(glow);
-  return mesh;
-}
-
-function edge(a, b, color) {
-  const geo = new THREE.BufferGeometry().setFromPoints([a, b]);
-  const mat = new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.35 });
-  scene.add(new THREE.Line(geo, mat));
-}
 
 // Layer planes
 function plane(y, color, opacity) {
-  const geo = new THREE.PlaneGeometry(90, 90);
+  const geo = new THREE.PlaneGeometry(100, 100);
   const mat = new THREE.MeshBasicMaterial({ color, transparent:true, opacity, side:THREE.DoubleSide });
   const m = new THREE.Mesh(geo, mat);
   m.rotation.x = -Math.PI/2;
   m.position.y = y;
   scene.add(m);
 }
+plane(14, 0x00ff9c, 0.05);
+plane(0, 0x5fe0ff, 0.05);
+plane(-14, 0xe8c45c, 0.05);
 
-plane(12, 0x00ff9c, 0.06);   // Dashboard layer
-plane(0, 0x5fe0ff, 0.06);    // 2D World layer
-plane(-12, 0xe8c45c, 0.06);  // 3D World layer
-
-// Layer labels (sprites)
 function labelSprite(text, pos, color) {
   const canvas = document.createElement('canvas');
-  canvas.width = 256; canvas.height = 64;
+  canvas.width = 512; canvas.height = 64;
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = 'rgba(6,8,11,0.6)';
-  ctx.fillRect(0,0,256,64);
-  ctx.font = 'bold 20px Courier New';
+  ctx.fillStyle = 'rgba(6,8,11,0.7)';
+  ctx.fillRect(0,0,512,64);
+  ctx.font = 'bold 18px Courier New';
   ctx.fillStyle = color;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText(text, 128, 32);
+  ctx.fillText(text, 256, 32);
   const tex = new THREE.CanvasTexture(canvas);
   const mat = new THREE.SpriteMaterial({ map: tex, transparent:true });
   const sprite = new THREE.Sprite(mat);
   sprite.position.copy(pos);
-  sprite.scale.set(18, 4.5, 1);
+  sprite.scale.set(28, 3.5, 1);
   scene.add(sprite);
 }
-
-labelSprite('DASHBOARD (Command Deck)', new THREE.Vector3(0, 14, 42), '#00ff9c');
-labelSprite('2D PIXEL WORLD (City & Dark Realm)', new THREE.Vector3(0, 2, 42), '#5fe0ff');
-labelSprite('3D WORLD (Pro Only)', new THREE.Vector3(0, -10, 42), '#e8c45c');
+labelSprite('DASHBOARD (Command Deck) — DONE', new THREE.Vector3(0, 16, 48), '#00ff9c');
+labelSprite('2D PIXEL WORLD (City & Dark Realm) — DONE', new THREE.Vector3(0, 2, 48), '#5fe0ff');
+labelSprite('3D WORLD (Pro Only) — PARTIAL', new THREE.Vector3(0, -12, 48), '#e8c45c');
 
 const nodes = [];
-function N(pos, color, size, label, info) { const m = node(pos, color, size, label, info); nodes.push(m); return m; }
 const V = (x,y,z) => new THREE.Vector3(x,y,z);
 
-// Dashboard layer nodes
-const dash = {
-  auth: N(V(-25,12,10), 0x00ff9c, 1.2, 'Auth (JWT/Firebase)', 'Signup/login/verify. Free/Pro/Team tiers.'),
-  billing: N(V(-15,12,10), 0x00ff9c, 1.2, 'Billing (Stripe/x402/PayBox)', 'Checkout, webhooks, escrow, 80/20 split.'),
-  metering: N(V(-5,12,10), 0x00ff9c, 1.2, 'Metering (ORACLE)', 'Redis+PG daily limits, 1k/10k/unlimited.'),
-  agents: N(V(5,12,10), 0xa78bfa, 1.4, '7 Council Agents', 'SHADDAI ZEROX ORACLE NEXUS TURTLE QUILL PIKADON.'),
-  tools: N(V(15,12,10), 0x4ade80, 1.2, 'Tool Registry', 'PolicyEngine, WorkflowEngine, JobEngine.'),
-  aura: N(V(25,12,10), 0x4ade80, 1.2, 'AURA / RAG Brain', 'Boxes, ingest/search, MCP tools.'),
-  forge: N(V(0,12,-5), 0x00ff9c, 1.3, 'Agent Forge', 'BYOK Grok/Claude/Fable. /api/operatives.'),
-  bazaar: N(V(15,12,-5), 0xff5a4d, 1.2, 'Bazaar (Agora)', 'List/buy/sell, x402 settle, 5% fee.'),
-};
+function node(pos, color, size, label, info, status) {
+  const geo = new THREE.SphereGeometry(size, 24, 24);
+  const mat = new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 0.4, metalness: 0.3, roughness: 0.4 });
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.copy(pos);
+  mesh.userData = { label, info, color, status };
+  scene.add(mesh);
+  const glowGeo = new THREE.SphereGeometry(size*1.7, 16, 16);
+  const glowMat = new THREE.MeshBasicMaterial({ color, transparent:true, opacity: 0.1 });
+  const glow = new THREE.Mesh(glowGeo, glowMat);
+  glow.position.copy(pos);
+  scene.add(glow);
+  nodes.push(mesh);
+  return mesh;
+}
+function edge(a, b, color) {
+  const geo = new THREE.BufferGeometry().setFromPoints([a, b]);
+  const mat = new THREE.LineBasicMaterial({ color, transparent:true, opacity: 0.25 });
+  scene.add(new THREE.Line(geo, mat));
+}
 
-// 2D World layer nodes
-const world2d = {
-  city: N(V(-20,0,5), 0x5fe0ff, 1.3, 'SHADDAI City', 'Hub, offices, bazaar, interiors.'),
-  meadow: N(V(-10,0,-5), 0x5fe0ff, 1.1, 'Meadow/Farm', 'Ox, tractor, harvest, fishing.'),
-  beach: N(V(0,0,-5), 0x5fe0ff, 1.1, 'Beach (Crystal Sea)', 'Boats, hoverboard, skate.'),
-  forest: N(V(10,0,-5), 0x5fe0ff, 1.1, 'Forest', 'Ape mount, pod vehicle.'),
-  desert: N(V(20,0,-5), 0x5fe0ff, 1.1, 'Desert', 'Camel, buggy, mining.'),
-  suburb: N(V(-15,0,15), 0x5fe0ff, 1.1, 'Suburb', 'Dog mount, scooter, apartments.'),
-  volcano: N(V(-5,0,15), 0x5fe0ff, 1.1, 'Volcano', 'Forge, siege, dragon.'),
-  darkforest: N(V(5,0,15), 0x5fe0ff, 1.1, 'Darkforest', 'Castle siege, crystals.'),
-  arcade: N(V(15,0,15), 0x5fe0ff, 1.2, 'Arcade Building', 'Games, sparks entry fees.'),
-  tactics: N(V(25,0,5), 0x5fe0ff, 1.1, 'Colosseum', 'Tactics (FFT), pot payouts.'),
-};
+const C = { done: 0x00ff9c, partial: 0xfbbf24, open: 0xff4d6d, agent: 0xa78bfa, integ: 0x5fe0ff, eco: 0xff5a4d };
 
-// 3D World layer nodes
-const world3d = {
-  host: N(V(-15,-12,5), 0xe8c45c, 1.3, '3D World Host', 'Biomes, GLBs, sacred geometry.'),
-  glbs: N(V(-5,-12,5), 0xe8c45c, 1.1, 'GLB Pack (47)', 'Buildings, mounts, vehicles, heroes.'),
-  rigs: N(V(5,-12,5), 0xe8c45c, 1.1, 'Agent Rigs (7)', '24-bone, idle/run/walk (clips gap).'),
-  perf: N(V(15,-12,5), 0xe8c45c, 1.1, 'Perf (batcher)', 'Self-hosted three.js, Draco, LODs.'),
-  homes: N(V(0,-12,-5), 0xe8c45c, 1.1, 'Realm Homes', '5 kits, enterable, furnished.'),
-  hazards: N(V(10,-12,-5), 0xe8c45c, 1.1, 'Hazards/Mode', 'Passive/fight, Void forced fight.'),
+// Dashboard layer
+const D = {
+  auth: node(V(-28,14,8), C.done, 1.3, 'Auth (JWT/Firebase)', 'Signup/login/verify. Free/Pro/Team tiers.', 'DONE'),
+  billing: node(V(-16,14,8), C.done, 1.3, 'Billing (Stripe/x402/PayBox)', 'Checkout, webhooks, escrow, 80/20 split.', 'DONE'),
+  metering: node(V(-4,14,8), C.done, 1.3, 'Metering (ORACLE)', 'Redis+PG daily limits. 1k/10k/unlimited.', 'DONE'),
+  agents: node(V(8,14,8), C.agent, 1.5, '7 Council Agents', 'SHADDAI ZEROX ORACLE NEXUS TURTLE QUILL PIKADON.', 'DONE'),
+  tools: node(V(20,14,8), C.done, 1.3, 'Tool Registry', 'PolicyEngine, WorkflowEngine, JobEngine.', 'DONE'),
+  aura: node(V(32,14,8), C.done, 1.3, 'AURA / RAG Brain', 'Boxes, ingest/search, MCP tools. Endpoint DONE, widget OPEN.', 'DONE'),
+  forge: node(V(0,14,-6), C.done, 1.3, 'Agent Forge (BYOK)', 'Grok/Claude/Fable. /api/operatives. DONE.', 'DONE'),
+  bazaar: node(V(16,14,-6), C.done, 1.3, 'Bazaar (Agora)', 'List/buy/sell, x402, 5% fee. DONE.', 'DONE'),
 };
-
-// Economy nodes (center, cross-layer)
-const eco = {
-  sparks: N(V(0,6,0), 0xff5a4d, 1.5, 'Sparks Ledger', '1 Spark = $1. Closed-loop. No cash-out.'),
-  stripe: N(V(-12,6,0), 0xff5a4d, 1.1, 'Stripe -> Sparks', 'Checkout rail, round-up.'),
-  x402: N(V(12,6,0), 0xff5a4d, 1.1, 'x402 Micropayments', 'Ledger + escrow + security.'),
-  paybox: N(V(0,6,12), 0xff5a4d, 1.1, 'PayBox (agent wallet)', 'MoonPay OWS, guard rebuild needed.'),
-  plots: N(V(0,6,-12), 0xff5a4d, 1.1, 'Plots (net new)', 'Fee pool, productive not passive.'),
-  nft: N(V(-8,6,-6), 0xff5a4d, 1.0, 'NFTs (pages only)', 'Badges + art frame. Needs spec.'),
-  asimov: N(V(8,6,-6), 0xff5a4d, 1.0, 'ASIMOV Token', 'Solana, NVDAx-paired, 3% tax.'),
+// 2D World
+const W2 = {
+  city: node(V(-22,0,6), C.done, 1.4, 'SHADDAI City', 'Hub, offices, bazaar, interiors. DONE.', 'DONE'),
+  meadow: node(V(-10,0,-4), C.done, 1.2, 'Meadow/Farm', 'Ox, tractor, harvest, fishing. DONE.', 'DONE'),
+  beach: node(V(2,0,-4), C.done, 1.2, 'Beach (Crystal Sea)', 'Boats, hoverboard, skate. DONE.', 'DONE'),
+  forest: node(V(14,0,-4), C.done, 1.2, 'Forest', 'Ape mount, pod vehicle. DONE.', 'DONE'),
+  desert: node(V(26,0,-4), C.done, 1.2, 'Desert', 'Camel, buggy, mining. DONE.', 'DONE'),
+  suburb: node(V(-16,0,16), C.done, 1.2, 'Suburb', 'Dog mount, scooter, apartments. DONE.', 'DONE'),
+  volcano: node(V(-4,0,16), C.done, 1.2, 'Volcano', 'Forge, siege, dragon. DONE.', 'DONE'),
+  darkforest: node(V(8,0,16), C.done, 1.2, 'Darkforest', 'Castle siege, crystals. DONE.', 'DONE'),
+  arcade: node(V(20,0,16), C.done, 1.2, 'Arcade Building', 'Games, sparks entry fees. DONE.', 'DONE'),
+  colosseum: node(V(32,0,6), C.partial, 1.2, 'Colosseum', 'Tactics (FFT) DONE. Interchangeable floors PARTIAL.', 'PARTIAL'),
 };
-
-// Integrations ring (outer)
+// 3D World
+const W3 = {
+  host: node(V(-18,-14,6), C.partial, 1.4, '3D World Host', 'Biomes, GLBs, sacred geometry. PARTIAL.', 'PARTIAL'),
+  glbs: node(V(-6,-14,6), C.partial, 1.2, 'GLB Pack (47)', 'Buildings, mounts, vehicles, heroes. PARTIAL (lazy-load OPEN).', 'PARTIAL'),
+  rigs: node(V(6,-14,6), C.partial, 1.2, 'Agent Rigs (7)', '24-bone, idle/run/walk. Combat clips OPEN.', 'PARTIAL'),
+  perf: node(V(18,-14,6), C.partial, 1.2, 'Perf (batcher)', 'Self-hosted three.js, Draco. LODs OPEN.', 'PARTIAL'),
+  homes: node(V(-6,-14,-6), C.done, 1.2, 'Realm Homes', '5 kits, enterable, furnished. DONE.', 'DONE'),
+  hazards: node(V(6,-14,-6), C.done, 1.2, 'Hazards/Mode', 'Passive/fight, Void forced fight. DONE.', 'DONE'),
+};
+// Economy (center)
+const E = {
+  sparks: node(V(0,7,0), C.eco, 1.6, 'Sparks Ledger', '1 Spark = $1. Closed-loop. No cash-out. DONE.', 'DONE'),
+  stripe: node(V(-12,7,0), C.done, 1.2, 'Stripe → Sparks', 'Checkout rail, round-up. DONE.', 'DONE'),
+  x402: node(V(12,7,0), C.done, 1.2, 'x402 Micropayments', 'Ledger + escrow + security. DONE.', 'DONE'),
+  paybox: node(V(0,7,14), C.done, 1.2, 'PayBox (agent wallet)', 'MoonPay OWS, guard rebuilt. DONE.', 'DONE'),
+  plots: node(V(0,7,-14), C.open, 1.2, 'Plots (net new)', 'Fee pool, productive not passive. OPEN — needs spec.', 'OPEN'),
+  nft: node(V(-8,7,-7), C.open, 1.1, 'NFTs (pages only)', 'Badges + art frame. Economics OPEN.', 'OPEN'),
+  asimov: node(V(8,7,-7), C.open, 1.1, 'ASIMOV Token', 'Solana, NVDAx-paired, 3% tax. Rewards center OPEN.', 'OPEN'),
+  rewards: node(V(0,7,7), C.open, 1.2, 'Rewards Center', 'Bridge 3% tax → Sparks pool. OPEN — deep planned.', 'OPEN'),
+};
+// Integrations (outer ring)
 const integ = [
-  N(V(-38,6,0), 0x4ade80, 0.9, 'Grok/Claude/Fable', 'BYOK brains.'),
-  N(V(38,6,0), 0x4ade80, 0.9, 'fal.ai', 'Image gen, one-shot gates.'),
-  N(V(0,6,38), 0x4ade80, 0.9, 'DexScreener/Helius', 'Market data, Solana RPC.'),
-  N(V(0,6,-38), 0x4ade80, 0.9, 'Telegram', 'Bot, signals, aura.'),
-  N(V(-27,6,27), 0x4ade80, 0.9, 'Stripe/MoonPay', 'Payments, agent wallet.'),
-  N(V(27,6,-27), 0x4ade80, 0.9, 'GitHub Pages', 'Publish, deploy.'),
+  node(V(-42,7,0), C.integ, 1.0, 'Grok/Claude/Fable', 'BYOK brains. DONE.', 'DONE'),
+  node(V(42,7,0), C.integ, 1.0, 'fal.ai', 'Image gen, one-shot gates. DONE.', 'DONE'),
+  node(V(0,7,42), C.integ, 1.0, 'DexScreener/Helius', 'Market data, Solana RPC. DONE.', 'DONE'),
+  node(V(0,7,-42), C.integ, 1.0, 'Telegram', 'Bot, signals, aura. DONE.', 'DONE'),
+  node(V(-30,7,30), C.integ, 1.0, 'Stripe/MoonPay', 'Payments, agent wallet. DONE.', 'DONE'),
+  node(V(30,7,-30), C.integ, 1.0, 'GitHub Pages', 'Publish, deploy. DONE.', 'DONE'),
 ];
 
-// Edges: dashboard -> economy
-Object.values(dash).forEach(n => edge(n.position, eco.sparks.position, 0x00ff9c));
-// 2d world -> economy
-Object.values(world2d).forEach(n => edge(n.position, eco.sparks.position, 0x5fe0ff));
-// 3d world -> economy
-Object.values(world3d).forEach(n => edge(n.position, eco.sparks.position, 0xe8c45c));
-// economy internal
-edge(eco.stripe.position, eco.sparks.position, 0xff5a4d);
-edge(eco.x402.position, eco.sparks.position, 0xff5a4d);
-edge(eco.paybox.position, eco.sparks.position, 0xff5a4d);
-edge(eco.plots.position, eco.sparks.position, 0xff5a4d);
-edge(eco.nft.position, eco.sparks.position, 0xff5a4d);
-edge(eco.asimov.position, eco.sparks.position, 0xff5a4d);
-// integrations -> sparks
-integ.forEach(n => edge(n.position, eco.sparks.position, 0x4ade80));
-// agents -> tools
-edge(dash.agents.position, dash.tools.position, 0xa78bfa);
-edge(dash.aura.position, dash.tools.position, 0xa78bfa);
+// Edges
+Object.values(D).forEach(n => edge(n.position, E.sparks.position, 0x00ff9c));
+Object.values(W2).forEach(n => edge(n.position, E.sparks.position, 0x5fe0ff));
+Object.values(W3).forEach(n => edge(n.position, E.sparks.position, 0xe8c45c));
+edge(E.stripe.position, E.sparks.position, 0xff5a4d);
+edge(E.x402.position, E.sparks.position, 0xff5a4d);
+edge(E.paybox.position, E.sparks.position, 0xff5a4d);
+edge(E.plots.position, E.sparks.position, 0xff5a4d);
+edge(E.nft.position, E.sparks.position, 0xff5a4d);
+edge(E.asimov.position, E.sparks.position, 0xff5a4d);
+edge(E.rewards.position, E.sparks.position, 0xff5a4d);
+integ.forEach(n => edge(n.position, E.sparks.position, 0x5fe0ff));
+edge(D.agents.position, D.tools.position, 0xa78bfa);
+edge(D.aura.position, D.tools.position, 0xa78bfa);
 
-// Raycaster for hover
+// Raycaster
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 let hovered = null;
@@ -219,14 +218,15 @@ window.addEventListener('mousemove', e => {
   if (hits.length) {
     const o = hits[0].object;
     if (hovered !== o) {
-      if (hovered) hovered.material.emissiveIntensity = 0.35;
+      if (hovered) hovered.material.emissiveIntensity = 0.4;
       hovered = o;
-      o.material.emissiveIntensity = 0.9;
-      infoEl.innerHTML = '<b>' + o.userData.label + '</b><br>' + o.userData.info;
+      o.material.emissiveIntensity = 1.0;
+      const statusColor = o.userData.status === 'DONE' ? '#00ff9c' : o.userData.status === 'PARTIAL' ? '#fbbf24' : '#ff4d6d';
+      infoEl.innerHTML = '<b style="color:' + o.userData.color.toString(16).padStart(6,'0').replace(/^/,'#') + '">' + o.userData.label + '</b><br><span style="color:' + statusColor + '">[' + o.userData.status + ']</span> ' + o.userData.info;
     }
   } else {
-    if (hovered) { hovered.material.emissiveIntensity = 0.35; hovered = null; }
-    infoEl.innerHTML = 'Hover a node to see its role.<br><b>Master plan:</b> SHADDAI_MASTER_PLAN_OPUS55.md';
+    if (hovered) { hovered.material.emissiveIntensity = 0.4; hovered = null; }
+    infoEl.innerHTML = 'Hover a node to see its role and status.<br><b>Master plan:</b> SHADDAI_MASTER_PLAN_OPUS55.md<br><span style="color:#00ff9c">Green=done</span> <span style="color:#fbbf24">Yellow=partial</span> <span style="color:#ff4d6d">Red=open</span>';
   }
 });
 
@@ -236,25 +236,23 @@ window.addEventListener('resize', () => {
   renderer.setSize(innerWidth, innerHeight);
 });
 
-// Animate
 const clock = new THREE.Clock();
 function animate() {
   requestAnimationFrame(animate);
   controls.update();
   const t = clock.getElapsedTime();
-  // gentle pulse on sparks node
-  const s = eco.sparks;
-  s.scale.setScalar(1 + Math.sin(t*2)*0.06);
-  // rotate integration ring slowly
+  E.sparks.scale.setScalar(1 + Math.sin(t*2)*0.06);
   integ.forEach((n,i) => {
-    const a = t*0.15 + i*Math.PI*2/integ.length;
-    const r = 46;
+    const a = t*0.12 + i*Math.PI*2/integ.length;
+    const r = 48;
     n.position.x = Math.cos(a)*r;
     n.position.z = Math.sin(a)*r;
   });
   renderer.render(scene, camera);
 }
 animate();
+
+loading.style.display = 'none';
 </script>
 </body>
 </html>
