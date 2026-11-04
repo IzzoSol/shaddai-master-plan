@@ -619,3 +619,178 @@ Most games are NOT mobile-playable (0 touch handlers for dodgeball, soccer, XTO,
 ---
 *Appendix by QUILL · SHADDAI Council · 2026-11-03*
 '
+---
+
+# DEEP PLANNING — ALL AGENTS (2026-11-03)
+
+Compiled from parallel agent deep-planning outputs. Each section is the raw agent deliverable.
+
+## DP1. SHADDAI — Opus 5.5 Execution Checklist
+
+See full checklist in the master plan §6. Key additions from SHADDAI's review:
+
+- **Contradictory PayBox status:** §2.1 marks "PIKADON as PayBox gateway" as ✅ DONE, but §2.2 and Phase 5 still list it as open. Reconcile before assigning. (Verified: it IS done in paybox-routes.js.)
+- **15 dirty repos, 91+ commits, no merge plan:** No rollback/conflict-resolution strategy documented. Risk of catastrophic merge. Add smoke test script to Phase 8.
+- **ASIMOV rewards center built on unverified revenue:** NVDAx "NVIDIA rewards" stream unconfirmed. Verify Backed Finance terms before any code.
+- **No CI/CD pipeline:** Tests are manual. Add automated gate before 91-commit merge.
+- **Mobile testing has no real device:** PWA install and touch handlers need physical phone verification.
+- **Missing docs may not exist:** Phase 0 references 12 docs. Verify they exist before starting.
+- **No rate-limit on AURA ingest paid rail:** 402 paid rail exists but no per-user spend cap documented. Risk of runaway costs.
+- **Single-file 1.5MB dashboard:** No code-splitting or lazy-loading plan. Performance budget may be exceeded on mobile.
+
+## DP2. NEXUS — Rewards Center Technical Spec
+
+**Bridge (3% tax → Sparks pool):** On-chain listener (Helius webhook) → idempotency via tx signature (processed_sigs table, UNIQUE on sig+slot) → treasury ATA (multisig, Squads Protocol, HSM-backed) → `EconomyService.grant(POOL_USER_ID, amount, 'asimov_tax_bridge', sig)`. Treasury reconciliation nightly (alert on drift >0.5%). Convert 1:1 (1 USDC = 1 Spark). No cash-out path added.
+
+**Pool data structure:** `reward_pool {pool_id, balance_sparks BIGINT, updated_at}`, `bridge_ingest_log {sig PK, amount_sparks, kind, ingested_at}`, `play_reward_log {match_id PK, user_id, result, sparks_paid, idempotency_key, paid_at}`. Pool is synthetic user `__asimov_pool__` in economy_accounts.
+
+**Venue:** 2D entry = new building in shaddai.html city layer (pixel-art facade, "ASIMOV Arena" sign). Click → match lobby panel. 3D counterpart optional under asimov-3d/ (lazy-loaded, desktop only). Flow: Lobby → Match (server-authoritative Colyseus) → Result → Sparks credit + leaderboard. Leaderboard top-20 by Sparks earned this week, resets Monday 00:00 UTC.
+
+**Cosmetics unlock (read-only):** Server calls Helius RPC `getTokenAccountsByOwner(wallet, mint)` — never trust client. Thresholds: ≥100 ASIMOV → "Neon Skin"; ≥1000 → "Gold Cat Announcer"; NVDAx holder → "NVDAx Chrome" (US-blocked). On unlock: `EconomyService.grantItem(userId, cosmeticCatalogId, 1, idempotencyKey)`. No fighting advantage.
+
+**Payout formula:** Match completed (any result) +1 Spark (participation). Win +2 (total 3 per win). 3-win streak +1 bonus. Daily cap per user: 20 Sparks from play rewards. Pool floor: if pool < 100 Sparks, rewards pause. Anti-farming: match ≥60s + ≥3 player inputs, server-validated.
+
+**API endpoints:** POST /api/rewards/bridge/ingest (webhook), GET /api/rewards/pool/balance, POST /api/rewards/play/complete, GET /api/rewards/leaderboard, GET /api/rewards/cosmetics/check, POST /api/rewards/cosmetics/unlock.
+
+**Mobile:** 2D venue only on max-width:768px; 3D gated behind matchMedia. Touch controls reuse asimov-fight touch layer. Leaderboard paginated 10/page. Bridge listener server-side only. Cosmetics balance check uses public RPC (read-only, cached 60s).
+
+## DP3. ZEROX — Rewards Bridge Economic Model
+
+**Bridge rate:** 1 Spark = $1.00 USD. Tax revenue converts 1:1. $1 tax = 1 Spark.
+
+**Pool sizing (daily):**
+| Scenario | Daily Volume | Tax/Day | Sparks/Day |
+|----------|-------------|---------|------------|
+| Conservative | $100K | $3,000 | 3,000 |
+| Base | $500K | $15,000 | 15,000 |
+| Bull | $2M | $60,000 | 60,000 |
+
+Base case: $500K daily volume → 15,000 Sparks/day inflow.
+
+**Payout formula (base case, 10K players/day):** Entry sink 1 Spark × 10,000 = 10,000 out. Win reward 2 Sparks × 4,000 wins = 8,000 in. Leaderboard top-10: 263 in. Daily challenge: 500 in. Total print: ~8,763/day. Other sinks ~6,000/day. Net circulation: −7,237/day (deflationary). Pool change: +6,237/day. Pool cap: 30-day reserve (~263K Sparks). Excess → seasonal tournaments, plot auctions, bonus drops.
+
+**Dynamic adjustment:** If pool < 15-day reserve → reduce win reward to 1.5 Sparks. If pool > 45-day reserve → increase to 2.5 Sparks.
+
+**Founders programme (100 spots):**
+| Tier | Spots | Price | Gets |
+|------|-------|-------|------|
+| Spark | 25 | $49 | Lifetime Pro, founder badge+frame, priority claim on 1 plot, 50 bonus Sparks, name in credits |
+| Flame | 25 | $99 | All Spark + priority claim on 3 plots, exclusive cosmetic set, 100 bonus Sparks, beta access |
+| Blaze | 50 | $199 | All Flame + priority claim on 5 plots, legendary cosmetic, 250 bonus Sparks, direct feedback channel, early feature access |
+
+Revenue: $13,650 total. Refund: 14-day no-questions. After Pro activation: no refunds. No yield, no revenue share, no staking return.
+
+**Compliance frame:** No passive revenue share on holdings. Tax revenue is platform revenue, not dividend. Sparks distributed only for gameplay activity. Disclaimers: "Sparks are non-transferable game credits. Not securities. No cash-out. Rewards are activity-based prizes, not holding returns."
+
+**Break-even:** Pool self-sustaining when daily tax ≥ daily print. Break-even volume: 8,763 / 0.03 = ~$292K/day ASIMOV volume. Below $292K: pool depletes. Above $500K: pool accumulates.
+
+**Owner decisions needed:** (1) Confirm base volume ($500K) or provide actuals. (2) Approve dynamic payout multipliers (1.5x–2.5x) vs fixed. (3) Approve founders pricing and spot counts. (4) Confirm pool cap target (30-day reserve) and excess-drain mechanism. (5) Verify "NVIDIA rewards" claim — if unverifiable, remove from all marketing.
+
+## DP4. ORACLE — NVDAx Research Brief
+
+**NVDAx (Backed Finance) — Dividend Terms:** Tracker certificate issued by Backed Assets (JE) Limited (Jersey SPV, JFSC-registered), 1:1 backed by real NVDA shares held by regulated custodians. Distributed under Liechtenstein FMA-approved base prospectus (EU Prospectus Regulation), passportable across EEA. Not offered to US persons (Reg S restriction). Holder terms governed by Jersey law.
+
+**Dividend handling:** Dividends are NOT paid as cash. Custodian receives dividend and reinvests into additional NVDA shares, net of 30% US withholding tax. Reflected on-chain as multiplier increase that rebases every holder's balance automatically. No action required. (Verified via xStocks Docs, Kraken FAQ, Token Terminal.)
+
+**Key constraint:** There is NO separable "rewards stream." Dividend value is automatically reinvested into the holder's own position — cannot be extracted, redirected, or pooled. Additionally, NVDAx's US-person exclusion means any game mechanism tying rewards to NVDAx holdings exposes SHADDAI to securities distribution risk if US users served.
+
+**Compliance landscape:** SEC March 2026 interpretive guidance (Release 33-11412) applies Howey test. Activity-based prizes (skill, gameplay, achievements) are less likely to be securities. Holding returns (rewards proportional to token holdings, staking-like yield) are more likely to be investment contracts. Gambling: if prize money derives from participant entry fees → likely gambling. If funded by third-party sponsors → generally lawful. Risk increases where rewards exchangeable for fiat/crypto with market value. MLM: if rewards require recruitment/downline, or early participants profit from later entrants' activity, pyramid concerns arise. Activity-based prize vs. holding return is the critical line.
+
+**Comparable models:** Axie Infinity (SLP) — two-token, SLP earned through gameplay, burned for breeding, emissions ended Jan 2026 due to farming abuse. STEPN (GST/GMT) — move-to-earn, GPS-tracked. Gods Unchained (GODS) — fragments allocate reward pool share based on rank/performance. Common compliance pattern: skill-based eligibility, non-transferable soul-bound in-game credits, geo-blocking, clear T&Cs, no recruitment requirements.
+
+**Recommendations:** (1) Do not use NVDAx dividends as direct reward stream — auto-reinvested, US-restricted. (2) Structure Sparks as activity-based prizes. (3) Make Sparks non-transferable and non-redeemable for cash/crypto. (4) Geo-block US persons. (5) No recruitment/downline mechanics. (6) Engage securities and gaming counsel. (7) Publish clear disclaimers.
+
+**Confidence:** High on NVDAx mechanics and US restriction (verified). Medium on compliance landscape (evolving). Low on MLM-specific analysis (no direct precedent). What would change my mind: legal opinion confirming Sparks are non-securities, or evidence that comparable tax-funded reward pool survived regulatory scrutiny.
+
+## DP5. TURTLE — Rewards Center Venue Spec
+
+**District:** Nexus (cyan tech quarter). Neon-lit arcade facade, holographic NVDAx Chrome trim, ASIMOV token sigil over door.
+
+**Facade (2D, 16px tiles, 48x48 sprite):** obsidian base #0a0e1a, gold signage #e8c45c, emerald energy strips #00ff9c, cyan holographic windows. Night-lit: windows glow cyan pulse (2s loop). Doorway arch with ASIMOV sigil. Reference: world-map-concept.html district cell pattern; office-workflow-redesign.html panel corner brackets.
+
+**Interior (5 zones, top-down 2D):** (1) Lobby — welcome kiosk, daily-cap progress ring, cosmetics preview mannequin. (2) Match Arena — center stage, 2-player match surface, score HUD, countdown timer. (3) Leaderboard Wall — right wall, top-10 Sparks earners, per-player avatar + NVDAx badge. (4) Cosmetics Display — left wall, 3 pedestals (Neon Skin, Gold Cat Announcer, NVDAx Chrome), preview carousel. (5) Pool Status Ticker — bottom strip, scrolling balance/earnings/cap.
+
+**Mobile controls (touch):** Left: virtual thumb stick (movement) — cyan ring, emerald knob. Right: 3 action buttons — A (jump/dash) gold, B (interact) emerald, C (special) cyan. 48px min tap targets, 8px gap. Above stick: pause. Haptic on hit.
+
+**Cosmetics display:** Pedestal = 48x48 sprite, hover → 2x preview with rotation. Unlocked: gold border + emerald check. Locked: desaturated + price in Sparks. Preview modal: 3D turntable (lazy, desktop only), equip button.
+
+**Pool Status Ticker:** Bottom strip, mono font, scrolls: `POOL: 12,450 Sparks · YOU: 340 · DAILY CAP: 500/1000`. Color: pool balance cyan, your earnings gold, cap emerald→red when >80%. Tap → expands to breakdown modal (per-game earnings, cap reset timer).
+
+**3D counterpart (Pro-only, lazy):** Three.js scene, GLB arcade cabinet + neon signage, bloom post-processing. Desktop-only, IntersectionObserver lazy-load, fallback to 2D sprite on mobile/low-end. Camera: isometric 45°, orbit disabled on touch.
+
+**Color palette (SHADDAI canonical):** Obsidian #0a0e1a (base), Gold #e8c45c (accents/CTAs/unlocked), Emerald #00ff9c (energy/success/caps OK), Cyan #5fe0ff (holographic/tech/highlights), Red #ff4d6d (cap warning/sell), Violet #a98bff (ASIMOV token). Motion: 200ms ease transitions, glow pulses 2s, scanline overlay 4% opacity. Typography: Chakra Petch (display), Share Tech Mono (data).
+
+## DP6. PIKADON — Security Review (Severity-Rated)
+
+**1. On-Chain Listener (Helius Webhook) — CRITICAL:**
+- [CRITICAL] No webhook signature verification. Fix: verify Helius X-Helius-Signature HMAC (timing-safe compare) before processing.
+- [CRITICAL] No idempotency on tx signature. Fix: persist processed signatures in processed_sigs table with UNIQUE on (signature, slot); reject duplicates with 409.
+- [HIGH] No replay protection/timestamp freshness. Reject payloads older than 5 min; track last-seen slot.
+- [HIGH] SSRF via URL inputs. Pass through assertPublicUrl from ssrf-guard.
+- [MEDIUM] Agent dispatch injection. Sanitize task strings (strip control chars, cap length, treat as data).
+
+**2. Treasury Security — CRITICAL:**
+- [CRITICAL] Treasury ATA key management unspecified. Fix: multisig (Squads Protocol on Solana) ≥3-of-5 signers; HSM-backed keys (Fireblocks/Turnkey). No hot wallet.
+- [HIGH] No balance reconciliation. Nightly job comparing on-chain treasury inflows vs. Sparks granted; alert on mismatch >0.1%.
+- [MEDIUM] Treasury address not allowlisted. Hardcode ASIMOV token program ID and treasury ATA; reject anything else.
+
+**3. Sparks Minting Integrity — CRITICAL:**
+- [CRITICAL] Fake tax event → free Sparks. Fix: independently verify via Helius RPC getTransaction(signature) — check program ID, instruction discriminator, amount, treasury recipient. Only then credit.
+- [HIGH] Rate limiting on ingest. rateLimit({windowMs:60000, max:120}) + per-signature dedup + per-IP limits.
+- [HIGH] Double-credit protection. Idempotency key = tx signature. Use economy-service.grant(userId, amount, reason, idemKey) with idemKey = tax:${signature}:${slot}. applyTransaction UNIQUE constraint is ultimate guard.
+- [MEDIUM] Amount validation. Tax revenue must be positive integer in smallest unit. Reject fractional/negative. 3% split uses integer math (like splitAmount in reward-engine.js); treasury absorbs remainder.
+
+**4. Cosmetics Unlock (Holder Check) — HIGH:**
+- [HIGH] Read-only balance check can be spoofed. Fix: server calls Helius RPC getTokenAccountsByOwner(wallet, mint); check balance ≥ threshold. Never trust client.
+- [HIGH] NVDAx region blocking (US persons). Fix: IP geolocation + KYC attestation; store region_verified_at; re-verify on each unlock. Fail closed.
+- [MEDIUM] Wallet ownership proof. User must sign message (Solana signMessage) before balance check is meaningful.
+
+**5. Compliance — HIGH:**
+- [HIGH] Securities (Howey test). Pool distributing revenue to token holders based on others' efforts likely passes all 4 prongs. Mitigation: (a) Sparks closed-loop non-transferable non-cashable (no withdraw API — preserve), (b) cosmetics purely aesthetic, (c) legal disclaimer. Engage securities counsel.
+- [MEDIUM] Gambling. If Sparks earned by gameplay AND have value, rewards could be gambling winnings. Mitigation: Sparks not redeemable for fiat; no cash-out; game outcomes skill-based (≥60s, ≥3 inputs).
+- [MEDIUM] MLM. Referral system has referrer splits. Ensure no recruitment-based compensation beyond existing 5-level cap; no buy-in requirement.
+- [LOW] Consumer protection. Age gate (13+ parental consent, 18+ for NVDAx cosmetics). ToS with disclaimers. Audit trail of all grants.
+
+**6. Anti-Farming — HIGH:**
+- [HIGH] Match validation: ≥60s play time + ≥3 distinct inputs, server-side. Client-reported play time untrusted. Use server-authoritative game state or signed play receipt.
+- [HIGH] Daily caps: per-user Spark earning cap (e.g., 500 Sparks/day from gameplay). Per-user match submission cap (e.g., 20 matches/day). Enforce in economy-service via daily-grant counter.
+- [MEDIUM] Bot detection: track input entropy (timing variance, keystroke patterns). Flag accounts with >95% identical input timing. Rate-limit match submissions per IP (max 5 distinct users/IP/day).
+
+**7. Rate Limiting & Abuse — MEDIUM:**
+- [MEDIUM] Per-user caps: Sparks balance cap (prevent infinite accumulation). Per-user transaction rate limit (max 10 grants/min).
+- [MEDIUM] Per-IP limits: Webhook ingest 120 req/min/IP. Gameplay endpoints 30 req/min/IP. Use existing rateLimit middleware.
+- [LOW] Anomaly detection: alert on single user earning >3x median, same IP submitting for >5 accounts, grant amounts exceeding 2x expected tax revenue.
+
+**8. Audit Trail — MEDIUM:**
+Must log (append-only, tamper-evident): every tax event (tx sig, slot, amount, treasury recipient, verified, timestamp); every Spark grant (userId, amount, reason, idempotencyKey, source tx sig, timestamp); every holder verification (wallet, token, balance, region, verified_at, method); every rate-limit hit (IP, endpoint, timestamp); every reconciliation (expected vs actual, delta, timestamp); admin actions (who, what, when via requireAdminUser from auth-guard).
+
+Pattern reference: ledger model from economy-service.js (append-only spark_transactions) and paybox-guard.js (500-entry rolling calls array). Extend with bridge_audit_log table.
+
+**Summary of Critical Path (ship blockers):** (1) On-chain verification before any Spark credit. (2) Multisig treasury. (3) Server-side holder verification with wallet signature proof. (4) Region blocking for NVDAx (fail closed). (5) Closed-loop Sparks — no withdraw/cash-out API. (6) Legal review for securities/gambling before mainnet.
+
+## DP7. QUILL — SPEC-economy.md (Draft v0.1)
+
+Written to `Shaddai/docs/SPEC-economy.md` (514 words, 8 sections).
+
+**1. Round-up:** Stripe purchases round up to nearest $1 USD. Opt-in at checkout, default off. UI prompt: "Round up $X.XX to $Y.00? (+Z Sparks)". Crypto-in: no round-up. Round-up credit posts after Stripe payment settles. [OWNER DECISION]
+
+**2. Sparks:** 1 Spark = $1 USD, fixed, no float. Ledger in economy-service.js (PostgreSQL in prod). Balance read via GET /api/economy/balance. Fractional: round down to whole Sparks; remainder stays as credit cents in separate float ledger. No cash-out, no transfer, no redemption.
+
+**3. Plots:** Fixed supply 10,000. Cost: 100 Sparks each. Buy via POST /api/plots/claim (idempotent on plotId+userId). Resellable via bazaar at market price. Unsold: 20% reserved for founders (2,000), 80% (8,000) public. Once sold out: secondary market only. [OWNER DECISION]
+
+**4. Fee Pool:** Feeds from (a) 5% bazaar marketplace fee, (b) 20% platform cut on agent job settlements, (c) 3% ASIMOV tax bridge. Settles weekly, Monday 00:00 UTC. Stored in fee_pool table (period, amount, source_breakdown JSONB). Pool amount = share of fees actually collected; never a promised rate. [OWNER DECISION]
+
+**5. Payout:** Formula: per_plot = (pool_amount / num_active_plots) × plot_multiplier. plot_multiplier: 1.0 default; 1.5 for founders plots. Worked examples: Pool $10,000, 500 active plots → $20/plot. 10,000 users, 2,000 active plots, $50,000 pool → $25/plot. 100 users, 50 plots, $500 pool → $10/plot. Empty pool → per_plot = 0; UI shows "Pool empty this period." [OWNER DECISION]
+
+**6. NFT Benefits:** Badge NFT tiers Prospect→Grandmaster. Grants: (a) plot priority (founders first), (b) fee-pool multiplier +0.1 per tier (max +0.5 for Grandmaster), (c) cosmetic unlocks. No cash value. Provenance via IPFS hash. [OWNER DECISION]
+
+**7. SHADDAI Coin:** Conversion: Sparks → coin at 100:1 (100 Sparks = 1 coin). Disclaimer (verbatim in UI): "SHADDAI coin is speculative. No guaranteed value. No cash-out. Not an investment." No in-game utility beyond cosmetic/governance signaling. [OWNER DECISION]
+
+**8. Failure Modes:** (a) Empty pool → plots pay 0, UI "Pool empty this period." (b) Refund → round-up Sparks clawed back; negative balance allowed up to −50, then blocked. (c) Plot supply sells out → secondary market only (bazaar). [OWNER DECISION]
+
+**Owner Decisions Summary:** All bracketed items require explicit owner sign-off before build. Payouts are a share of actually collected fees, computed after the fact; no promised, projected, or advertised rate of return in product copy.
+
+---
+*Deep planning compiled by QUILL · SHADDAI Council · 2026-11-03*
+*Sources: SHADDAI (orchestrator), NEXUS (architecture), ZEROX (economy), ORACLE (research), TURTLE (venue), PIKADON (security), QUILL (spec).*
+'
