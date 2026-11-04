@@ -63,12 +63,13 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const loading = document.getElementById('loading');
+window.addEventListener('error', e => { loading.innerHTML = 'ERROR: ' + (e.message || e.error || 'unknown'); loading.style.display = 'flex'; loading.style.color = '#ff4d6d'; });
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x06080b);
-scene.fog = new THREE.Fog(0x06080b, 60, 160);
+scene.fog = new THREE.Fog(0x06080b, 80, 200);
 
-const camera = new THREE.PerspectiveCamera(45, innerWidth/innerHeight, 0.1, 500);
-camera.position.set(0, 50, 90);
+const camera = new THREE.PerspectiveCamera(50, innerWidth/innerHeight, 0.1, 500);
+camera.position.set(0, 20, 35);
 
 const renderer = new THREE.WebGLRenderer({ antialias:true });
 renderer.setSize(innerWidth, innerHeight);
@@ -245,29 +246,29 @@ const integ = [
 
 // ===== EDGES =====
 // Dashboard → Economy
-Object.values(D).forEach(n => edge(n.position, E.sparks.position, 0x00ff9c, 0.2));
+Object.values(D).forEach(n => edge(n.position, E.Sparks_Ledger.position, 0x00ff9c, 0.2));
 // 2D World → Economy
-Object.values(W2).forEach(n => edge(n.position, E.sparks.position, 0x5fe0ff, 0.15));
+Object.values(W2).forEach(n => edge(n.position, E.Sparks_Ledger.position, 0x5fe0ff, 0.15));
 // 3D World → Economy
-Object.values(W3).forEach(n => edge(n.position, E.sparks.position, 0xe8c45c, 0.15));
+Object.values(W3).forEach(n => edge(n.position, E.Sparks_Ledger.position, 0xe8c45c, 0.15));
 // Economy internal
-edge(E.stripe.position, E.sparks.position, 0xff5a4d, 0.4);
-edge(E.x402.position, E.sparks.position, 0xff5a4d, 0.4);
-edge(E.paybox.position, E.sparks.position, 0xff5a4d, 0.4);
-edge(E.fee_pool.position, E.sparks.position, 0xff5a4d, 0.3);
-edge(E.plots.position, E.sparks.position, 0xff5a4d, 0.3);
-edge(E.nft.position, E.sparks.position, 0xff5a4d, 0.3);
-edge(E.asimov.position, E.sparks.position, 0xff5a4d, 0.3);
-edge(E.rewards.position, E.sparks.position, 0xff5a4d, 0.3);
-edge(E.shddai_coin.position, E.sparks.position, 0xff5a4d, 0.3);
-edge(E.founders.position, E.sparks.position, 0xff5a4d, 0.2);
+edge(E.Stripe___Sparks.position, E.Sparks_Ledger.position, 0xff5a4d, 0.4);
+edge(E.x____Micropayments.position, E.Sparks_Ledger.position, 0xff5a4d, 0.4);
+edge(E.PayBox__agent_wallet_.position, E.Sparks_Ledger.position, 0xff5a4d, 0.4);
+edge(E.Fee_Pool.position, E.Sparks_Ledger.position, 0xff5a4d, 0.3);
+edge(E.Plots__net_new_.position, E.Sparks_Ledger.position, 0xff5a4d, 0.3);
+edge(E.NFTs__pages_only_.position, E.Sparks_Ledger.position, 0xff5a4d, 0.3);
+edge(E.ASIMOV_Token.position, E.Sparks_Ledger.position, 0xff5a4d, 0.3);
+edge(E.Rewards_Center.position, E.Sparks_Ledger.position, 0xff5a4d, 0.3);
+edge(E.SHADDAI_Coin.position, E.Sparks_Ledger.position, 0xff5a4d, 0.3);
+edge(E.Founders_Programme.position, E.Sparks_Ledger.position, 0xff5a4d, 0.2);
 // Integrations → Sparks
-integ.forEach(n => edge(n.position, E.sparks.position, 0x5fe0ff, 0.1));
+integ.forEach(n => edge(n.position, E.Sparks_Ledger.position, 0x5fe0ff, 0.1));
 // Agents → Tools
-edge(D.tools.position, A.nexus.position, 0xa78bfa, 0.2);
-edge(D.aura.position, A.oracle.position, 0xa78bfa, 0.2);
-edge(D.forge.position, A.turtle.position, 0xa78bfa, 0.2);
-edge(D.bazaar.position, A.zerox.position, 0xa78bfa, 0.2);
+edge(D.Tool_Registry.position, A.NEXUS.position, 0xa78bfa, 0.2);
+edge(D.AURA___RAG_Brain.position, A.ORACLE.position, 0xa78bfa, 0.2);
+edge(D.Agent_Forge__BYOK_.position, A.TURTLE.position, 0xa78bfa, 0.2);
+edge(D.Bazaar__Agora_.position, A.ZEROX.position, 0xa78bfa, 0.2);
 
 // ===== RAYCASTER =====
 const raycaster = new THREE.Raycaster();
@@ -316,15 +317,20 @@ function animate() {
   requestAnimationFrame(animate);
   controls.update();
   const t = clock.getElapsedTime();
-  E.sparks.scale.setScalar(1 + Math.sin(t*2)*0.05);
-  integ.forEach((n,i) => {
-    const a = t*0.1 + i*Math.PI*2/integ.length;
-    const r = 58;
-    n.position.x = Math.cos(a)*r;
-    n.position.z = Math.sin(a)*r;
-  });
+  if (E.Sparks_Ledger) E.Sparks_Ledger.scale.setScalar(1 + Math.sin(t*2)*0.05);
+  try {
+    integ.forEach((n,i) => {
+      const a = t*0.1 + i*Math.PI*2/integ.length;
+      const r = 58;
+      n.position.x = Math.cos(a)*r;
+      n.position.z = Math.sin(a)*r;
+    });
+  } catch(e) { console.error('integ error:', e.message); }
   renderer.render(scene, camera);
 }
+console.log('Scene children:', scene.children.length);
+console.log('Nodes:', nodes.length);
+console.log('Camera pos:', camera.position.x, camera.position.y, camera.position.z);
 animate();
 
 loading.style.display = 'none';
