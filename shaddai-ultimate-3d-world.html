@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SHADDAI — Ultimate 3D World (Complete Blueprint)</title>
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:#06080b; color:#eaf4f0; font-family:'Courier New',monospace; overflow:hidden; }
+  #canvas { position:fixed; inset:0; }
+  #hud { position:fixed; top:10px; left:10px; z-index:10; background:rgba(6,8,11,.88); border:1px solid rgba(95,224,255,.25); padding:10px 14px; border-radius:4px; backdrop-filter:blur(8px); max-width:380px; }
+  #hud h1 { font-size:11px; letter-spacing:.3em; color:#e8c45c; text-transform:uppercase; margin-bottom:4px; }
+  #hud p { font-size:8.5px; letter-spacing:.1em; color:#8fb2a4; line-height:1.5; }
+  #hud .legend { margin-top:6px; display:flex; flex-wrap:wrap; gap:4px; }
+  #hud .legend span { font-size:7.5px; padding:2px 5px; border:1px solid; border-radius:2px; letter-spacing:.08em; }
+  #info { position:fixed; bottom:10px; right:10px; z-index:10; background:rgba(6,8,11,.88); border:1px solid rgba(95,224,255,.25); padding:10px 14px; border-radius:4px; backdrop-filter:blur(8px); max-width:360px; font-size:8.5px; letter-spacing:.08em; color:#8fb2a4; line-height:1.5; max-height:45vh; overflow-y:auto; }
+  #info b { color:#e8c45c; }
+  #controls { position:fixed; bottom:10px; left:10px; z-index:10; font-size:7.5px; letter-spacing:.12em; color:#5fe0ff; opacity:.7; }
+  #district-nav { position:fixed; top:10px; right:10px; z-index:10; background:rgba(6,8,11,.88); border:1px solid rgba(95,224,255,.25); padding:8px 10px; border-radius:4px; backdrop-filter:blur(8px); max-width:220px; font-size:8px; letter-spacing:.08em; max-height:80vh; overflow-y:auto; }
+  #district-nav h3 { font-size:9px; color:#e8c45c; margin-bottom:4px; letter-spacing:.2em; }
+  #district-nav button { display:block; width:100%; text-align:left; background:none; border:none; color:#8fb2a4; font-family:inherit; font-size:8px; padding:3px 6px; cursor:pointer; border-radius:2px; letter-spacing:.08em; }
+  #district-nav button:hover { color:#5fe0ff; background:rgba(95,224,255,.08); }
+  #loading { position:fixed; inset:0; z-index:20; display:flex; align-items:center; justify-content:center; background:#06080b; color:#e8c45c; font-size:12px; letter-spacing:.3em; }
+</style>
+</head>
+<body>
+<div id="loading">LOADING ULTIMATE 3D WORLD...</div>
+<div id="canvas"></div>
+<div id="hud">
+  <h1>SHADDAI — Ultimate 3D World</h1>
+  <p>Complete blueprint: every number, every formula, every mechanic. 20+ sections from the Master Blueprint. Hover nodes for full detail. Districts = major systems.</p>
+  <div class="legend">
+    <span style="color:#00ff9c;border-color:#00ff9c">Done</span>
+    <span style="color:#fbbf24;border-color:#fbbf24">Partial</span>
+    <span style="color:#ff4d6d;border-color:#ff4d6d">Open</span>
+    <span style="color:#a78bfa;border-color:#a78bfa">Agents</span>
+    <span style="color:#5fe0ff;border-color:#5fe0ff">Integrations</span>
+    <span style="color:#e8c45c;border-color:#e8c45c">Economy</span>
+    <span style="color:#ff5a4d;border-color:#ff5a4d">Revenue</span>
+  </div>
+</div>
+<div id="info">Hover a node to see its full description.<br><b>Master plan:</b> SHADDAI_MASTER_PLAN_OPUS55.md<br><span style="color:#00ff9c">Green=done</span> <span style="color:#fbbf24">Yellow=partial</span> <span style="color:#ff4d6d">Red=open</span></div>
+<div id="controls">ORBIT: drag &nbsp; ZOOM: scroll &nbsp; HOVER: inspect &nbsp; NAV: district buttons (top-right)</div>
+<div id="district-nav">
+  <h3>DISTRICTS</h3>
+  <button onclick="flyTo(0,18,0)">Overview</button>
+  <button onclick="flyTo(-50,14,0)">Dashboard</button>
+  <button onclick="flyTo(50,10,0)">Economy</button>
+  <button onclick="flyTo(0,2,50)">2D World</button>
+  <button onclick="flyTo(0,-14,-50)">3D World</button>
+  <button onclick="flyTo(0,20,0)">Agents</button>
+  <button onclick="flyTo(-30,10,30)">Funnel/Tiers</button>
+  <button onclick="flyTo(30,10,-30)">Land/Signal</button>
+  <button onclick="flyTo(0,10,-30)">Well/Boost/Rooms</button>
+  <button onclick="flyTo(0,10,30)">Stocks/NFTs/Referral</button>
+  <button onclick="flyTo(0,10,0)">SHD/Siege/ROI</button>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const loading = document.getElementById('loading');
+window.addEventListener('error', e => { loading.innerHTML = 'ERROR: ' + (e.message || 'unknown'); loading.style.display = 'flex'; loading.style.color = '#ff4d6d'; });
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x06080b);
+scene.fog = new THREE.Fog(0x06080b, 80, 220);
+
+const camera = new THREE.PerspectiveCamera(50, innerWidth/innerHeight, 0.1, 500);
+camera.position.set(0, 25, 45);
+
+const renderer = new THREE.WebGLRenderer({ antialias:true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+document.getElementById('canvas').appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.minDistance = 10;
+controls.maxDistance = 250;
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+const dl = new THREE.DirectionalLight(0x5fe0ff, 0.9);
+dl.position.set(30, 50, 30);
+scene.add(dl);
+const pl = new THREE.PointLight(0xe8c45c, 1.6, 120);
+pl.position.set(0, 15, 0);
+scene.add(pl);
+const pl2 = new THREE.PointLight(0x00ff9c, 1.0, 90);
+pl2.position.set(-30, 10, 30);
+scene.add(pl2);
+
+const nodes = [];
+const V = (x,y,z) => new THREE.Vector3(x,y,z);
+const C = { done:0x00ff9c, partial:0xfbbf24, open:0xff4d6d, agent:0xa78bfa, integ:0x5fe0ff, eco:0xff5a4d, rev:0xff5a4d, tier:0x22d3ee };
+
+function node(pos, color, size, label, info, status, district) {
+  const geo = new THREE.SphereGeometry(size, 16, 16);
+  const mat = new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 0.4, metalness: 0.3, roughness: 0.4 });
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.copy(pos);
+  mesh.userData = { label, info, color, status, district };
+  scene.add(mesh);
+  const glow = new THREE.Mesh(new THREE.SphereGeometry(size*1.5, 10, 10), new THREE.MeshBasicMaterial({ color, transparent:true, opacity: 0.07 }));
+  glow.position.copy(pos);
+  scene.add(glow);
+  nodes.push(mesh);
+  return mesh;
+}
+function edge(a, b, color, opacity) {
+  const geo = new THREE.BufferGeometry().setFromPoints([a, b]);
+  const mat = new THREE.LineBasicMaterial({ color, transparent:true, opacity: opacity||0.12 });
+  scene.add(new THREE.Line(geo, mat));
+}
+function plane(y, color, opacity, w, h) {
+  const geo = new THREE.PlaneGeometry(w||80, h||80);
+  const mat = new THREE.MeshBasicMaterial({ color, transparent:true, opacity, side:THREE.DoubleSide });
+  const m = new THREE.Mesh(geo, mat);
+  m.rotation.x = -Math.PI/2;
+  m.position.y = y;
+  scene.add(m);
+}
+function labelSprite(text, pos, color, scale) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 512; canvas.height = 64;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = 'rgba(6,8,11,0.7)';
+  ctx.fillRect(0,0,512,64);
+  ctx.font = 'bold 14px Courier New';
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, 256, 32);
+  const tex = new THREE.CanvasTexture(canvas);
+  const mat = new THREE.SpriteMaterial({ map: tex, transparent:true });
+  const sprite = new THREE.Sprite(mat);
+  sprite.position.copy(pos);
+  sprite.scale.set(scale||20, 2.5, 1);
+  scene.add(sprite);
+}
+
+// District planes
+plane(18, 0x00ff9c, 0.03, 50, 50);
+plane(0, 0x5fe0ff, 0.03, 70, 70);
+plane(-18, 0xe8c45c, 0.03, 50, 50);
+plane(10, 0xff5a4d, 0.03, 45, 45);
+
+// District labels
+labelSprite('DASHBOARD', V(-40,20,0), '#00ff9c', 16);
+labelSprite('ECONOMY', V(40,12,0), '#ff5a4d', 16);
+labelSprite('2D WORLD', V(0,2,45), '#5fe0ff', 16);
+labelSprite('3D WORLD', V(0,-16,-45), '#e8c45c', 16);
+labelSprite('AGENTS', V(0,20,0), '#a78bfa', 14);
+labelSprite('FUNNEL/TIERS', V(-25,12,25), '#22d3ee', 14);
+labelSprite('LAND/SIGNAL', V(25,12,-25), '#4ade80', 14);
+labelSprite('WELL/BOOST/ROOMS', V(0,12,-25), '#e8c45c', 14);
+labelSprite('STOCKS/NFTS/REFERRAL', V(0,12,25), '#a78bfa', 14);
+labelSprite('SHD/SIEGE/ROI', V(0,12,0), '#ff5a4d', 14);
+
+// ===== DASHBOARD DISTRICT =====
+const D = {};
+function d(x,z,l,i,s,st) { D[l.replace(/[^a-zA-Z]/g,'_')] = node(V(x,18,z), C.done, 1.1, l, i, st, 'Dashboard'); }
+d(-45,-5,'Auth (JWT/Firebase)','Signup/login/verify. Free/Pro/Team tiers. Stubs in SHADDAI-MASTER, real in server-production (softAuth).','DONE');
+d(-45,3,'Billing (Stripe/x402/PayBox)','Checkout, webhooks, escrow, 80/20 split, tip-link, confirm-order, credit topup.','DONE');
+d(-45,11,'Metering (ORACLE)','Redis+PG daily limits. Free 1k/Pro 10k/Team unlimited tokens. Soft warnings at 80%.','DONE');
+d(-33,-5,'Tool Registry','PolicyEngine (tier gating), WorkflowEngine (multi-step, approval gates), JobEngine (bid/select/escrow).','DONE');
+d(-33,3,'AURA / RAG Brain','Boxes (hall/office scope), ingest/search MCP tools, Telegram /learn /boxes /ask. Endpoint DONE, widget OPEN.','DONE');
+d(-33,11,'Agent Forge (BYOK)','User creates agent: name, archetype, skills, MD files, personality. Grok/Claude/Fable. /api/operatives. DONE.','DONE');
+d(-21,-5,'Bazaar (Agora)','List/buy/sell skills/services/items. x402 settle. 5% fee. resolveItem across bazaar/collectible/forge. DONE.','DONE');
+d(-21,3,'Notifications','In-app toast, EmailJS, webhook. 6 preference toggles. DONE.','DONE');
+d(-21,11,'Analytics Dashboard','KPI cards, revenue trend chart, agent performance table. Chart.js optional. DONE.','DONE');
+d(-9,-2,'Agent Marketplace','Browse 7 agents, search by skill, filter by availability/rating, calendar, booking. DONE.','DONE');
+d(-9,6,'Job Templates','5 pre-built: Build API, Write Content, Design UI, Security Audit, Data Analysis. DONE.','DONE');
+d(3,2,'Dispute Resolution','File dispute, evidence (5 types), mediation, timeline, refund. DONE.','DONE');
+
+// ===== ECONOMY DISTRICT =====
+const E = {};
+function e(x,z,l,i,s,st) { E[l.replace(/[^a-zA-Z]/g,'_')] = node(V(x,10,z), C.eco, 1.2, l, i, st, 'Economy'); }
+e(30,-12,'Sparks Ledger','1 Spark = $1 USD fixed. Closed-loop. No cash-out API. economy-service.js. DONE.','DONE');
+e(42,-12,'Stripe to Sparks','Checkout rail. Round-up (opt-in). Webhook signature verification. Escrow release on confirm. DONE.','DONE');
+e(54,-12,'x402 Micropayments','Ledger + escrow + security. Mounted. DONE.','DONE');
+e(30,0,'PayBox (agent wallet)','MoonPay OWS. 5-layer guard (disabled by default). READ_ONLY + GATED tools. DONE (enabled pending owner).','DONE');
+e(42,0,'Plots (net new)','10K fixed supply. 100 Sparks each. 20/80 founders/public. Fee-pool payout. OPEN - needs spec sign-off.','OPEN');
+e(54,0,'NFTs (pages only)','nft-collection.html, collectibles-nft.html. Badge NFTs (5 tiers, IPFS). Art NFT = frame not cash-out. Economics OPEN.','OPEN');
+e(30,12,'ASIMOV Token','Solana, NVDAx-paired, 3% tax. Cosmetics unlock (read-only balance check). Rewards center OPEN.','OPEN');
+e(42,12,'Rewards Center','Bridge 3% tax to Sparks pool. Gameplay rewards (activity-based, not holding returns). Deep planned.','OPEN');
+e(54,12,'SHADDAI Coin','Speculative. 100 Sparks = 1 coin. No cash-out. No in-game utility beyond cosmetic/governance. OPEN.','OPEN');
+e(42,-6,'Fee Pool','5% bazaar + 20% job cut + 3% ASIMOV bridge. Weekly settle (Mon 00:00 UTC). Stored fee_pool table. OPEN.','OPEN');
+e(54,-6,'Founders Programme','3 tiers: Spark $49 (25 spots), Flame $99 (25), Blaze $199 (50). $13,650 total. Utility only, no yield. OPEN.','OPEN');
+
+// ===== 2D WORLD DISTRICT =====
+const W2 = {};
+function w2(x,z,l,i,s,st) { W2[l.replace(/[^a-zA-Z]/g,'_')] = node(V(x,0,z), C.done, 1.1, l, i, st, '2D World'); }
+w2(-30,35,'SHADDAI City','Hub, offices, bazaar, interiors. 2.5D: day/night, water ripples, shadows, lamps, birds. DONE.','DONE');
+w2(-15,35,'Meadow/Farm','Ox, tractor, harvest, fishing (Void-Pearl 1-in-100). DONE.','DONE');
+w2(0,35,'Beach (Crystal Sea)','Boats, hoverboard, skate, tricks (ollie/flip/360). DONE.','DONE');
+w2(15,35,'Forest','Ape mount, pod vehicle. DONE.','DONE');
+w2(30,35,'Desert','Camel, buggy, mining. DONE.','DONE');
+w2(-20,50,'Suburb','Dog mount, scooter, apartments. DONE.','DONE');
+w2(-5,50,'Volcano','Forge, siege, dragon, lavaMat. DONE.','DONE');
+w2(10,50,'Darkforest','Castle siege, crystals, neon trees. DONE.','DONE');
+w2(25,50,'Arcade Building','Games as venues, Sparks entry fees, score bridge. DONE.','DONE');
+w2(40,35,'Colosseum','Tactics (FFT) CT/AGI turns, pot payouts. DONE. Interchangeable floors PARTIAL.','PARTIAL');
+w2(-30,65,'Fishing','Cast 3-12s to STRIKE to SPACE 1.6s window. Realm fish, tension fight. DONE.','DONE');
+w2(-15,65,'NPC Dialogs','E on agent = letterboxed dialog. Agent picks quest vs persona. Trust tiers scale pay. DONE.','DONE');
+w2(0,65,'Arcade Score Bridge','Games post {shdGame,shdScore,shdWin}; parent pays once per entry. DONE.','DONE');
+w2(15,65,'2D Exteriors','Per-region facades, venue signs, dusk-to-night windows, door spill, emissive light. DONE.','DONE');
+
+// ===== 3D WORLD DISTRICT =====
+const W3 = {};
+function w3(x,z,l,i,s,st) { W3[l.replace(/[^a-zA-Z]/g,'_')] = node(V(x,-18,z), C.partial, 1.1, l, i, st, '3D World'); }
+w3(-25,-35,'3D World Host','Biomes, GLBs, sacred geometry [0,0] hexagon R=260. PARTIAL.','PARTIAL');
+w3(-10,-35,'GLB Pack (47)','Buildings, mounts, vehicles, props, heroes x4+clips. PARTIAL (lazy-load OPEN).','PARTIAL');
+w3(5,-35,'Agent Rigs (7)','24-bone skeletons. idle/run/walk only. Combat/dodge/hit/sit/mount OPEN.','PARTIAL');
+w3(20,-35,'Perf (batcher)','Self-hosted three.js, Draco, static batcher (-15% draw calls). LODs OPEN.','PARTIAL');
+w3(-15,-50,'Realm Homes','5 kits, enterable, furnished (interiors v3). DONE.','DONE');
+w3(0,-50,'Hazards/Mode','Castle gas, pit lava, arctic, volcano. Passive/fight, Void forced fight. DONE.','DONE');
+w3(15,-50,'Collision Data','canon-colliders-v4.json: 6189 boxes, no deep overlaps. PARTIAL (probe OPEN).','PARTIAL');
+w3(-25,-65,'Hoverboard','Tricks: ollie/flip/360/big-air, HUD, localStorage. DONE.','DONE');
+w3(-10,-65,'Rideable Boats','Skiff/catamaran/yacht/submarine. DONE.','DONE');
+w3(5,-65,'Roads','Light-trail roads plaza to all realms+colosseum. DONE.','DONE');
+w3(20,-65,'Walk-in Colosseum','Mecha-arena on plateau, E opens spectate/tourney modal, sparks pools. DONE (foundation).','PARTIAL');
+w3(35,-50,'Garage','B at plaza beacon, hovercar 500 Sparks + board/car tier upgrades. DONE (foundation).','PARTIAL');
+
+// ===== AGENTS (center, y=20) =====
+const A = {};
+function a(x,z,l,i,s,st) { A[l.replace(/[^a-zA-Z]/g,'_')] = node(V(x,20,z), C.agent, 1.2, l, i, st, 'Agents'); }
+a(-15,0,'SHADDAI','Supreme Orchestrator. Strategy, decisions, final QA. Gold #e8c45c.','DONE');
+a(-5,0,'ZEROX','Wealth & Revenue. Billing, pricing, unit economics, Stripe, trading. Blue #00C8FF.','DONE');
+a(5,0,'ORACLE','Research & Intelligence. Market research, trends, AURA boxes. Purple #8b7bf0.','DONE');
+a(15,0,'NEXUS','Technical Architect. Backend, APIs, DB, tool registry, workflow engine. Steel gray #87909C.','DONE');
+a(-10,10,'TURTLE','UI/UX & Creative. Frontend, components, animations, pixel art. Green #00ff9c.','DONE');
+a(0,10,'QUILL','Writing & Communication. Docs, copy, guides, error messages. Cyan #5fe0ff.','DONE');
+a(10,10,'PIKADON','Security & Compliance. Vulnerabilities, PII, audit, permissions. Red #ff5a4d.','DONE');
+
+// ===== INTEGRATIONS (outer ring, rotating) =====
+const integ = [
+  node(V(-55,10,0), C.integ, 0.9, 'Grok/Claude/Fable','BYOK brains. User own subscription, encrypted at rest, per-user isolation. DONE.','DONE','Integrations'),
+  node(V(55,10,0), C.integ, 0.9, 'fal.ai','Image gen (FLUX, Rodin, Tripo, Meshy). One-shot gates, canary first. DONE.','DONE','Integrations'),
+  node(V(0,10,55), C.integ, 0.9, 'DexScreener/Helius','Market data, Solana RPC, Jupiter DEX. DONE.','DONE','Integrations'),
+  node(V(0,10,-55), C.integ, 0.9, 'Telegram','Bot (long-polling), signals (ZEROX terminal), aura (/learn /boxes /ask). DONE.','DONE','Integrations'),
+  node(V(-38,10,38), C.integ, 0.9, 'Stripe/MoonPay','Stripe checkout + webhooks. PayBox (MoonPay OWS) agent wallet. DONE.','DONE','Integrations'),
+  node(V(38,10,-38), C.integ, 0.9, 'GitHub Pages','Publish, deploy. GitHub Actions CI/CD. DONE.','DONE','Integrations'),
+  node(V(-38,10,-38), C.integ, 0.9, 'NewsAPI/DEX','Web research engine. Crypto trends, AI news, startups. DONE.','DONE','Integrations'),
+  node(V(38,10,38), C.integ, 0.9, 'Chart.js/EmailJS','Analytics charts (optional). Email alerts (optional). DONE.','DONE','Integrations'),
+];
+
+// ===== FUNNEL/TIERS (front-left, y=12) =====
+const F = {};
+function f(x,z,l,i,s,st) { F[l.replace(/[^a-zA-Z]/g,'_')] = node(V(x,12,z), C.tier, 1.0, l, i, st, 'Funnel/Tiers'); }
+f(-30,20,'Free Tier','$0/mo. 50 trial credits (one-time). BYOK. 30 RPM. 2 skill slots. Pixel world. Sparks earning.','DONE');
+f(-30,28,'Builder Tier','$19/mo. 2,000 credits/mo. BYOK + SHADDAI keys. 60 RPM. 8 skill slots. Priority queue.','DONE');
+f(-30,36,'Pro Tier','$30/mo. 5,000 credits/mo. 200 RPM. 20 skill slots. Office deed. 3D world. Land ownership. Clipper. Pro Signals.','DONE');
+f(-30,44,'Alpha Tier','$199/mo. 50,000 credits/mo. 1,000 RPM. Unlimited skills. All 3 worlds. Priority support. Clipper. Pro Signals.','DONE');
+f(-30,52,'Founder Tier','$100 once. ECA 1-2.5% SHD. Genesis Badge NFT (25 only). 5,000 credit grant. Governance vote. Founders Row. 3mo Pro.','DONE');
+f(-18,20,'Credit Packs','Starter $10/1k, Boost $25/2.75k, Power $50/6k, Enterprise $100/13k. BYOK = 0 credit spend.','DONE');
+f(-18,28,'BYOK','Bring your own OpenAI/Anthropic/Gemini keys. Zero credit spend. Paste in Settings. Stays in browser session.','DONE');
+f(-18,36,'Credit Value','1 credit = $0.001. 5,000 credits = ~$50 retail value. Alpha 50,000 = ~$500 value.','DONE');
+
+// ===== LAND/SIGNAL (front-right, y=12) =====
+const L = {};
+function l(x,z,lab,i,s,st) { L[lab.replace(/[^a-zA-Z]/g,'_')] = node(V(x,12,z), C.done, 1.0, lab, i, st, 'Land/Signal'); }
+l(20,20,'30 Fixed Plots','30 plots in SHADDAI City. Each streams Sparks automatically. Tiered: Raw/Developed/Landmark. DONE (scaffold).','PARTIAL');
+l(20,28,'9 Districts','Forest (TURTLE 0.5/s), Beach (ORACLE 1.0/s), Oracle Sky (1.5/s), SHADDAI City (0/s), Suburb (0.8/s), Meadow (QUILL 0.3/s), Volcano (NEXUS 3.0/s), Zerox District (ZEROX 2.0/s), Dark Realm (PIKADON 5.0/s). DONE.','DONE');
+l(20,36,'Signal System','Signal bar 0-100. Drains in high-intensity districts. Hit zero: rescued, pay 50 Sparks penalty. Seeds LP reserve. DONE.','DONE');
+l(20,44,'Boost Vaults','Lock Sparks to multiply stream rate. Formula: 1+3r/(1+1.5r). Max 4x (6x with amenities). 48h decay on unlock. DONE.','DONE');
+l(20,52,'Rooms & Tenants','8 room slots per plot. 6 tenant types: Night Baker (120/wk), Clockmaker (180/wk), Chess Hustler (90/wk), Data Trader (250/wk), Wandering Mage (60/wk), Forgemaster (200/wk). Landlord gets 10%. DONE.','DONE');
+l(32,20,'Signal Drop Penalty','50 Sparks penalty when signal hits zero. 60% district reserve, 35% LP reserve, 10% treasury. DONE.','DONE');
+l(32,28,'Boost Lock Amounts','100 Sparks=1.5x, 500=2.3x, 2000=3.1x, 10000=3.7x, Max+amenities=6.0x. DONE.','DONE');
+l(32,36,'Max Passive Yield','8 rooms x Data Trader (250/wk) = 2000/wk rents. 10% cut = 200/wk passive. + 3x boost = ~900+/wk total. DONE.','DONE');
+
+// ===== WELL/BOOST/ROOMS (back, y=12) =====
+const W = {};
+function w(x,z,l,i,s,st) { W[l.replace(/[^a-zA-Z]/g,'_')] = node(V(x,12,z), C.eco, 1.0, l, i, st, 'Well/Boost/Rooms'); }
+w(0,20,'Wishing Well','Center of SHADDAI City. 40% burn forever (deflationary). 35% seeds SHD LP reserve. 15% weekly jackpot (Sunday draw). 10% shrine cosmetics. DONE.','DONE');
+w(0,28,'Boost Formula','multiplier = 1 + 3r/(1+1.5r) where r = locked Sparks / base plot value. Max 4x, 6x with amenities. 48h decay on unlock. DONE.','DONE');
+w(0,36,'Tenant Economy','8 room slots. 6 tenant archetypes with weekly rent. Landlord gets 10% of rent. Runs automatically after setup. DONE.','DONE');
+w(0,44,'Plot Streaming','Plots stream Sparks from district reserve. Never more than district CITY_RESERVE. Base rate 0.5/tick. Boost multiplies. DONE.','DONE');
+w(0,52,'Non-Negotiable Rule','A plot can never stream more than its district CITY_RESERVE. This is the stability guarantee. DONE.','DONE');
+
+// ===== STOCKS/NFTS/REFERRAL (front, y=12) =====
+const S = {};
+function s(x,z,l,i,s,st) { S[l.replace(/[^a-zA-Z]/g,'_')] = node(V(x,12,z), C.tier, 1.0, l, i, st, 'Stocks/NFTs/Referral'); }
+s(0,20,'TRTL (Forest)','TURTLE agent. Yield: nature harvest + room rents. Risk: Low. DONE.','DONE');
+s(0,28,'ORCL (Beach+Sky)','ORACLE agent. Yield: data trades + intelligence. Risk: Medium. DONE.','DONE');
+s(0,36,'NEXS (Volcano)','NEXUS agent. Yield: forge outputs + tech builds. Risk: High. DONE.','DONE');
+s(0,44,'PIKD (Dark Realm)','PIKADON agent. Yield: siege drops + risk premium. Risk: Extreme. DONE.','DONE');
+s(0,52,'QUIL (Meadow)','QUILL agent. Yield: content + media + archives. Risk: Very Low. DONE.','DONE');
+s(0,60,'ZERX (Zerox District)','ZEROX agent. Yield: market fees + trade volume. Risk: High. DONE.','DONE');
+s(0,68,'SPARK (All)','System. Base Spark index. Risk: Tracked. DONE.','DONE');
+s(12,20,'Genesis Badges','3 minted: SHADDAI, ZEROX, ORACLE. Character art, traits, factions. Soul-bound. Founders receive at claim. DONE.','DONE');
+s(12,28,'Plot Deed NFT','Metaplex Core NFT on Solana. 1 of 30 SHADDAI City lots. Tiered: Raw/Developed/Landmark. Streams Sparks. DONE (devnet).','PARTIAL');
+s(12,36,'Collectibles (160)','160-item collection. 4 rarity tiers: Common to Rare to Epic to Legendary. Earned by doing work. DONE.','DONE');
+s(12,44,'Room Deed NFT','Sub-NFT within a plot. Holder rents room, earns tenant income. Sellable independently. COMING.','OPEN');
+s(12,52,'Forged Agent NFT','Agent built in Forge. Represents AI creation on-chain. Listable in Agent Marketplace. COMING.','OPEN');
+s(12,60,'Referral: Sparks','Instant Spark bonus when referral activates. Scales with first purchase. DONE.','DONE');
+s(12,68,'Referral: Reputation','Reputation XP on agent profile. Unlocks status perks and leaderboard rank. DONE.','DONE');
+s(24,20,'Referral: Status Perks','Cosmetics, room bonuses, boost multiplier increases, district access gates. DONE.','DONE');
+s(24,28,'Referral: Revenue Share','Revenue settlement when referral pays. Share routes to settlement pool. Cash-out in later phase. PENDING.','PARTIAL');
+
+// ===== SHD/SIEGE/ROI (center, y=12) =====
+const H = {};
+function h(x,z,l,i,s,st) { H[l.replace(/[^a-zA-Z]/g,'_')] = node(V(x,12,z), C.rev, 1.0, l, i, st, 'SHD/Siege/ROI'); }
+h(0,20,'SHD Token (Solana SPL)','Governance + utility token on Solana. LP-reserve backed. No speculative minting. Treasury earns backing first. PLANNED.','OPEN');
+h(0,28,'Community/Ecosystem 30%','Community and ecosystem allocation. 30% of total supply.','OPEN');
+h(0,36,'Team (2yr vest) 20%','Team allocation with 2-year vesting. 20% of total supply.','OPEN');
+h(0,44,'Treasury 18%','Treasury allocation. 18% of total supply.','OPEN');
+h(0,52,'Ecosystem Fund 15%','Ecosystem fund. 15% of total supply.','OPEN');
+h(0,60,'Early Investors 10%','Early investor allocation. 10% of total supply.','OPEN');
+h(0,68,'Founders (ECA) 7%','Founders ECA: 1-2.5% each, 25 spots. 7% of total supply.','OPEN');
+h(12,20,'SHD Utility: Governance','Hold SHD to vote on fee rates, district rules, LP ratios. All holders.','OPEN');
+h(12,28,'SHD Utility: District Access','Gate premium district features behind SHD hold threshold. Stakers.','OPEN');
+h(12,36,'SHD Utility: Fee Discounts','Marketplace fees reduced for SHD stakers. Traders.','OPEN');
+h(12,44,'SHD Utility: Boost Multiplier','Staking SHD adds +0.5x to plot boost vault ceiling. Land owners.','OPEN');
+h(12,52,'SHD Utility: Siege Power','SHD stake weight gives extra siege influence. Siege players.','OPEN');
+h(24,20,'Siege: Winning Side 40%','Winning side gets 40% of prize pool, split equally among winning team.','DONE');
+h(24,28,'Siege: Top 3 MVPs 25%','Top 3 scorers on any side get 25% of prize pool.','DONE');
+h(24,36,'Siege: Random Drop 20%','20% of prize pool to random eligible participants.','DONE');
+h(24,44,'Siege: Treasury 15%','15% of prize pool funds next siege + ecosystem.','DONE');
+h(24,52,'ROI: $30/mo Pro','5,000 credits (~$50 value) + office lot + 200 RPM + land + agents + signals + clipper.','DONE');
+h(24,60,'ROI: 900+ Sparks/wk','Maxed plot (3x boost) + 8 tenants = ~900+/wk passive. DONE.','DONE');
+h(24,68,'ROI: Founder $100','5,000 credit grant + Genesis Badge NFT + ECA 1-2.5% + governance + 3mo Pro. DONE.','DONE');
+h(36,20,'ROI: Realistic Timeline','$900-$4,500 MRR months 1-3 (100-150 paying users). $30K+ over 6-12 months. Compounding, not popping.','DONE');
+
+// ===== EDGES =====
+// Dashboard to Economy
+Object.values(D).forEach(n => edge(n.position, E.Sparks_Ledger.position, 0x00ff9c, 0.15));
+// 2D World to Economy
+Object.values(W2).forEach(n => edge(n.position, E.Sparks_Ledger.position, 0x5fe0ff, 0.1));
+// 3D World to Economy
+Object.values(W3).forEach(n => edge(n.position, E.Sparks_Ledger.position, 0xe8c45c, 0.1));
+// Economy internal
+edge(E.Stripe_to_Sparks.position, E.Sparks_Ledger.position, 0xff5a4d, 0.3);
+edge(E.x____Micropayments.position, E.Sparks_Ledger.position, 0xff5a4d, 0.3);
+edge(E.PayBox__agent_wallet_.position, E.Sparks_Ledger.position, 0xff5a4d, 0.3);
+edge(E.Fee_Pool.position, E.Sparks_Ledger.position, 0xff5a4d, 0.25);
+edge(E.Plots__net_new_.position, E.Sparks_Ledger.position, 0xff5a4d, 0.25);
+edge(E.NFTs__pages_only_.position, E.Sparks_Ledger.position, 0xff5a4d, 0.25);
+edge(E.ASIMOV_Token.position, E.Sparks_Ledger.position, 0xff5a4d, 0.25);
+edge(E.Rewards_Center.position, E.Sparks_Ledger.position, 0xff5a4d, 0.25);
+edge(E.SHADDAI_Coin.position, E.Sparks_Ledger.position, 0xff5a4d, 0.25);
+edge(E.Founders_Programme.position, E.Sparks_Ledger.position, 0xff5a4d, 0.2);
+// Integrations to Sparks
+integ.forEach(n => edge(n.position, E.Sparks_Ledger.position, 0x5fe0ff, 0.08));
+// Agents to Tools
+edge(D.Tool_Registry.position, A.NEXUS.position, 0xa78bfa, 0.15);
+edge(D.AURA___RAG_Brain.position, A.ORACLE.position, 0xa78bfa, 0.15);
+edge(D.Agent_Forge__BYOK_.position, A.TURTLE.position, 0xa78bfa, 0.15);
+edge(D.Bazaar__Agora_.position, A.ZEROX.position, 0xa78bfa, 0.15);
+// Funnel to Economy
+Object.values(F).forEach(n => edge(n.position, E.Sparks_Ledger.position, 0x22d3ee, 0.05));
+// Land to Economy
+Object.values(L).forEach(n => edge(n.position, E.Sparks_Ledger.position, 0x4ade80, 0.05));
+// Well to Economy
+Object.values(W).forEach(n => edge(n.position, E.Sparks_Ledger.position, 0xe8c45c, 0.05));
+// Stocks to Economy
+Object.values(S).forEach(n => edge(n.position, E.Sparks_Ledger.position, 0xa78bfa, 0.05));
+// SHD/Siege/ROI to Economy
+Object.values(H).forEach(n => edge(n.position, E.Sparks_Ledger.position, 0xff5a4d, 0.05));
+
+// ===== RAYCASTER =====
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+let hovered = null;
+const infoEl = document.getElementById('info');
+
+window.addEventListener('mousemove', e => {
+  mouse.x = (e.clientX / innerWidth) * 2 - 1;
+  mouse.y = -(e.clientY / innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  const hits = raycaster.intersectObjects(nodes);
+  if (hits.length) {
+    const o = hits[0].object;
+    if (hovered !== o) {
+      if (hovered) hovered.material.emissiveIntensity = 0.4;
+      hovered = o;
+      o.material.emissiveIntensity = 1.0;
+      const statusColor = o.userData.status === 'DONE' ? '#00ff9c' : o.userData.status === 'PARTIAL' ? '#fbbf24' : o.userData.status === 'OPEN' ? '#ff4d6d' : '#a78bfa';
+      const hexColor = '#' + o.userData.color.toString(16).padStart(6,'0');
+      infoEl.innerHTML = '<b style="color:' + hexColor + '">' + o.userData.label + '</b> <span style="color:' + statusColor + ';border:1px solid ' + statusColor + ';padding:1px 4px;border-radius:2px;font-size:7px;">' + o.userData.status + '</span><br><span style="color:#8fb2a4;">' + o.userData.info + '</span><br><span style="color:#5fe0ff;font-size:7.5px;">District: ' + o.userData.district + '</span>';
+    }
+  } else {
+    if (hovered) { hovered.material.emissiveIntensity = 0.4; hovered = null; }
+    infoEl.innerHTML = 'Hover a node to see its full description.<br><b>Master plan:</b> SHADDAI_MASTER_PLAN_OPUS55.md<br><span style="color:#00ff9c">Green=done</span> <span style="color:#fbbf24">Yellow=partial</span> <span style="color:#ff4d6d">Red=open</span>';
+  }
+});
+
+window.addEventListener('resize', () => {
+  camera.aspect = innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+window.flyTo = (x, y, z) => {
+  const target = new THREE.Vector3(x, y, z);
+  const offset = new THREE.Vector3(x, y + 25, z + 40);
+  camera.position.copy(offset);
+  controls.target.copy(target);
+  controls.update();
+};
+
+const clock = new THREE.Clock();
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  const t = clock.getElapsedTime();
+  if (E.Sparks_Ledger) E.Sparks_Ledger.scale.setScalar(1 + Math.sin(t*2)*0.05);
+  integ.forEach((n,i) => {
+    const a = t*0.1 + i*Math.PI*2/integ.length;
+    const r = 58;
+    n.position.x = Math.cos(a)*r;
+    n.position.z = Math.sin(a)*r;
+  });
+  renderer.render(scene, camera);
+}
+animate();
+
+console.log('Scene children:', scene.children.length);
+console.log('Nodes:', nodes.length);
+console.log('Camera pos:', camera.position.x, camera.position.y, camera.position.z);
+loading.style.display = 'none';
+</script>
+</body>
+</html>
+'
