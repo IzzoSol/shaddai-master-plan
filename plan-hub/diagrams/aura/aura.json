@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "AURA — ask → answer → remember",
+    "subtitle": "Deterministic token saver: cache and skills answer first, compute takes the cheap routes, the LLM is the last resort — and every answer seeds the cache.",
+    "output": "portfolio/aura/aura.html",
+    "theme": "dark",
+    "quality_profile": "showcase",
+    "direction": "tb",
+    "source": {
+      "repo": "IzzoSol/Aura",
+      "ref": "main",
+      "note": "aura_ask path across aura-cache.json · skills.json · aura-stats.json (research clone + .shaddai-aura stores)"
+    },
+    "legend": [
+      { "kind": "tool", "label": "Deterministic step" },
+      { "kind": "other", "label": "Cache / store" }
+    ]
+  },
+  "steps": [
+    { "id": "p_in", "label": "Prompt arrives", "kind": "start", "order": 0 },
+    { "id": "cache", "label": "Hash + cache lookup", "sublabel": "aura-cache.json (SHA-256, TTL 24h)", "kind": "task", "order": 1 },
+    { "id": "hit_q", "label": "Cached hit?", "kind": "decision", "order": 2 },
+    { "id": "hit_ret", "label": "Return cached answer", "sublabel": "aura_stats.hits++", "kind": "task", "order": 3 },
+    { "id": "skills", "label": "Match skills.json rules", "kind": "task", "order": 4 },
+    { "id": "match_q", "label": "Trigger rule?", "kind": "decision", "order": 5 },
+    { "id": "skill_ret", "label": "Run canned answer", "sublabel": "supports $1 capture", "kind": "task", "order": 6 },
+    { "id": "compute", "label": "Try deterministic compute", "kind": "task", "order": 7 },
+    { "id": "comp_q", "label": "Solves it?", "kind": "decision", "order": 8 },
+    { "id": "comp_ret", "label": "Return computed result", "kind": "task", "order": 9 },
+    { "id": "ask_llm", "label": "Ask the model", "sublabel": "LLM is the fallback, not the default", "kind": "task", "order": 10 },
+    { "id": "remember", "label": "Write to cache", "sublabel": "aura_remember — seeds the next ask", "kind": "task", "order": 11 },
+    { "id": "done", "label": "Answer returned", "kind": "end", "order": 12 }
+  ],
+  "edges": [
+    { "from": "p_in", "to": "cache" },
+    { "from": "cache", "to": "hit_q" },
+    { "from": "hit_q", "to": "hit_ret", "label": "hit", "kind": "yes" },
+    { "from": "hit_q", "to": "skills", "label": "miss", "kind": "no" },
+    { "from": "hit_ret", "to": "done", "kind": "return" },
+    { "from": "skills", "to": "match_q" },
+    { "from": "match_q", "to": "skill_ret", "label": "match", "kind": "yes" },
+    { "from": "match_q", "to": "compute", "label": "none", "kind": "no" },
+    { "from": "skill_ret", "to": "done", "kind": "return" },
+    { "from": "compute", "to": "comp_q" },
+    { "from": "comp_q", "to": "comp_ret", "label": "solved", "kind": "yes" },
+    { "from": "comp_q", "to": "ask_llm", "label": "fallback", "kind": "no" },
+    { "from": "comp_ret", "to": "done", "kind": "return" },
+    { "from": "ask_llm", "to": "remember" },
+    { "from": "remember", "to": "done" }
+  ],
+  "phases": [
+    { "id": "ph_lookup", "label": "Cache & skills first", "contains": ["p_in", "cache", "hit_q", "hit_ret", "skills", "match_q", "skill_ret"] },
+    { "id": "ph_compute", "label": "Cheap routes", "contains": ["compute", "comp_q", "comp_ret"] },
+    { "id": "ph_answer", "label": "LLM + memoize", "contains": ["ask_llm", "remember", "done"] }
+  ]
+}

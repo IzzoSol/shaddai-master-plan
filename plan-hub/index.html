@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SHADDAI Plan Hub</title>
+<style>
+/* Same design language as shaddai-design-studio/portfolio (merged 2026-11-05): obsidian panels, emerald accent, mono metadata. */
+:root{
+  --bg:#070a0e; --panel:#0b1117; --line:rgba(126,158,142,.20); --line-2:rgba(126,158,142,.36);
+  --ink:#e8f0ea; --muted:#8fa39a; --accent:#00e5a0; --accent-ink:#04120c; --gold:#e8c45c;
+  --done:#00e5a0; --part:#fbbf24; --open:#f87171;
+  --font:'Rajdhani','Inter',system-ui,-apple-system,sans-serif;
+  --mono:'Share Tech Mono',ui-monospace,'Cascadia Mono',monospace;
+}
+html[data-theme=light]{--bg:#f4f7f6;--panel:#fff;--line:rgba(20,50,40,.16);--line-2:rgba(20,50,40,.34);--ink:#0d1a15;--muted:#5b6f66;--accent:#047857;--accent-ink:#fff;--gold:#a16207;--done:#047857;--part:#a16207;--open:#b91c1c}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--font);
+  background-image:radial-gradient(circle at 15% 0%,rgba(0,229,160,.06),transparent 46%),radial-gradient(circle at 90% 100%,rgba(56,189,248,.05),transparent 45%)}
+.wrap{max-width:1320px;margin:0 auto;padding:30px 32px 70px}
+header{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:32px;letter-spacing:.02em;font-weight:700}
+h1 em{font-style:normal;color:var(--accent)}
+.sub{margin:6px 0 0;color:var(--muted);font-size:14px;max-width:70ch}
+h2{margin:38px 0 4px;font-size:20px;letter-spacing:.03em}
+h2 + .sub{margin-bottom:16px}
+button{font:600 11px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;min-height:32px;padding:0 13px;border-radius:8px;border:1px solid var(--line-2);background:var(--panel);color:var(--ink)}
+button:hover{border-color:var(--accent);color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.doors{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px;margin-top:24px}
+.door{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;background:var(--panel);overflow:hidden;text-decoration:none;color:inherit;transition:.18s}
+.door:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.door .thumb{aspect-ratio:16/9;background:var(--bg);border-bottom:1px solid var(--line);overflow:hidden;position:relative}
+.door .thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.92)}
+.door .thumb .glyph{height:100%;display:grid;place-items:center;font:700 44px/1 var(--mono);color:var(--accent);opacity:.75}
+.chip{position:absolute;top:10px;left:10px;padding:3px 9px;border-radius:999px;background:var(--panel);border:1px solid var(--line-2);font:600 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.door .body{padding:15px 17px 17px;display:grid;gap:6px}
+.door h3{margin:0;font-size:18px}
+.door p{margin:0;color:var(--muted);font-size:13px}
+.door .go{margin-top:6px;font:600 11px/1 var(--mono);letter-spacing:.1em;color:var(--accent)}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.links a{font:600 11px/1 var(--mono);letter-spacing:.06em;text-decoration:none;color:var(--muted);border:1px solid var(--line-2);border-radius:999px;padding:7px 11px;background:var(--panel)}
+.links a:hover{color:var(--accent);border-color:var(--accent)}
+.links a.hot{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 50%,transparent)}
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:14px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.st{font:600 10.5px/1 var(--mono);letter-spacing:.08em;white-space:nowrap}
+.st.done{color:var(--done)}.st.part{color:var(--part)}.st.open{color:var(--open)}
+td small{color:var(--muted)}
+footer{margin-top:38px;font:11px/1.6 var(--mono);color:var(--muted)}
+@media(max-width:640px){.wrap{padding:22px 16px 50px}h1{font-size:26px}th:nth-child(3),td:nth-child(3){display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <h1>SHADDAI <em>Plan Hub</em></h1>
+    <p class="sub">The master plan, the design-studio diagrams, the economy blueprint, and the 3D plan maps, in one place. Every page here is static and opens offline.</p>
+  </div>
+  <button id="themeBtn" type="button">Light</button>
+</header>
+
+<div class="doors">
+  <a class="door" href="diagrams/index.html">
+    <div class="thumb"><img src="diagrams/master/master.png" alt="" loading="lazy"><span class="chip">16 diagrams</span></div>
+    <div class="body"><h3>Diagrams</h3><p>The design-studio portfolio: architecture, money streams, MCP, AURA, the master mind map. Each one is interactive.</p><span class="go">OPEN GALLERY &rarr;</span></div>
+  </a>
+  <a class="door" href="blueprint/index.html">
+    <div class="thumb"><img src="blueprint/assets/flywheel.png" alt="" loading="lazy"><span class="chip">20 sections</span></div>
+    <div class="body"><h3>Economy Blueprint</h3><p>Funnel, tiers, credits, Sparks, fees, land, rooms, the Wishing Well, AMM, NFTs, siege, ROI.</p><span class="go">OPEN BLUEPRINT &rarr;</span></div>
+  </a>
+  <a class="door" href="../shaddai-ultimate-3d-world.html">
+    <div class="thumb"><div class="glyph">3D</div><span class="chip">121 nodes</span></div>
+    <div class="body"><h3>3D Plan World</h3><p>Every subsystem as a district, coloured by status (done, partial, open). Hover any node for its detail.</p><span class="go">ENTER &rarr;</span></div>
+  </a>
+  <a class="door" href="../SHADDAI_MASTER_PLAN_OPUS55.md">
+    <div class="thumb"><div class="glyph">MD</div><span class="chip">master plan</span></div>
+    <div class="body"><h3>Master Plan</h3><p>Status matrix, gaps, architecture, economy, build phases 0 to 8, and Phase W (world + Forge finish).</p><span class="go">READ &rarr;</span></div>
+  </a>
+</div>
+
+<h2>Blueprint, by section</h2>
+<p class="sub">Jump straight into the economy blueprint.</p>
+<div class="links">
+  <a href="blueprint/index.html#why">Why</a><a href="blueprint/index.html#funnel">Funnel</a><a href="blueprint/index.html#paths">Paths</a><a href="blueprint/index.html#flywheel">Flywheel</a>
+  <a href="blueprint/index.html#tiers">Tiers</a><a href="blueprint/index.html#credits">Credits</a><a href="blueprint/index.html#sparks-value">Sparks value</a><a href="blueprint/index.html#fees">Fees</a>
+  <a href="blueprint/index.html#tokens">Tokens</a><a href="blueprint/index.html#land">Land</a><a href="blueprint/index.html#signal">Signal</a><a href="blueprint/index.html#boost">Boost</a>
+  <a class="hot" href="blueprint/index.html#rooms">Rooms</a><a href="blueprint/index.html#well">Wishing Well</a><a href="blueprint/index.html#amm">AMM</a><a href="blueprint/index.html#nfts">NFTs</a>
+  <a href="blueprint/index.html#referral">Referral</a><a href="blueprint/index.html#shd">SHD</a><a href="blueprint/index.html#siege">Siege</a><a href="blueprint/index.html#roi">ROI</a>
+</div>
+
+<h2>Other 3D maps</h2>
+<div class="links">
+  <a href="../shaddai-massive-3d-world.html">Massive 3D World: districts by system</a>
+  <a href="../shaddai-3d-visual.html">3D Visual: the first status map</a>
+  <a href="diagrams/hub/realm.html">Economy Realm: treasury, farms, siege</a>
+  <a href="diagrams/hub/simulator.html">Scale Simulator</a>
+</div>
+
+<h2>Phase W: World + Forge finish</h2>
+<p class="sub">Live targets: <b>shaddai-backup.onrender.com/SHADDAI-WORLD-3D.html</b> and <b>/forge-demo.html</b>. Source: IzzoSol/Shaddai (Shaddai-3d), branch <code>polish/world-finish-p1</code>. Full detail in the master plan, section 6, Phase W.</p>
+<table>
+  <thead><tr><th>Item</th><th>Status</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>Shader crash on instanced decals</td><td class="st done">DONE ON BRANCH</td><td><small>Live console showed "'instanceMatrix' : undeclared identifier". The dragon and VFX decal shaders now guard on USE_INSTANCING. Bundles rebuilt.</small></td></tr>
+    <tr><td>Load time and lag</td><td class="st open">OPEN</td><td><small>Live headless: 165 s to playable, 825 requests, ~30 MB. Next: shadow culling, distance hiding for towns and titans, draw-call merges, ZEROX.glb (12.3 MB) compression.</small></td></tr>
+    <tr><td>Loading screen + character select</td><td class="st part">PARTIAL</td><td><small>The selector works, but it shows 2D portraits. Target: real 3D agent models on the cards.</small></td></tr>
+    <tr><td>Clean HUD + hide-all toggle</td><td class="st done">DONE ON BRANCH</td><td><small>F2 hides every chip, pill, notice and button, keeps panels you opened, and F2 again restores it all. The \ key no longer also drops a campfire (that's Shift+\ now). Still needs an in-game check.</small></td></tr>
+    <tr><td>Navi movement</td><td class="st open">OPEN</td><td><small>Smoothing and correction pass on the Navi command center and camera.</small></td></tr>
+    <tr><td>Mounts, hoverboard, hover moves</td><td class="st open">OPEN</td><td><small>Verify O (board), I (mounts and travel), and the trick and wall-ride moves end to end.</small></td></tr>
+    <tr><td>Forge demo models + flow</td><td class="st done">DONE ON BRANCH</td><td><small>Body offers the 7 real council bodies, built as a hologram and then materialised. The field bot is your body. "Enter Shaddai World" registers the agent and opens the world. Checked headless end to end.</small></td></tr>
+    <tr><td>Operatives endpoint security</td><td class="st done">DONE ON BRANCH</td><td><small>Clients can no longer set id, economy, stats or inventory (id could overwrite another user's agent). Red-team test 9/9.</small></td></tr>
+  </tbody>
+</table>
+
+<footer>Merged 2026-11-05 from shaddai-design-studio/portfolio, shaddai-consultancy/public/blueprint.html, and shaddai-massive-3d-world.html. The diagram screenshots are pixel-measured by the design studio's gate, not human-reviewed.</footer>
+</div>
+<script>
+document.getElementById('themeBtn').addEventListener('click',function(){
+  var cur=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
+  document.documentElement.setAttribute('data-theme',cur); this.textContent=cur==='light'?'Dark':'Light';
+});
+</script>
+</body>
+</html>

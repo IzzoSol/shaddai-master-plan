@@ -1,0 +1,68 @@
+{
+  "generator": "shaddai-diagrams",
+  "version": 1,
+  "type": "sequence",
+  "quality": "showcase",
+  "candidate": "portfolio/mcp/seq-rag-nav.json",
+  "output": "portfolio/mcp/seq-rag-nav.html",
+  "screenshot": "portfolio\\mcp\\seq-rag-nav.png",
+  "ok": true,
+  "durationMs": 3427,
+  "checks": [
+    {
+      "gate": "validate",
+      "status": "pass",
+      "errors": 0,
+      "warnings": 0,
+      "detail": null
+    },
+    {
+      "gate": "deliver",
+      "status": "pass",
+      "errors": 0,
+      "warnings": 0,
+      "detail": null
+    },
+    {
+      "gate": "check",
+      "status": "pass",
+      "errors": 0,
+      "warnings": 0,
+      "detail": null
+    },
+    {
+      "gate": "browser-check",
+      "status": "pass",
+      "errors": 0,
+      "warnings": 0,
+      "detail": {
+        "nodes": 5,
+        "links": 9,
+        "regions": 2
+      }
+    },
+    {
+      "gate": "perceptual",
+      "status": "pass",
+      "errors": 0,
+      "warnings": 1,
+      "detail": {
+        "luminance": {
+          "min": 10,
+          "max": 238,
+          "mean": 20,
+          "sd": 21.3
+        },
+        "text": {
+          "hex": "e8f0ea",
+          "ratio": 16.32,
+          "minContrast": 4.5,
+          "ok": true,
+          "bgLum": 17
+        }
+      }
+    }
+  ],
+  "visualReview": "pixel-measured",
+  "claim": "automated checks passed; perceptual evidence is a pixel measurement, not a human review"
+}

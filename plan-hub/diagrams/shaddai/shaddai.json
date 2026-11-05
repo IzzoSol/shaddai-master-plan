@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "SHADDAI Platform",
+    "subtitle": "One monolith, many faces — how a user, an agent, and a Telegram bot all reach the same brain, guard rails, and store.",
+    "output": "portfolio/shaddai/shaddai.html",
+    "theme": "dark",
+    "quality_profile": "showcase",
+    "direction": "lr",
+    "source": {
+      "repo": "IzzoSol/Shaddai",
+      "ref": "feat/market-intel",
+      "note": "backend (Express :3000) · public/ · shaddai-mcp · gateway/pikadon-kernel · servers/ micro-set"
+    },
+    "legend": [
+      { "kind": "client", "label": "Clients" },
+      { "kind": "frontend", "label": "Frontend" },
+      { "kind": "backend", "label": "Backend" },
+      { "kind": "service", "label": "MCP layer" },
+      { "kind": "database", "label": "Stores" },
+      { "kind": "external", "label": "External" }
+    ]
+  },
+  "components": [
+    { "id": "browser", "label": "Browser", "sublabel": "user sessions", "kind": "client", "rank": 0, "order": 0 },
+    { "id": "mcp_host", "label": "Host agent", "sublabel": "OpenCode · Claude Code", "kind": "client", "rank": 0, "order": 1 },
+    { "id": "tg", "label": "Telegram bots", "sublabel": "@ShaddaiHall & friends", "kind": "external", "rank": 0, "order": 2 },
+    { "id": "web", "label": "public/", "sublabel": "~200 static pages · auth.js · dashboards", "kind": "frontend", "rank": 1, "order": 0 },
+    { "id": "mcp", "label": "shaddai-mcp/", "sublabel": "mcp-unified.js + eco-* engine modules", "kind": "service", "rank": 1, "order": 1 },
+    { "id": "api", "label": "Backend monolith", "sublabel": "Express :3000 · routes · lib · services", "kind": "backend", "rank": 2, "order": 0 },
+    { "id": "servers", "label": "servers/", "sublabel": "agent · quest · market · daily micro-servers", "kind": "service", "rank": 3, "order": 0 },
+    { "id": "gateway", "label": "gateway/pikadon-kernel", "sublabel": "security guard rail", "kind": "security", "rank": 3, "order": 1 },
+    { "id": "aura_py", "label": "aura/ (Python)", "sublabel": "deterministic token saver", "kind": "tool", "rank": 3, "order": 2 },
+    { "id": "rag", "label": "shaddai-rag/", "sublabel": "zero-dep TF-IDF library", "kind": "tool", "rank": 3, "order": 3 },
+    { "id": "store", "label": "backend/data/", "sublabel": "~110 JSON stores · ledger · rgistry", "kind": "database", "rank": 4, "order": 0 },
+    { "id": "kb", "label": "Knowledge & RAG KBs", "sublabel": "kb_<agent>/docs.json · <agent>-kb.js", "kind": "database", "rank": 4, "order": 1 },
+    { "id": "pub_mcp", "label": "public-mcp/", "sublabel": "mcp-server-rag.js, published package", "kind": "service", "rank": 3, "order": 4 }
+  ],
+  "relationships": [
+    { "from": "browser", "to": "web", "label": "HTTPS", "kind": "sync" },
+    { "from": "mcp_host", "to": "mcp", "label": "JSON-RPC", "kind": "sync" },
+    { "from": "tg", "to": "api", "label": "bot updates", "kind": "event" },
+    { "from": "web", "to": "api", "label": "REST · WebSocket", "kind": "sync" },
+    { "from": "mcp", "to": "api", "label": "HTTP :3000", "kind": "sync" },
+    { "from": "mcp", "to": "rag", "label": "local search", "kind": "async" },
+    { "from": "mcp", "to": "pub_mcp", "label": "publish", "kind": "async" },
+    { "from": "api", "to": "servers", "label": "dispatch", "kind": "async" },
+    { "from": "api", "to": "gateway", "label": "guard", "kind": "sync" },
+    { "from": "api", "to": "aura_py", "label": "token savings", "kind": "async" },
+    { "from": "api", "to": "store", "label": "persistence", "kind": "data" },
+    { "from": "api", "to": "kb", "label": "grounding", "kind": "data" }
+  ],
+  "boundaries": [
+    { "id": "b_api", "label": "structure/api (routes · lib · services)", "kind": "backend", "contains": ["api", "servers", "store", "kb"] },
+    { "id": "b_mcp", "label": "structure/shaddai-mcp + public-mcp", "kind": "service", "contains": ["mcp", "pub_mcp"] },
+    { "id": "b_guard", "label": "structure/gateway + aura", "kind": "security", "contains": ["gateway", "aura_py"] }
+  ]
+}

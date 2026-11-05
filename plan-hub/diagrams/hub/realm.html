@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SHADDAI Economy Realm — 3D showcase</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Space Grotesk',system-ui,sans-serif; background:#06080b; overflow:hidden; }
+  #ui { position:fixed; top:14px; left:14px; z-index:10; background:rgba(6,8,11,.88);
+        border:1px solid #1c2624; border-radius:10px; padding:14px 16px; color:#e7f3ee; max-width:300px; }
+  #ui h1 { font-size:16px; } #ui h1 b { color:#e8c45c; }
+  #ui p { font-size:11px; color:#7fa79b; margin-top:6px; font-family:'JetBrains Mono',monospace; }
+  .row { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
+  button, .btn { padding:6px 10px; font-size:11px; border:1px solid #00ff9c; background:rgba(0,255,156,.12);
+    color:#00ff9c; border-radius:6px; cursor:pointer; font-family:inherit; text-decoration:none; display:inline-block; }
+  button:hover, .btn:hover { background:rgba(0,255,156,.3); }
+  .btn.gold { border-color:#e8c45c; color:#e8c45c; background:rgba(232,196,92,.1); }
+  label.ck { font-size:11px; color:#7fa79b; display:flex; gap:6px; align-items:center; margin-top:10px; }
+  #info { position:fixed; bottom:14px; left:14px; right:14px; z-index:10; background:rgba(6,8,11,.88);
+    border:1px solid #1c2624; border-radius:10px; padding:10px 14px; color:#e7f3ee;
+    font-family:'JetBrains Mono',monospace; font-size:12px; }
+  #info b { color:#e8c45c; }
+  #legend { position:fixed; top:14px; right:14px; z-index:10; background:rgba(6,8,11,.88);
+    border:1px solid #1c2624; border-radius:10px; padding:10px 12px; color:#7fa79b;
+    font-family:'JetBrains Mono',monospace; font-size:10.5px; line-height:1.7; }
+  #legend i { display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:6px; }
+  #warn { position:fixed; top:40%; width:100%; text-align:center; color:#7fa79b; display:none; }
+</style>
+</head>
+<body>
+<div id="ui">
+  <h1>SHADDAI <b>Economy Realm</b></h1>
+  <p>1 spark = $1 peg · click any building · drag to look · scroll to zoom</p>
+  <div class="row">
+    <a class="btn gold" href="dossier.html">2D DOSSIER + DOCS</a>
+    <a class="btn" href="simulator.html">SIMULATOR</a>
+  </div>
+  <label class="ck"><input type="checkbox" id="spin" checked/> auto-rotate</label>
+  <p>prices: edit CONFIG in this file, master in prices.json</p>
+</div>
+<div id="info">Click a building — treasury, pools, founders, farms, siege castle, market, asimov, rails.</div>
+<div id="legend"><b style="color:#e7f3ee">FLY 30/20/20/15/10/5</b><br/>
+<i style="background:#e8c45c"></i>treasury 20<br/><i style="background:#38bdf8"></i>pools 30<br/>
+<i style="background:#a78bfa"></i>founders · asimov<br/><i style="background:#00ff9c"></i>farms · plots<br/>
+<i style="background:#ff3b3b"></i>siege dragons<br/><i style="background:#f472b6"></i>market 85/10/5</div>
+<div id="warn">Could not load three.js CDN — check connection, then reload.</div>
+<script async src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+/* ================= EDITABLE — mirrors shaddai-n8n/prices.json v1.1.0 ================= */
+const CONFIG = {
+  peg: '1 spark = $1 · 6 decimals (0.5 = 50c)',
+  splits: 'revenue 30 LP / 20 treasury / 20 holders / 15 burn / 10 farms / 5 giveaways',
+  treasury: '20% of revenue · ops + dev · buys SHADDAI + sparks',
+  pools: '30% of revenue · SHADDAI/SOL depth · SOL accrues here',
+  founders: 'Genesis 100 (plot+25% off+dividend) · Pioneer 500 (10% off+half tickets) · Settler 1000 (title+XP)',
+  farms: 'planting 50% LP / 40% replant / 10% owner · owner perks: harvest + half-off tickets',
+  siege: 'server ticket 25 sparks · 5 dragons · damage 40 / resets 20 / max-hit 20 / final 10 / council 10',
+  market: 'feeds · item swaps · clothing · agent bodies · cosmetics from 0.1 · fees 85/10/5',
+  plots: '100 sparks · 72/day · max 3 · banks 24h',
+  asimov: 'NVDAx-reserve launchpad hunt · 5 CA shards · commit-reveal · official-badge verify',
+  rails: 'pay your way: sparks $1 · USDC x402 · SOL gas+pair · sub $49/$199/$999'
+};
+/* ===================================================================================== */
+let scene, camera, renderer, pickables = [], dragons = [], coins = [], curve = null;
+const INFO = {
+  treasury: ['<b>TREASURY — 20%</b>', CONFIG.treasury],
+  pools: ['<b>LIQUIDITY POOLS — 30%</b>', CONFIG.pools],
+  founders: ['<b>FOUNDERS HALL</b>', CONFIG.founders],
+  farms: ['<b>FARMS + TREES</b>', CONFIG.farms],
+  castle: ['<b>SIEGE CASTLE</b>', CONFIG.siege],
+  market: ['<b>MARKETPLACE</b>', CONFIG.market],
+  plots: ['<b>PLOTS</b>', CONFIG.plots],
+  asimov: ['<b>ASIMOV CENTER</b>', CONFIG.asimov],
+  rails: ['<b>PAY RAILS</b>', CONFIG.rails]
+};
+function label(text, sub){
+  const c = document.createElement('canvas'); c.width = 512; c.height = 128;
+  const x = c.getContext('2d');
+  x.fillStyle = 'rgba(6,8,11,0.85)'; x.fillRect(0,0,512,128);
+  x.strokeStyle = '#e8c45c'; x.lineWidth = 4; x.strokeRect(4,4,504,120);
+  x.fillStyle = '#e7f3ee'; x.font = 'bold 44px sans-serif'; x.textAlign = 'center';
+  x.fillText(text, 256, 58);
+  x.fillStyle = '#7fa79b'; x.font = '30px monospace'; x.fillText(sub || '', 256, 100);
+  const t = new THREE.CanvasTexture(c);
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map:t, depthTest:false }));
+  s.scale.set(30, 7.5, 1); return s;
+}
+function box(w,h,d,color,x,y,z,key){
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d),
+    new THREE.MeshStandardMaterial({ color, roughness:.6, metalness:.3 }));
+  m.position.set(x,y,z); m.castShadow = true; m.userData.key = key;
+  scene.add(m); pickables.push(m); return m;
+}
+function init(){
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x06080b);
+  scene.fog = new THREE.Fog(0x06080b, 220, 700);
+  camera = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, .1, 2000);
+  camera.position.set(0, 70, 150); camera.lookAt(0, 10, 0);
+  renderer = new THREE.WebGLRenderer({ antialias:true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.shadowMap.enabled = true;
+  document.body.appendChild(renderer.domElement);
+  scene.add(new THREE.HemisphereLight(0xfff1d6, 0x6b5a42, 1.0));
+  const sun = new THREE.DirectionalLight(0xffe2b0, 1.6);
+  sun.position.set(-120, 200, -80); sun.castShadow = true; scene.add(sun);
+  // ground
+  const g = new THREE.Mesh(new THREE.CircleGeometry(130, 72),
+    new THREE.MeshStandardMaterial({ color:0x0b1210, roughness:1 }));
+  g.rotation.x = -Math.PI/2; g.receiveShadow = true; scene.add(g);
+  const grid = new THREE.GridHelper(260, 26, 0x1c2624, 0x111816);
+  grid.position.y = .05; scene.add(grid);
+  // TREASURY — gold tower center
+  const tw = new THREE.Mesh(new THREE.CylinderGeometry(7, 9, 22, 24),
+    new THREE.MeshStandardMaterial({ color:0xe8c45c, roughness:.35, metalness:.7 }));
+  tw.position.set(0, 11, 0); tw.castShadow = true; tw.userData.key = 'treasury';
+  scene.add(tw); pickables.push(tw);
+  const tl = label('TREASURY', '20% ops + buys'); tl.position.set(0, 30, 0); scene.add(tl);
+  // LP POOLS — blue torus
+  const lp = new THREE.Mesh(new THREE.TorusGeometry(11, 2.4, 14, 48),
+    new THREE.MeshStandardMaterial({ color:0x38bdf8, roughness:.3, metalness:.6 }));
+  lp.rotation.x = Math.PI/2; lp.position.set(-52, 3, -24); lp.userData.key = 'pools';
+  scene.add(lp); pickables.push(lp);
+  const ll = label('LP POOLS', '30% SHADDAI/SOL'); ll.position.set(-52, 16, -24); scene.add(ll);
+  // FOUNDERS HALL — violet block
+  box(14, 11, 14, 0xa78bfa, 52, 5.5, -24, 'founders');
+  const fl = label('FOUNDERS', '100 / 500 / 1000'); fl.position.set(52, 17, -24); scene.add(fl);
+  // FARMS — green cones
+  [[-52,34],[-42,42],[-62,42]].forEach(([fx,fz],i)=>{
+    const t = new THREE.Mesh(new THREE.ConeGeometry(4-i, 9, 10),
+      new THREE.MeshStandardMaterial({ color:0x00ff9c, roughness:.8 }));
+    t.position.set(fx, 4.5, fz); t.castShadow = true; t.userData.key = 'farms';
+    scene.add(t); pickables.push(t);
+  });
+  const farl = label('FARMS', '50 / 40 / 10'); farl.position.set(-52, 16, 38); scene.add(farl);
+  // SIEGE CASTLE — dark walls + 5 red dragons orbiting
+  const cg = new THREE.Group(); cg.position.set(52, 0, 38); scene.add(cg);
+  [[-8,-8],[8,-8],[-8,8],[8,8]].forEach(([px,pz])=>{
+    const t = new THREE.Mesh(new THREE.BoxGeometry(5, 16, 5),
+      new THREE.MeshStandardMaterial({ color:0x3a3a3a, roughness:.8 }));
+    t.position.set(px, 8, pz); t.castShadow = true; t.userData.key = 'castle'; cg.add(t); pickables.push(t);
+  });
+  const keep = new THREE.Mesh(new THREE.BoxGeometry(9, 22, 9),
+    new THREE.MeshStandardMaterial({ color:0x6b0f0f, roughness:.7 }));
+  keep.position.y = 11; keep.userData.key = 'castle'; cg.add(keep); pickables.push(keep);
+  for(let i=0;i<5;i++){
+    const d = new THREE.Mesh(new THREE.SphereGeometry(1.8, 14, 14),
+      new THREE.MeshBasicMaterial({ color:0xff3b3b }));
+    d.userData = { a:(i/5)*Math.PI*2, r:20+i*2, h:22+(i%2)*6 };
+    cg.add(d); dragons.push(d);
+  }
+  const cl = label('SIEGE', '5 dragons · 25 sparks'); cl.position.set(52, 30, 38); scene.add(cl);
+  // MARKET — pink stalls
+  [[-8,0],[0,0],[8,0]].forEach(([ox],i)=>{
+    box(5, 4+i, 5, 0xf472b6, ox, 2+i/2, 62, 'market');
+  });
+  const ml = label('MARKET', '85 / 10 / 5'); ml.position.set(0, 14, 62); scene.add(ml);
+  // PLOTS ring — cyan parcels
+  for(let i=0;i<12;i++){
+    const a = (i/12)*Math.PI*2;
+    const p = new THREE.Mesh(new THREE.BoxGeometry(5,.6,5),
+      new THREE.MeshStandardMaterial({ color:0x2dd4bf, roughness:.6 }));
+    p.position.set(Math.cos(a)*95, .3, Math.sin(a)*95); p.userData.key = 'plots';
+    scene.add(p); pickables.push(p);
+  }
+  const pl = label('PLOTS', '100 sparks · 72/day'); pl.position.set(0, 10, -95); scene.add(pl);
+  // ASIMOV CENTER — cyan octahedron on pedestal (NVDAx hunt hub)
+  const ped = new THREE.Mesh(new THREE.BoxGeometry(10, 3, 10),
+    new THREE.MeshStandardMaterial({ color:0x1c2624, roughness:.7 }));
+  ped.position.set(0, 1.5, -52); ped.castShadow = true; ped.userData.key = 'asimov';
+  scene.add(ped); pickables.push(ped);
+  const oct = new THREE.Mesh(new THREE.OctahedronGeometry(6),
+    new THREE.MeshStandardMaterial({ color:0x3fe8ff, roughness:.25, metalness:.7, emissive:0x0a2a33 }));
+  oct.position.set(0, 11, -52); oct.userData.key = 'asimov';
+  scene.add(oct); pickables.push(oct);
+  const al = label('ASIMOV', 'NVDAx hunt · shards'); al.position.set(0, 21, -52); scene.add(al);
+  // PAY RAILS — 4 pylons around treasury: sparks / USDC / SOL / sub
+  [['sparks',0x00ff9c,14,0],['usdc',0x38bdf8,0,14],['sol',0xa78bfa,-14,0],['sub',0xf472b6,0,-14]].forEach(([nm,col,ox,oz])=>{
+    const py = new THREE.Mesh(new THREE.CylinderGeometry(1.4, 1.8, 7, 10),
+      new THREE.MeshStandardMaterial({ color:col, roughness:.4, metalness:.5 }));
+    py.position.set(ox, 3.5, oz); py.userData.key = 'rails';
+    scene.add(py); pickables.push(py);
+  });
+  const rl = label('PAY RAILS', 'sparks·USDC·SOL·sub'); rl.position.set(0, 12, 20); scene.add(rl);
+  // money loop curve
+  const pts = [[0,16,0],[-52,10,-24],[-52,12,38],[0,10,62],[52,16,38],[52,12,-24],[0,16,0]]
+    .map(([x,y,z])=>new THREE.Vector3(x,y,z));
+  curve = new THREE.CatmullRomCurve3(pts, true);
+  const cg2 = new THREE.SphereGeometry(.9, 8, 8);
+  const cm = new THREE.MeshBasicMaterial({ color:0xe8c45c });
+  for(let i=0;i<50;i++){
+    const m = new THREE.Mesh(cg2, cm);
+    m.userData.t = i/50; scene.add(m); coins.push(m);
+  }
+  // pick + drag + hover highlight
+  const ray = new THREE.Raycaster(), mv = new THREE.Vector2();
+  const hovRay = new THREE.Raycaster(), hovMv = new THREE.Vector2();
+  let drag = false, px = 0, hovered = null;
+  addEventListener('mousedown', e=>{ drag = true; px = e.clientX; });
+  addEventListener('mousemove', e=>{
+    if(drag){
+      const dx = e.clientX - px; px = e.clientX;
+      const ax = new THREE.Vector3(0,1,0);
+      camera.position.applyAxisAngle(ax, -dx*.005);
+      return;
+    }
+    hovMv.set((e.clientX/innerWidth)*2-1, -(e.clientY/innerHeight)*2+1);
+    hovRay.setFromCamera(hovMv, camera);
+    const hit = hovRay.intersectObjects(pickables, false)[0];
+    const m = hit ? hit.object : null;
+    if(m !== hovered){
+      if(hovered && hovered.material.emissive) hovered.material.emissive.setHex(hovered.userData._e || 0x000000);
+      hovered = m;
+      if(hovered && hovered.material.emissive){
+        hovered.userData._e = hovered.material.emissive.getHex();
+        hovered.material.emissive.setHex(0x444444);
+      }
+      document.body.style.cursor = hovered ? 'pointer' : 'default';
+    }
+  });
+  addEventListener('mouseup', e=>{
+    if(Math.abs(e.clientX - px) < 4 && drag){
+      mv.set((e.clientX/innerWidth)*2-1, -(e.clientY/innerHeight)*2+1);
+      ray.setFromCamera(mv, camera);
+      const hit = ray.intersectObjects(pickables, false)[0];
+      if(hit && INFO[hit.object.userData.key]){
+        const [t,b] = INFO[hit.object.userData.key];
+        document.getElementById('info').innerHTML = t + ' — ' + b;
+      }
+    }
+    drag = false;
+  });
+  addEventListener('wheel', e=>{
+    e.preventDefault();
+    const d = camera.position.length();
+    const n = Math.max(40, Math.min(320, d + e.deltaY*.1));
+    camera.position.setLength(n);
+  }, { passive:false });
+  addEventListener('resize', ()=>{
+    camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+  });
+  window.__DBG = { scene, camera, renderer };
+  animate();
+}
+let last = 0;
+function animate(t){
+  requestAnimationFrame(animate);
+  const dt = Math.min(.05, (t-last)/1000 || .016); last = t;
+  dragons.forEach(d=>{
+    d.userData.a += dt*.5;
+    d.position.set(Math.cos(d.userData.a)*d.userData.r, d.userData.h, Math.sin(d.userData.a)*d.userData.r);
+  });
+  coins.forEach((c,i)=>{
+    c.userData.t = (c.userData.t + dt*.06) % 1;
+    const p = curve.getPoint(c.userData.t); c.position.copy(p);
+  });
+  if(document.getElementById('spin').checked){
+    const px = camera.position.x, pz = camera.position.z;
+    const h = Math.hypot(px, pz), a = Math.atan2(px, pz) + dt*.08;
+    camera.position.x = Math.sin(a)*h; camera.position.z = Math.cos(a)*h;
+    camera.lookAt(0, 10, 0);
+  }
+  renderer.render(scene, camera);
+}
+window.addEventListener('load', ()=>{
+  if(typeof THREE === 'undefined'){ document.getElementById('warn').style.display = 'block'; return; }
+  init();
+});
+</script>
+</body>
+</html>

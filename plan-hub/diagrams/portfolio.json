@@ -1,0 +1,511 @@
+{
+  "generated": "2026-10-21T17:43:24.701Z",
+  "count": 16,
+  "items": [
+    {
+      "name": "extras/dossier",
+      "type": "hub",
+      "title": "SHADDAI Economy — dossier",
+      "subtitle": "Whitepaper + prices + splits + token + founders + siege + brand wall + maps. 1 spark = $1 peg.",
+      "repo": "shaddai/shaddai-n8n",
+      "ref": "2026-10-15",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": null,
+      "html": "hub/dossier.html",
+      "png": "hub/dossier.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "nexus-audit=pass"
+        ],
+        "gateCount": 1,
+        "screenshot": "hub/dossier.png"
+      }
+    },
+    {
+      "name": "extras/realm",
+      "type": "hub",
+      "title": "SHADDAI Economy Realm",
+      "subtitle": "3D showcase: treasury, pools, founders, farms, siege castle, market. Click any building.",
+      "repo": "shaddai/shaddai-n8n",
+      "ref": "2026-10-15",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": null,
+      "html": "hub/realm.html",
+      "png": "hub/realm.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "nexus-audit=pass"
+        ],
+        "gateCount": 1,
+        "screenshot": "hub/realm.png"
+      }
+    },
+    {
+      "name": "extras/simulator",
+      "type": "hub",
+      "title": "SHADDAI Scale Simulator",
+      "subtitle": "Toggle streams, set customers/day, edit prices, run N days. prices.json is master.",
+      "repo": "shaddai/shaddai-n8n",
+      "ref": "2026-10-15",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": null,
+      "html": "hub/simulator.html",
+      "png": "hub/simulator.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "nexus-audit=pass"
+        ],
+        "gateCount": 1,
+        "screenshot": "hub/simulator.png"
+      }
+    },
+    {
+      "name": "extras/thinking-graphs",
+      "type": "hub",
+      "title": "Seven Ways — bars, donut, tree",
+      "subtitle": "One thinking canon, three graphs + source posters + SHADDAI use per system.",
+      "repo": "shaddai/shaddai-n8n",
+      "ref": "2026-10-15",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": null,
+      "html": "hub/thinking-graphs.html",
+      "png": "hub/thinking.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "nexus-audit=pass"
+        ],
+        "gateCount": 1,
+        "screenshot": "hub/thinking.png"
+      }
+    },
+    {
+      "name": "content-engine/content-engine",
+      "type": "architecture",
+      "title": "SHADDAI Content Engine (proposed)",
+      "subtitle": "From raw video to publishable clips: ingest, transcribe, match the right moment, then edit and ship — built on the RAG brain and the video-perception skill.",
+      "repo": "IzzoSol/shaddai-design-studio",
+      "ref": "main",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "lr",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "3 component(s) sit outside every boundary — expected if they are ungrouped"
+      ],
+      "metrics": {
+        "nodes": 10,
+        "links": 10,
+        "regions": 1
+      },
+      "html": "content-engine\\content-engine.html",
+      "png": "content-engine\\content-engine.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "validate=pass",
+          "deliver=pass",
+          "check=pass",
+          "browser-check=pass",
+          "perceptual=pass"
+        ],
+        "gateCount": 5,
+        "screenshot": "portfolio\\content-engine\\content-engine.png"
+      }
+    },
+    {
+      "name": "gamedev/gamedev",
+      "type": "architecture",
+      "title": "gamedev-tools kit",
+      "subtitle": "A flat library + genre templates + skill packs, connected by a tiny MCP bridge — one kit, every path into it stops at the same SHADDAI design system.",
+      "repo": "IzzoSol/gamedev-tools",
+      "ref": "main",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "lr",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "8 component(s) sit outside every boundary — expected if they are ungrouped"
+      ],
+      "metrics": {
+        "nodes": 8,
+        "links": 12,
+        "regions": 5
+      },
+      "html": "gamedev\\gamedev.html",
+      "png": "gamedev\\gamedev.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "validate=pass",
+          "deliver=pass",
+          "check=pass",
+          "browser-check=pass",
+          "perceptual=pass"
+        ],
+        "gateCount": 5,
+        "screenshot": "portfolio\\gamedev\\gamedev.png"
+      }
+    },
+    {
+      "name": "master/.master.bak",
+      "type": "architecture",
+      "title": "SHADDAI Master Mind Map",
+      "subtitle": "Every diagram, hub page and operating loop — how we think, how money moves, how we build, where it lives.",
+      "repo": "shaddai/local-backend",
+      "ref": "2026-10-15",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "tb",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "5 component(s) sit outside every boundary — expected if they are ungrouped"
+      ],
+      "metrics": {
+        "nodes": 34,
+        "links": 48,
+        "regions": 4
+      },
+      "html": null,
+      "png": null,
+      "gates": null
+    },
+    {
+      "name": "master/master",
+      "type": "architecture",
+      "title": "SHADDAI Master Mind Map",
+      "subtitle": "Every diagram, hub page and operating loop — how we think, how money moves, how we build, where it lives.",
+      "repo": "shaddai/local-backend",
+      "ref": "2026-10-15",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "tb",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "5 component(s) sit outside every boundary — expected if they are ungrouped"
+      ],
+      "metrics": {
+        "nodes": 32,
+        "links": 45,
+        "regions": 4
+      },
+      "html": "master\\master.html",
+      "png": "master\\master.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "validate=pass",
+          "deliver=pass",
+          "check=pass",
+          "browser-check=pass",
+          "perceptual=pass"
+        ],
+        "gateCount": 5,
+        "screenshot": "portfolio\\master\\master.png"
+      }
+    },
+    {
+      "name": "mcp-surface/mcp-surface",
+      "type": "architecture",
+      "title": "One registry. Every bot.",
+      "subtitle": "1,074 tools · 1,633 workflows · 1,356 n8n exports · 270 curated skills over a 3,022 catalogue · 16 frameworks",
+      "repo": "IzzoSol/Shaddai-Beta",
+      "ref": "master",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "lr",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "6 component(s) sit outside every boundary — expected if they are ungrouped"
+      ],
+      "metrics": {
+        "nodes": 16,
+        "links": 17,
+        "regions": 3
+      },
+      "html": "mcp-surface\\mcp-surface.html",
+      "png": "mcp-surface\\mcp-surface.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "validate=pass",
+          "deliver=pass",
+          "check=pass",
+          "browser-check=pass",
+          "perceptual=pass"
+        ],
+        "gateCount": 5,
+        "screenshot": "portfolio\\mcp-surface\\mcp-surface.png"
+      }
+    },
+    {
+      "name": "mcp/mcp",
+      "type": "architecture",
+      "title": "SHADDAI MCP Server",
+      "subtitle": "One unified MCP endpoint — how a host agent's tool call reaches the brain, the backend, and the chain.",
+      "repo": "IzzoSol/Shaddai-Beta",
+      "ref": "master",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "lr",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "5 component(s) sit outside every boundary — expected if they are ungrouped"
+      ],
+      "metrics": {
+        "nodes": 10,
+        "links": 10,
+        "regions": 2
+      },
+      "html": "mcp\\mcp.html",
+      "png": "mcp\\mcp.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "validate=pass",
+          "deliver=pass",
+          "check=pass",
+          "browser-check=pass",
+          "perceptual=pass"
+        ],
+        "gateCount": 5,
+        "screenshot": "portfolio\\mcp\\mcp.png"
+      }
+    },
+    {
+      "name": "revenue/revenue",
+      "type": "architecture",
+      "title": "SHADDAI Money Streams",
+      "subtitle": "Every revenue path — what the house earns and how USERS earn: who pays, what captures it, how it splits, where it lands.",
+      "repo": "shaddai/local-backend",
+      "ref": "2026-10-15",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "lr",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "6 component(s) sit outside every boundary — expected if they are ungrouped"
+      ],
+      "metrics": {
+        "nodes": 33,
+        "links": 39,
+        "regions": 6
+      },
+      "html": "revenue\\revenue.html",
+      "png": "revenue\\revenue.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "validate=pass",
+          "deliver=pass",
+          "check=pass",
+          "browser-check=pass",
+          "perceptual=pass"
+        ],
+        "gateCount": 5,
+        "screenshot": "portfolio\\revenue\\revenue.png"
+      }
+    },
+    {
+      "name": "revenue2/revenue2",
+      "type": "architecture",
+      "title": "SHADDAI Money Streams ADVANCED",
+      "subtitle": "Map 2.0: OG structure + selectable payment rails, per-node fee detail, MCP/AURA/B2B/social/vtuber/merch/music/SEO streams — click any node to trace its reach.",
+      "repo": "shaddai/local-backend",
+      "ref": "2026-10-15",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "lr",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "8 component(s) sit outside every boundary — expected if they are ungrouped"
+      ],
+      "metrics": {
+        "nodes": 47,
+        "links": 68,
+        "regions": 8
+      },
+      "html": "revenue2\\revenue2.html",
+      "png": "revenue2\\revenue2.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "validate=pass",
+          "deliver=pass",
+          "check=pass",
+          "browser-check=pass",
+          "perceptual=pass"
+        ],
+        "gateCount": 5,
+        "screenshot": "portfolio\\revenue2\\revenue2.png"
+      }
+    },
+    {
+      "name": "shaddai/shaddai",
+      "type": "architecture",
+      "title": "SHADDAI Platform",
+      "subtitle": "One monolith, many faces — how a user, an agent, and a Telegram bot all reach the same brain, guard rails, and store.",
+      "repo": "IzzoSol/Shaddai",
+      "ref": "feat/market-intel",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "lr",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "8 component(s) sit outside every boundary — expected if they are ungrouped"
+      ],
+      "metrics": {
+        "nodes": 13,
+        "links": 12,
+        "regions": 3
+      },
+      "html": "shaddai\\shaddai.html",
+      "png": "shaddai\\shaddai.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "validate=pass",
+          "deliver=pass",
+          "check=pass",
+          "browser-check=pass",
+          "perceptual=pass"
+        ],
+        "gateCount": 5,
+        "screenshot": "portfolio\\shaddai\\shaddai.png"
+      }
+    },
+    {
+      "name": "thinking/thinking",
+      "type": "architecture",
+      "title": "Seven Ways of Thinking",
+      "subtitle": "Diderot tree · graphic organisers · 9 behaviours · 20 paradoxes · 7 logics · values map · thinking maps — one taxonomy for teaching agents.",
+      "repo": "shaddai/shaddai-n8n",
+      "ref": "2026-10-15",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "lr",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "8 component(s) sit outside every boundary — expected if they are ungrouped"
+      ],
+      "metrics": {
+        "nodes": 59,
+        "links": 63,
+        "regions": 7
+      },
+      "html": "thinking\\thinking.html",
+      "png": "thinking\\thinking.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "validate=pass",
+          "deliver=pass",
+          "check=pass",
+          "browser-check=pass",
+          "perceptual=pass"
+        ],
+        "gateCount": 5,
+        "screenshot": "portfolio\\thinking\\thinking.png"
+      }
+    },
+    {
+      "name": "aura/aura",
+      "type": "workflow",
+      "title": "AURA — ask → answer → remember",
+      "subtitle": "Deterministic token saver: cache and skills answer first, compute takes the cheap routes, the LLM is the last resort — and every answer seeds the cache.",
+      "repo": "IzzoSol/Aura",
+      "ref": "main",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "tb",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "nodes": 13,
+        "links": 15,
+        "regions": 3
+      },
+      "html": "aura\\aura.html",
+      "png": "aura\\aura.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "validate=pass",
+          "deliver=pass",
+          "check=pass",
+          "browser-check=pass",
+          "perceptual=pass"
+        ],
+        "gateCount": 5,
+        "screenshot": "portfolio\\aura\\aura.png"
+      }
+    },
+    {
+      "name": "mcp/seq-rag-nav",
+      "type": "sequence",
+      "title": "hall_rag_nav request lifecycle",
+      "subtitle": "A host agent asks the brain a question — cache first, then BM25 over the per-agent KBs, then the annotated answer travels back.",
+      "repo": "IzzoSol/Shaddai-Beta",
+      "ref": "master",
+      "quality": "showcase",
+      "theme": "dark",
+      "direction": "",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "metrics": {
+        "nodes": 5,
+        "links": 9,
+        "regions": 2
+      },
+      "html": "mcp\\seq-rag-nav.html",
+      "png": "mcp\\seq-rag-nav.png",
+      "gates": {
+        "ok": true,
+        "checks": [
+          "validate=pass",
+          "deliver=pass",
+          "check=pass",
+          "browser-check=pass",
+          "perceptual=pass"
+        ],
+        "gateCount": 5,
+        "screenshot": "portfolio\\mcp\\seq-rag-nav.png"
+      }
+    }
+  ]
+}

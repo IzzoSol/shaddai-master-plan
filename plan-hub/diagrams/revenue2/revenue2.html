@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SHADDAI Money Streams ADVANCED — Map 2.0: OG structure + selectable payment rails, per-node fee detail, MCP/AURA/B2B/social/vtuber/merch/music/SEO streams — click any node to trace its reach.</title>
+<meta name="generator" content="shaddai-diagrams">
+<meta name="description" content="Map 2.0: OG structure + selectable payment rails, per-node fee detail, MCP/AURA/B2B/social/vtuber/merch/music/SEO streams — click any node to trace its reach.">
+<style>
+:root{
+  --bg:#070a0e; --panel:#0b1117; --line:rgba(126,158,142,.20); --line-2:rgba(126,158,142,.36);
+  --ink:#e8f0ea; --muted:#8fa39a; --accent:#00e5a0; --accent-ink:#04120c;
+  --node:#0f1720; --node-line:rgba(126,158,142,.34); --edge:rgba(190,215,205,.72);
+  --region:rgba(255,255,255,.028);
+  --k-client:#7dd3fc; --k-frontend:#38bdf8; --k-backend:#a78bfa; --k-service:#00e5a0;
+  --k-agent:#fbbf24; --k-database:#f472b6; --k-store:#fb7185; --k-queue:#c084fc;
+  --k-cloud:#94a3b8; --k-security:#f87171; --k-messagebus:#22d3ee; --k-external:#64748b;
+  --k-tool:#facc15; --k-other:#94a3b8; --k-start:#00e5a0; --k-task:#00e5a0;
+  --k-decision:#fbbf24; --k-gate:#f87171; --k-retry:#facc15; --k-end:#00e5a0;
+  --font:'Rajdhani','Inter',system-ui,-apple-system,sans-serif;
+  --mono:'Share Tech Mono',ui-monospace,'Cascadia Mono',monospace;
+}
+html[data-theme=light]{
+  --bg:#f4f7f6; --panel:#ffffff; --line:rgba(20,50,40,.16); --line-2:rgba(20,50,40,.34);
+  --ink:#0d1a15; --muted:#5b6f66; --node:#ffffff; --node-line:rgba(20,50,40,.28);
+  --edge:rgba(20,50,40,.70); --region:rgba(10,40,30,.035);
+  --k-client:#0369a1; --k-frontend:#0369a1; --k-backend:#6d28d9; --k-service:#047857;
+  --k-agent:#a16207; --k-database:#be185d; --k-store:#be123c; --k-queue:#7e22ce;
+  --k-cloud:#475569; --k-security:#b91c1c; --k-messagebus:#0e7490; --k-external:#64748b;
+  --k-tool:#a16207; --k-other:#475569; --k-start:#047857; --k-task:#047857;
+  --k-decision:#a16207; --k-gate:#b91c1c; --k-retry:#a16207; --k-end:#047857;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--font);
+  background-image:radial-gradient(circle at 15% 0%,rgba(0,229,160,.06),transparent 46%),
+                   radial-gradient(circle at 90% 100%,rgba(56,189,248,.05),transparent 45%);}
+.wrap{max-width:1680px;margin:0 auto;padding:26px 30px 60px}
+header{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;
+  padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:8px}
+h1{margin:0;font-size:27px;letter-spacing:.02em;font-weight:700}
+h1 em{font-style:normal;color:var(--accent)}
+.sub{margin:5px 0 0;color:var(--muted);font-size:14px;max-width:74ch}
+.badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;
+  border:1px solid var(--line-2);background:var(--panel);font:600 10.5px/1 var(--mono);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.badge.ok{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+.badge b{font-weight:700;color:var(--ink)}
+.src{font:11px/1 var(--mono);color:var(--muted);margin-top:10px;word-break:break-all}
+.src a{color:var(--accent);text-decoration:none}
+.src a:hover{text-decoration:underline}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:16px 0 12px}
+button{font:600 11px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+  min-height:32px;padding:0 13px;border-radius:8px;border:1px solid var(--line-2);
+  background:var(--panel);color:var(--ink);transition:.15s}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 14px;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:7px;font:600 11px/1 var(--mono);
+  letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.legend i{width:11px;height:11px;border-radius:3px;background:var(--c);box-shadow:0 0 0 1px var(--node-line)}
+.stage{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:16px;
+  padding:18px;overflow:auto;background-image:linear-gradient(var(--line) 1px,transparent 1px),
+  linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:44px 44px;
+  background-position:-1px -1px}
+.stage::before{content:"";position:absolute;inset:0;background:var(--panel);opacity:.86;pointer-events:none}
+.stage>*{position:relative}
+.dg-svg{display:block;margin:0 auto;max-width:none;height:auto;overflow:visible}
+footer{margin-top:16px;font:11px/1.6 var(--mono);color:var(--muted);display:flex;gap:18px;flex-wrap:wrap}
+hint{display:block;color:var(--muted);font-size:11.5px}
+
+/* --- nodes --- */
+.nd-inner>.box{fill:var(--node);stroke:var(--node-line);stroke-width:1.4}
+.node{cursor:pointer;transition:opacity .16s}
+.node:hover .nd-inner>.box{stroke:var(--accent);stroke-width:1.9}
+.nd-bar{fill:var(--k-other);stroke:none}
+.node[data-kind=client] .nd-bar,.node[data-kind=frontend] .nd-bar{fill:var(--k-frontend)}
+.node[data-kind=backend] .nd-bar,.node[data-kind=service] .nd-bar{fill:var(--k-service)}
+.node[data-kind=agent] .nd-bar{fill:var(--k-agent)}
+.node[data-kind=database] .nd-bar,.node[data-kind=store] .nd-bar{fill:var(--k-database)}
+.node[data-kind=queue] .nd-bar,.node[data-kind=messagebus] .nd-bar{fill:var(--k-messagebus)}
+.node[data-kind=cloud] .nd-bar,.node[data-kind=external] .nd-bar{fill:var(--k-cloud)}
+.node[data-kind=security] .nd-bar,.node[data-kind=gate] .nd-bar{fill:var(--k-security)}
+.node[data-kind=tool] .nd-bar,.node[data-kind=retry] .nd-bar{fill:var(--k-tool)}
+.node[data-kind=start] .nd-bar,.node[data-kind=end] .nd-bar,.node[data-kind=task] .nd-bar{fill:var(--k-start)}
+.node[data-kind=decision] .nd-bar{fill:var(--k-decision)}
+.node[data-kind=client] .nd-inner>.box,.node[data-kind=client] .nd-inner>.box{stroke:var(--k-client)}
+.node[data-kind=frontend] .nd-inner>.box,.node[data-kind=frontend] .nd-inner>.box{stroke:var(--k-frontend)}
+.node[data-kind=backend] .nd-inner>.box,.node[data-kind=backend] .nd-inner>.box{stroke:var(--k-backend)}
+.node[data-kind=agent] .nd-inner>.box,.node[data-kind=agent] .nd-inner>.box{stroke:var(--k-agent)}
+.node[data-kind=database] .nd-inner>.box,.node[data-kind=database] .nd-inner>.box{stroke:var(--k-database)}
+.node[data-kind=store] .nd-inner>.box,.node[data-kind=store] .nd-inner>.box{stroke:var(--k-store)}
+.node[data-kind=queue] .nd-inner>.box,.node[data-kind=queue] .nd-inner>.box{stroke:var(--k-queue)}
+.node[data-kind=messagebus] .nd-inner>.box,.node[data-kind=messagebus] .nd-inner>.box{stroke:var(--k-messagebus)}
+.node[data-kind=security] .nd-inner>.box,.node[data-kind=security] .nd-inner>.box{stroke:var(--k-security)}
+.node[data-kind=cloud] .nd-inner>.box,.node[data-kind=cloud] .nd-inner>.box{stroke:var(--k-cloud)}
+.node[data-kind=external] .nd-inner>.box,.node[data-kind=external] .nd-inner>.box{stroke:var(--k-external)}
+.node[data-kind=tool] .nd-inner>.box,.node[data-kind=tool] .nd-inner>.box{stroke:var(--k-tool)}
+.node[data-kind=start] .nd-inner>.box,.node[data-kind=end] .nd-inner>.box{stroke:var(--k-start);stroke-width:1.8}
+.node[data-kind=decision] .nd-inner>.box{stroke:var(--k-decision);stroke-width:1.8}
+.node[data-kind=gate] .nd-inner>.box{stroke:var(--k-gate);stroke-width:1.8}
+.node[data-kind=retry] .nd-inner>.box{stroke:var(--k-retry);stroke-dasharray:5 3}
+.nd-label{fill:var(--ink);font:600 13px/1 var(--font);letter-spacing:.005em;dominant-baseline:middle}
+.nd-sub{fill:var(--muted);font:400 11px/1 var(--font);dominant-baseline:middle}
+.nd-chip{fill:var(--muted);font:600 9.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  text-anchor:end;opacity:.7;dominant-baseline:middle}
+.node.sel .nd-inner>.box,.node.sel .nd-inner>.box{stroke:var(--accent);stroke-width:2.4}
+.node.sel .nd-inner{filter:drop-shadow(0 0 12px color-mix(in srgb,var(--accent) 55%,transparent))}
+
+/* --- regions, links --- */
+.region-box{fill:var(--region);stroke:var(--line-2);stroke-width:1.3;stroke-dasharray:7 6}
+.region-text{fill:var(--muted);font:600 10.5px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase}
+.region-label rect{fill:var(--panel);stroke:var(--line-2);stroke-width:1}
+.lk-path{stroke:var(--edge);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.lk-halo{stroke:var(--panel);stroke-width:5.4;opacity:.9}
+.link[data-kind=error] .lk-path{stroke:#f87171}
+.link[data-kind=auth] .lk-path{stroke:#fbbf24}
+.link[data-kind=data] .lk-path,.link[data-kind=async] .lk-path{stroke:#38bdf8}
+.link[data-kind=no] .lk-path{stroke:#fb7185}
+.link[data-kind=yes] .lk-path{stroke:#00e5a0}
+.link[data-kind=return] .lk-path{stroke:var(--muted)}
+.lk-label rect{fill:var(--panel);stroke:var(--line);stroke-width:1;rx:9.5}
+.lk-text{fill:var(--ink);font:600 11px/1 var(--font);text-anchor:middle;dominant-baseline:middle}
+.lk-note{fill:var(--muted);font:400 10.5px/1 var(--font);text-anchor:middle}
+.lifeline{stroke:var(--line-2);stroke-width:1.3;stroke-dasharray:5 6}
+.arrow-head{fill:var(--edge)}
+.link[data-kind=error] .arrow-head{fill:#f87171}
+.link[data-kind=auth] .arrow-head{fill:#fbbf24}
+.link[data-kind=data] .arrow-head,.link[data-kind=async] .arrow-head{fill:#38bdf8}
+.link[data-kind=no] .arrow-head{fill:#fb7185}
+.link[data-kind=yes] .arrow-head{fill:#00e5a0}
+
+/* --- reach trace --- */
+.stage.trace .node:not(.keep){opacity:.14}
+.stage.trace .link:not(.keep){opacity:.1}
+.stage.trace .region{opacity:.25}
+.hint{position:sticky;bottom:0;margin-top:12px;font:11px/1.6 var(--mono);color:var(--muted)}
+@media print{body{background:#fff}.bar{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>SHADDAI Money Streams ADVANCED</h1>
+      <p class="sub">Map 2.0: OG structure + selectable payment rails, per-node fee detail, MCP/AURA/B2B/social/vtuber/merch/music/SEO streams — click any node to trace its reach.</p>
+      <div class="src">source · <b>shaddai/local-backend</b> @ <a href="https://github.com/shaddai/local-backend/tree/2026-10-15" target="_blank" rel="noopener">2026-10-15</a> — v2 base (33n/39e) + payment rails + MCP/AURA/B2B/social growth streams; OG revenue map untouched</div>
+    </div>
+    <div class="badges">
+      <span class="badge">architecture</span>
+      <span class="badge">quality <b>showcase</b></span>
+      <span class="badge">47 nodes</span>
+      <span class="badge">68 edges</span>
+      <span class="badge ok">✓ finalized 2026-10-15 19:27 UTC</span>
+    </div>
+  </header>
+
+  <div class="bar">
+    <button id="themeBtn">Light</button>
+    <button id="fitBtn">Fit width</button>
+    <button id="dlBtn">Download SVG</button>
+    <button data-trace>Reset trace</button>
+    <span class="hint">click any node to trace its immediate reach · Esc resets</span>
+  </div>
+
+  <ul class="legend"><li><i style="--c:var(--k-client)"></i>Payer</li><li><i style="--c:var(--k-service)"></i>Storefront</li><li><i style="--c:var(--k-tool)"></i>Capture</li><li><i style="--c:var(--k-database)"></i>Split / ledger</li><li><i style="--c:var(--k-agent)"></i>Earner</li><li><i style="--c:var(--k-external)"></i>External rail</li></ul>
+
+  <div class="stage" id="stage"><svg class="dg-svg" viewBox="0 0 2128 2462" width="2128" height="2462"
+  xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SHADDAI Money Streams ADVANCED"
+  data-type="architecture" data-direction="lr"><defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" class="arrow-head"/>
+      </marker>
+    </defs><g transform="translate(60 564)"><g class="region" data-region="b_growth">
+    <rect x="422" y="562" width="732" height="1220" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="436" y="552" width="125.60000000000001" height="21" rx="10.5"/>
+    <text x="447" y="566.5" class="region-text">growth streams</text></g>
+  </g><g class="region" data-region="b_earn">
+    <rect x="1196" y="616" width="654" height="1004" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="1210" y="606" width="96" height="21" rx="10.5"/>
+    <text x="1221" y="620.5" class="region-text">users earn</text></g>
+  </g><g class="region" data-region="b_split">
+    <rect x="1196" y="292" width="330" height="1112" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="1210" y="282" width="140.4" height="21" rx="10.5"/>
+    <text x="1221" y="296.5" class="region-text">splits + ledgers</text></g>
+  </g><g class="region" data-region="b_door">
+    <rect x="422" y="130" width="342" height="1004" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="436" y="120" width="103.4" height="21" rx="10.5"/>
+    <text x="447" y="134.5" class="region-text">storefronts</text></g>
+  </g><g class="region" data-region="b_pay">
+    <rect x="26" y="393" width="360" height="803" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="40" y="383" width="66.4" height="21" rx="10.5"/>
+    <text x="51" y="397.5" class="region-text">payers</text></g>
+  </g><g class="region" data-region="b_rails">
+    <rect x="26" y="732" width="306" height="788" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="40" y="722" width="81.2" height="21" rx="10.5"/>
+    <text x="51" y="736.5" class="region-text">pay with</text></g>
+  </g><g class="region" data-region="b_land">
+    <rect x="1580" y="670" width="312" height="572" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="1594" y="660" width="125.60000000000001" height="21" rx="10.5"/>
+    <text x="1605" y="674.5" class="region-text">lands + guards</text></g>
+  </g><g class="region" data-region="b_cap">
+    <rect x="800" y="663" width="360" height="479" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="814" y="653" width="73.80000000000001" height="21" rx="10.5"/>
+    <text x="825" y="667.5" class="region-text">capture</text></g>
+  </g><g class="link" data-from="student" data-to="shop">
+    <path d="M 314 466 C 376.1 466, 389.9 203, 452 203" class="lk-halo" fill="none"/>
+    <path d="M 314 466 C 376.1 466, 389.9 203, 452 203" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="335.725" y="325" width="94.55" height="19" rx="9.5"/>
+       <text x="383" y="338.5" class="lk-text">buy plan/book</text></g></g><g class="link" data-from="fighter" data-to="avenue">
+    <path d="M 338 1129 C 389.3 1129, 400.7 959, 452 959" class="lk-halo" fill="none"/>
+    <path d="M 338 1129 C 389.3 1129, 400.7 959, 452 959" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="354.075" y="1034" width="81.85" height="19" rx="9.5"/>
+       <text x="395" y="1047.5" class="lk-text">hire battle</text></g></g><g class="link" data-from="fan" data-to="gate">
+    <path d="M 350 574 C 396 574, 406 311, 452 311" class="lk-halo" fill="none"/>
+    <path d="M 350 574 C 396 574, 406 311, 452 311" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="363.25" y="433" width="75.5" height="19" rx="9.5"/>
+       <text x="401" y="446.5" class="lk-text">buy ticket</text></g></g><g class="link" data-from="client" data-to="avenue">
+    <path d="M 356 689.5 C 402 689.5, 406 959, 452 959" class="lk-halo" fill="none"/>
+    <path d="M 356 689.5 C 402 689.5, 406 959, 452 959" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="372.6" y="814" width="62.8" height="19" rx="9.5"/>
+       <text x="404" y="827.5" class="lk-text">post job</text></g></g><g class="link" data-from="shop" data-to="quotes">
+    <path d="M 734 203 C 780 203, 784 859, 830 859" class="lk-halo" fill="none"/>
+    <path d="M 734 203 C 780 203, 784 859, 830 859" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="744.25" y="521" width="75.5" height="19" rx="9.5"/>
+       <text x="782" y="534.5" class="lk-text">open quote</text></g></g><g class="link" data-from="gate" data-to="sparks">
+    <path d="M 710 311 C 764 311, 776 743.5, 830 743.5" class="lk-halo" fill="none"/>
+    <path d="M 710 311 C 764 311, 776 743.5, 830 743.5" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="725.9" y="517" width="88.19999999999999" height="19" rx="9.5"/>
+       <text x="770" y="530.5" class="lk-text">spend sparks</text></g></g><g class="link" data-from="avenue" data-to="x402">
+    <path d="M 698 959 C 757.4 959, 770.6 967, 830 967" class="lk-halo" fill="none"/>
+    <path d="M 698 959 C 757.4 959, 770.6 967, 830 967" class="lk-path" data-kind="auth" fill="none" stroke-dasharray="2 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="723.075" y="953" width="81.85" height="19" rx="9.5"/>
+       <text x="764" y="966.5" class="lk-text">USDC intent</text></g></g><g class="link" data-from="avenue" data-to="quotes">
+    <path d="M 698 959 C 757.4 959, 770.6 859, 830 859" class="lk-halo" fill="none"/>
+    <path d="M 698 959 C 757.4 959, 770.6 859, 830 859" class="lk-path" data-kind="optional" fill="none" stroke-dasharray="6 5" marker-end="url(#arrow)"/><g class="lk-label"><rect x="726.25" y="899" width="75.5" height="19" rx="9.5"/>
+       <text x="764" y="912.5" class="lk-text">quote-only</text></g></g><g class="link" data-from="quotes" data-to="paybox">
+    <path d="M 1082 859 C 1146.8 859, 1161.2 1229, 1226 1229" class="lk-halo" fill="none"/>
+    <path d="M 1082 859 C 1146.8 859, 1161.2 1229, 1226 1229" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="1106.725" y="1034" width="94.55" height="19" rx="9.5"/>
+       <text x="1154" y="1047.5" class="lk-text">settle credit</text></g></g><g class="link" data-from="quotes" data-to="royalty">
+    <path d="M 1082 859 C 1146.8 859, 1161.2 473, 1226 473" class="lk-halo" fill="none"/>
+    <path d="M 1082 859 C 1146.8 859, 1161.2 473, 1226 473" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="1106.725" y="656" width="94.55" height="19" rx="9.5"/>
+       <text x="1154" y="669.5" class="lk-text">pack sale 75%</text></g></g><g class="link" data-from="sparks" data-to="tickrev">
+    <path d="M 1130 743.5 C 1176 743.5, 1180 365, 1226 365" class="lk-halo" fill="none"/>
+    <path d="M 1130 743.5 C 1176 743.5, 1180 365, 1226 365" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="1140.25" y="544" width="75.5" height="19" rx="9.5"/>
+       <text x="1178" y="557.5" class="lk-text">ticket cut</text></g></g><g class="link" data-from="sparks" data-to="purse">
+    <path d="M 1130 743.5 C 1176 743.5, 1180 581, 1226 581" class="lk-halo" fill="none"/>
+    <path d="M 1130 743.5 C 1176 743.5, 1180 581, 1226 581" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="1133.9" y="652" width="88.19999999999999" height="19" rx="9.5"/>
+       <text x="1178" y="665.5" class="lk-text">entry escrow</text></g></g><g class="link" data-from="x402" data-to="hall">
+    <path d="M 1124 967 C 1170 967, 1180 1337, 1226 1337" class="lk-halo" fill="none"/>
+    <path d="M 1124 967 C 1170 967, 1180 1337, 1226 1337" class="lk-path" data-kind="auth" fill="none" stroke-dasharray="2 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="1121.375" y="1142" width="107.25" height="19" rx="9.5"/>
+       <text x="1175" y="1155.5" class="lk-text">confirm receipt</text></g></g><g class="link" data-from="purse" data-to="hall">
+    <path d="M 1226 581 L -46 581 Q -62 581 -62 597 L -62 1856 Q -62 1872 -46 1872 L 1938 1872 Q 1954 1872 1954 1856 L 1954 1353 Q 1954 1337 1938 1337 L 1496 1337" class="lk-halo" fill="none"/>
+    <path d="M 1226 581 L -46 581 Q -62 581 -62 597 L -62 1856 Q -62 1872 -46 1872 L 1938 1872 Q 1954 1872 1954 1856 L 1954 1353 Q 1954 1337 1938 1337 L 1496 1337" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="917.775" y="1876" width="56.449999999999996" height="19" rx="9.5"/>
+       <text x="946" y="1889.5" class="lk-text">hall 15</text></g></g><g class="link" data-from="tickrev" data-to="hall">
+    <path d="M 1226 365 L -62 365 Q -78 365 -78 381 L -78 1882 Q -78 1898 -62 1898 L 1954 1898 Q 1970 1898 1970 1882 L 1970 1353 Q 1970 1337 1954 1337 L 1496 1337" class="lk-halo" fill="none"/>
+    <path d="M 1226 365 L -62 365 Q -78 365 -78 381 L -78 1882 Q -78 1898 -62 1898 L 1954 1898 Q 1970 1898 1970 1882 L 1970 1353 Q 1970 1337 1954 1337 L 1496 1337" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="917.775" y="1902" width="56.449999999999996" height="19" rx="9.5"/>
+       <text x="946" y="1915.5" class="lk-text">hall 20</text></g></g><g class="link" data-from="paybox" data-to="subpay">
+    <path d="M 1226 1229 L -78 1229 Q -94 1229 -94 1245 L -94 1908 Q -94 1924 -78 1924 L 1970 1924 Q 1986 1924 1986 1908 L 1986 1137 Q 1986 1121 1970 1121 L 1472 1121" class="lk-halo" fill="none"/>
+    <path d="M 1226 1229 L -78 1229 Q -94 1229 -94 1245 L -94 1908 Q -94 1924 -78 1924 L 1970 1924 Q 1986 1924 1986 1908 L 1986 1137 Q 1986 1121 1970 1121 L 1472 1121" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="911.425" y="1928" width="69.15" height="19" rx="9.5"/>
+       <text x="946" y="1941.5" class="lk-text">sub $0.10</text></g></g><g class="link" data-from="hall" data-to="plots">
+    <path d="M 1496 1337 C 1547.3 1337, 1558.7 851, 1610 851" class="lk-halo" fill="none"/>
+    <path d="M 1496 1337 C 1547.3 1337, 1558.7 851, 1610 851" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="1512.075" y="1084" width="81.85" height="19" rx="9.5"/>
+       <text x="1553" y="1097.5" class="lk-text">funds yield</text></g></g><g class="link" data-from="hall" data-to="wallets">
+    <path d="M 1496 1337 C 1547.3 1337, 1558.7 743, 1610 743" class="lk-halo" fill="none"/>
+    <path d="M 1496 1337 C 1547.3 1337, 1558.7 743, 1610 743" class="lk-path" data-kind="optional" fill="none" stroke-dasharray="6 5" marker-end="url(#arrow)"/><g class="lk-label"><rect x="1518.425" y="1030" width="69.15" height="19" rx="9.5"/>
+       <text x="1553" y="1043.5" class="lk-text">needs gas</text></g></g><g class="link" data-from="hall" data-to="tg">
+    <path d="M 1496 1337 C 1547.3 1337, 1558.7 959, 1610 959" class="lk-halo" fill="none"/>
+    <path d="M 1496 1337 C 1547.3 1337, 1558.7 959, 1610 959" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="1508.9" y="1138" width="88.19999999999999" height="19" rx="9.5"/>
+       <text x="1553" y="1151.5" class="lk-text">receipt post</text></g></g><g class="link" data-from="pikadon" data-to="purse">
+    <path d="M 1610 1175 L -94 1175 Q -110 1175 -110 1191 L -110 1934 Q -110 1950 -94 1950 L 1986 1950 Q 2002 1950 2002 1934 L 2002 597 Q 2002 581 1986 581 L 1460 581" class="lk-halo" fill="none"/>
+    <path d="M 1610 1175 L -94 1175 Q -110 1175 -110 1191 L -110 1934 Q -110 1950 -94 1950 L 1986 1950 Q 2002 1950 2002 1934 L 2002 597 Q 2002 581 1986 581 L 1460 581" class="lk-path" data-kind="auth" fill="none" stroke-dasharray="2 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="905.075" y="1954" width="81.85" height="19" rx="9.5"/>
+       <text x="946" y="1967.5" class="lk-text">veto payout</text></g></g><g class="link" data-from="pikadon" data-to="x402">
+    <path d="M 1610 1175 L -110 1175 Q -126 1175 -126 1191 L -126 1960 Q -126 1976 -110 1976 L 2002 1976 Q 2018 1976 2018 1960 L 2018 983 Q 2018 967 2002 967 L 1124 967" class="lk-halo" fill="none"/>
+    <path d="M 1610 1175 L -110 1175 Q -126 1175 -126 1191 L -126 1960 Q -126 1976 -110 1976 L 2002 1976 Q 2018 1976 2018 1960 L 2018 983 Q 2018 967 2002 967 L 1124 967" class="lk-path" data-kind="auth" fill="none" stroke-dasharray="2 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="908.25" y="1980" width="75.5" height="19" rx="9.5"/>
+       <text x="946" y="1993.5" class="lk-text">audit rail</text></g></g><g class="link" data-from="api_dev" data-to="meter">
+    <path d="M 188 876 L 188 -76 Q 188 -92 204 -92 L 943 -92 Q 959 -92 959 -76 L 959 1038" class="lk-halo" fill="none"/>
+    <path d="M 188 876 L 188 -76 Q 188 -92 204 -92 L 943 -92 Q 959 -92 959 -76 L 959 1038" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="536.25" y="-112" width="75.5" height="19" rx="9.5"/>
+       <text x="574" y="-98.5" class="lk-text">over quota</text></g></g><g class="link" data-from="meter" data-to="x402">
+    <path d="M 830 1075 L -126 1075 Q -142 1075 -142 1091 L -142 1986 Q -142 2002 -126 2002 L 2018 2002 Q 2034 2002 2034 1986 L 2034 983 Q 2034 967 2018 967 L 1124 967" class="lk-halo" fill="none"/>
+    <path d="M 830 1075 L -126 1075 Q -142 1075 -142 1091 L -142 1986 Q -142 2002 -126 2002 L 2018 2002 Q 2034 2002 2034 1986 L 2034 983 Q 2034 967 2018 967 L 1124 967" class="lk-path" data-kind="auth" fill="none" stroke-dasharray="2 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="898.725" y="2006" width="94.55" height="19" rx="9.5"/>
+       <text x="946" y="2019.5" class="lk-text">price confirm</text></g></g><g class="link" data-from="meter" data-to="hall">
+    <path d="M 1088 1075 C 1150.1 1075, 1163.9 1337, 1226 1337" class="lk-halo" fill="none"/>
+    <path d="M 1088 1075 C 1150.1 1075, 1163.9 1337, 1226 1337" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="1109.725" y="1196" width="94.55" height="19" rx="9.5"/>
+       <text x="1157" y="1209.5" class="lk-text">per-call USDC</text></g></g><g class="link" data-from="brand" data-to="clip">
+    <path d="M 314 1021 C 376.1 1021, 389.9 1067, 452 1067" class="lk-halo" fill="none"/>
+    <path d="M 314 1021 C 376.1 1021, 389.9 1067, 452 1067" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="345.25" y="1034" width="75.5" height="19" rx="9.5"/>
+       <text x="383" y="1047.5" class="lk-text">order cuts</text></g></g><g class="link" data-from="clip" data-to="services">
+    <path d="M 572 1030 L 572 -102 Q 572 -118 588 -118 L 1333 -118 Q 1349 -118 1349 -102 L 1349 1516" class="lk-halo" fill="none"/>
+    <path d="M 572 1030 L 572 -102 Q 572 -118 588 -118 L 1333 -118 Q 1349 -118 1349 -102 L 1349 1516" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="920.075" y="-138" width="81.85" height="19" rx="9.5"/>
+       <text x="961" y="-124.5" class="lk-text">service fee</text></g></g><g class="link" data-from="services" data-to="paybox">
+    <path d="M 1226 1553 L -142 1553 Q -158 1553 -158 1569 L -158 2012 Q -158 2028 -142 2028 L 2034 2028 Q 2050 2028 2050 2012 L 2050 1245 Q 2050 1229 2034 1229 L 1472 1229" class="lk-halo" fill="none"/>
+    <path d="M 1226 1553 L -142 1553 Q -158 1553 -158 1569 L -158 2012 Q -158 2028 -142 2028 L 2034 2028 Q 2050 2028 2050 2012 L 2050 1245 Q 2050 1229 2034 1229 L 1472 1229" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="905.075" y="2032" width="81.85" height="19" rx="9.5"/>
+       <text x="946" y="2045.5" class="lk-text">creator cut</text></g></g><g class="link" data-from="client" data-to="bridge">
+    <path d="M 356 689.5 C 402 689.5, 406 527, 452 527" class="lk-halo" fill="none"/>
+    <path d="M 356 689.5 C 402 689.5, 406 527, 452 527" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="356.725" y="598" width="94.55" height="19" rx="9.5"/>
+       <text x="404" y="611.5" class="lk-text">hire external</text></g></g><g class="link" data-from="bridge" data-to="deals">
+    <path d="M 569 490 L 569 -128 Q 569 -144 585 -144 L 1318 -144 Q 1334 -144 1334 -128 L 1334 976" class="lk-halo" fill="none"/>
+    <path d="M 569 490 L 569 -128 Q 569 -144 585 -144 L 1318 -144 Q 1334 -144 1334 -128 L 1334 976" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="917.425" y="-164" width="69.15" height="19" rx="9.5"/>
+       <text x="952" y="-150.5" class="lk-text">owner 50%</text></g></g><g class="link" data-from="deals" data-to="hall">
+    <path d="M 1226 1013 L -158 1013 Q -174 1013 -174 1029 L -174 2038 Q -174 2054 -158 2054 L 2050 2054 Q 2066 2054 2066 2038 L 2066 1353 Q 2066 1337 2050 1337 L 1496 1337" class="lk-halo" fill="none"/>
+    <path d="M 1226 1013 L -158 1013 Q -174 1013 -174 1029 L -174 2038 Q -174 2054 -158 2054 L 2050 2054 Q 2066 2054 2066 2038 L 2066 1353 Q 2066 1337 2050 1337 L 1496 1337" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="901.9" y="2058" width="88.19999999999999" height="19" rx="9.5"/>
+       <text x="946" y="2071.5" class="lk-text">platform 15%</text></g></g><g class="link" data-from="fan" data-to="dash">
+    <path d="M 350 574 C 396 574, 406 419, 452 419" class="lk-halo" fill="none"/>
+    <path d="M 350 574 C 396 574, 406 419, 452 419" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="356.9" y="487" width="88.19999999999999" height="19" rx="9.5"/>
+       <text x="401" y="500.5" class="lk-text">quests+bonus</text></g></g><g class="link" data-from="dash" data-to="quests">
+    <path d="M 590 382 L 590 -154 Q 590 -170 606 -170 L 1354 -170 Q 1370 -170 1370 -154 L 1370 760" class="lk-halo" fill="none"/>
+    <path d="M 590 382 L 590 -154 Q 590 -170 606 -170 L 1354 -170 Q 1370 -170 1370 -154 L 1370 760" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="958.125" y="-190" width="43.75" height="19" rx="9.5"/>
+       <text x="980" y="-176.5" class="lk-text">hosts</text></g></g><g class="link" data-from="dash" data-to="refer">
+    <path d="M 590 382 L 590 -180 Q 590 -196 606 -196 L 1342 -196 Q 1358 -196 1358 -180 L 1358 652" class="lk-halo" fill="none"/>
+    <path d="M 590 382 L 590 -180 Q 590 -196 606 -196 L 1342 -196 Q 1358 -196 1358 -180 L 1358 652" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="926.725" y="-216" width="94.55" height="19" rx="9.5"/>
+       <text x="974" y="-202.5" class="lk-text">referral link</text></g></g><g class="link" data-from="purse" data-to="win">
+    <path d="M 1226 581 L -174 581 Q -190 581 -190 597 L -190 2064 Q -190 2080 -174 2080 L 2066 2080 Q 2082 2080 2082 2064 L 2082 1461 Q 2082 1445 2066 1445 L 1466 1445" class="lk-halo" fill="none"/>
+    <path d="M 1226 581 L -174 581 Q -190 581 -190 597 L -190 2064 Q -190 2080 -174 2080 L 2066 2080 Q 2082 2080 2082 2064 L 2082 1461 Q 2082 1445 2066 1445 L 1466 1445" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="905.075" y="2084" width="81.85" height="19" rx="9.5"/>
+       <text x="946" y="2097.5" class="lk-text">pays winner</text></g></g><g class="link" data-from="win" data-to="fighter">
+    <path d="M 1226 1445 L -190 1445 Q -206 1445 -206 1461 L -206 2090 Q -206 2106 -190 2106 L 2082 2106 Q 2098 2106 2098 2090 L 2098 1145 Q 2098 1129 2082 1129 L 338 1129" class="lk-halo" fill="none"/>
+    <path d="M 1226 1445 L -190 1445 Q -206 1445 -206 1461 L -206 2090 Q -206 2106 -190 2106 L 2082 2106 Q 2098 2106 2098 2090 L 2098 1145 Q 2098 1129 2082 1129 L 338 1129" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="917.775" y="2110" width="56.449999999999996" height="19" rx="9.5"/>
+       <text x="946" y="2123.5" class="lk-text">2x land</text></g></g><g class="link" data-from="plots" data-to="yield">
+    <path d="M 1610 851 L -206 851 Q -222 851 -222 867 L -222 2116 Q -222 2132 -206 2132 L 2098 2132 Q 2114 2132 2114 2116 L 2114 921 Q 2114 905 2098 905 L 1472 905" class="lk-halo" fill="none"/>
+    <path d="M 1610 851 L -206 851 Q -222 851 -222 867 L -222 2116 Q -222 2132 -206 2132 L 2098 2132 Q 2114 2132 2114 2116 L 2114 921 Q 2114 905 2098 905 L 1472 905" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="911.425" y="2136" width="69.15" height="19" rx="9.5"/>
+       <text x="946" y="2149.5" class="lk-text">banks 24h</text></g></g><g class="link" data-from="yield" data-to="sparks">
+    <path d="M 1226 905 L -222 905 Q -238 905 -238 921 L -238 2142 Q -238 2158 -222 2158 L 2114 2158 Q 2130 2158 2130 2142 L 2130 759.5 Q 2130 743.5 2114 743.5 L 1130 743.5" class="lk-halo" fill="none"/>
+    <path d="M 1226 905 L -222 905 Q -238 905 -238 921 L -238 2142 Q -238 2158 -222 2158 L 2114 2158 Q 2130 2158 2130 2142 L 2130 759.5 Q 2130 743.5 2114 743.5 L 1130 743.5" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="917.775" y="2162" width="56.449999999999996" height="19" rx="9.5"/>
+       <text x="946" y="2175.5" class="lk-text">+72/day</text></g></g><g class="link" data-from="hall" data-to="payouts">
+    <path d="M 1496 1337 C 1547.3 1337, 1558.7 1067, 1610 1067" class="lk-halo" fill="none"/>
+    <path d="M 1496 1337 C 1547.3 1337, 1558.7 1067, 1610 1067" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="1508.9" y="1192" width="88.19999999999999" height="19" rx="9.5"/>
+       <text x="1553" y="1205.5" class="lk-text">monthly owed</text></g></g><g class="link" data-from="payouts" data-to="wallets">
+    <path d="M 1610 1067 L -238 1067 Q -254 1067 -254 1083 L -254 2168 Q -254 2184 -238 2184 L 2130 2184 Q 2146 2184 2146 2168 L 2146 759 Q 2146 743 2130 743 L 1838 743" class="lk-halo" fill="none"/>
+    <path d="M 1610 1067 L -238 1067 Q -254 1067 -254 1083 L -254 2168 Q -254 2184 -238 2184 L 2130 2184 Q 2146 2184 2146 2168 L 2146 759 Q 2146 743 2130 743 L 1838 743" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="914.6" y="2188" width="62.8" height="19" rx="9.5"/>
+       <text x="946" y="2201.5" class="lk-text">USDC out</text></g></g><g class="link" data-from="fan" data-to="pay_sparks">
+    <path d="M 56 574 L -254 574 Q -270 574 -270 590 L -270 2194 Q -270 2210 -254 2210 L 2146 2210 Q 2162 2210 2162 2194 L 2162 821 Q 2162 805 2146 805 L 302 805" class="lk-halo" fill="none"/>
+    <path d="M 56 574 L -254 574 Q -270 574 -270 590 L -270 2194 Q -270 2210 -254 2210 L 2146 2210 Q 2162 2210 2162 2194 L 2162 821 Q 2162 805 2146 805 L 302 805" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="917.775" y="2214" width="56.449999999999996" height="19" rx="9.5"/>
+       <text x="946" y="2227.5" class="lk-text">tickets</text></g></g><g class="link" data-from="client" data-to="pay_usdc">
+    <path d="M 56 689.5 L -270 689.5 Q -286 689.5 -286 705.5 L -286 2220 Q -286 2236 -270 2236 L 2162 2236 Q 2178 2236 2178 2220 L 2178 1253 Q 2178 1237 2162 1237 L 302 1237" class="lk-halo" fill="none"/>
+    <path d="M 56 689.5 L -270 689.5 Q -286 689.5 -286 705.5 L -286 2220 Q -286 2236 -270 2236 L 2162 2236 Q 2178 2236 2178 2220 L 2178 1253 Q 2178 1237 2162 1237 L 302 1237" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="927.3" y="2240" width="37.4" height="19" rx="9.5"/>
+       <text x="946" y="2253.5" class="lk-text">jobs</text></g></g><g class="link" data-from="pay_sparks" data-to="sparks">
+    <path d="M 179 768 L 179 -206 Q 179 -222 195 -222 L 964 -222 Q 980 -222 980 -206 L 980 699" class="lk-halo" fill="none"/>
+    <path d="M 179 768 L 179 -206 Q 179 -222 195 -222 L 964 -222 Q 980 -222 980 -206 L 980 699" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="558.125" y="-242" width="43.75" height="19" rx="9.5"/>
+       <text x="580" y="-228.5" class="lk-text">spend</text></g></g><g class="link" data-from="pay_usdc" data-to="x402">
+    <path d="M 179 1200 L 179 -232 Q 179 -248 195 -248 L 961 -248 Q 977 -248 977 -232 L 977 930" class="lk-halo" fill="none"/>
+    <path d="M 179 1200 L 179 -232 Q 179 -248 195 -248 L 961 -248 Q 977 -248 977 -232 L 977 930" class="lk-path" data-kind="auth" fill="none" stroke-dasharray="2 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="552.95" y="-268" width="50.099999999999994" height="19" rx="9.5"/>
+       <text x="578" y="-254.5" class="lk-text">intent</text></g></g><g class="link" data-from="pay_sol" data-to="wallets">
+    <path d="M 167 1308 L 167 -258 Q 167 -274 183 -274 L 1708 -274 Q 1724 -274 1724 -258 L 1724 706" class="lk-halo" fill="none"/>
+    <path d="M 167 1308 L 167 -258 Q 167 -274 183 -274 L 1708 -274 Q 1724 -274 1724 -258 L 1724 706" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="914.6" y="-294" width="62.8" height="19" rx="9.5"/>
+       <text x="946" y="-280.5" class="lk-text">gas+pair</text></g></g><g class="link" data-from="pay_sub" data-to="hall">
+    <path d="M 170 1416 L 170 -284 Q 170 -300 186 -300 L 1345 -300 Q 1361 -300 1361 -284 L 1361 1300" class="lk-halo" fill="none"/>
+    <path d="M 170 1416 L 170 -284 Q 170 -300 186 -300 L 1345 -300 Q 1361 -300 1361 -284 L 1361 1300" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="750.475" y="-320" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="766" y="-306.5" class="lk-text">MRR</text></g></g><g class="link" data-from="avenue" data-to="mcp_use">
+    <path d="M 452 959 L -286 959 Q -302 959 -302 975 L -302 2246 Q -302 2262 -286 2262 L 2178 2262 Q 2194 2262 2194 2246 L 2194 867 Q 2194 851 2178 851 L 716 851" class="lk-halo" fill="none"/>
+    <path d="M 452 959 L -286 959 Q -302 959 -302 975 L -302 2246 Q -302 2262 -286 2262 L 2178 2262 Q 2194 2262 2194 2246 L 2194 867 Q 2194 851 2178 851 L 716 851" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="914.6" y="2266" width="62.8" height="19" rx="9.5"/>
+       <text x="946" y="2279.5" class="lk-text">23 tools</text></g></g><g class="link" data-from="mcp_use" data-to="meter">
+    <path d="M 716 851 C 767.3 851, 778.7 1075, 830 1075" class="lk-halo" fill="none"/>
+    <path d="M 716 851 C 767.3 851, 778.7 1075, 830 1075" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="735.25" y="953" width="75.5" height="19" rx="9.5"/>
+       <text x="773" y="966.5" class="lk-text">over quota</text></g></g><g class="link" data-from="mcp_use" data-to="aura">
+    <path d="M 716 851 C 767.3 851, 778.7 1183, 830 1183" class="lk-halo" fill="none"/>
+    <path d="M 716 851 C 767.3 851, 778.7 1183, 830 1183" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="732.075" y="1007" width="81.85" height="19" rx="9.5"/>
+       <text x="773" y="1020.5" class="lk-text">cache check</text></g></g><g class="link" data-from="aura" data-to="hall">
+    <path d="M 1124 1183 C 1170 1183, 1180 1337, 1226 1337" class="lk-halo" fill="none"/>
+    <path d="M 1124 1183 C 1170 1183, 1180 1337, 1226 1337" class="lk-path" data-kind="optional" fill="none" stroke-dasharray="6 5" marker-end="url(#arrow)"/><g class="lk-label"><rect x="1130.9" y="1250" width="88.19999999999999" height="19" rx="9.5"/>
+       <text x="1175" y="1263.5" class="lk-text">saved margin</text></g></g><g class="link" data-from="client" data-to="gamedev_b2b">
+    <path d="M 356 689.5 C 402 689.5, 406 635, 452 635" class="lk-halo" fill="none"/>
+    <path d="M 356 689.5 C 402 689.5, 406 635, 452 635" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="366.25" y="652" width="75.5" height="19" rx="9.5"/>
+       <text x="404" y="665.5" class="lk-text">commission</text></g></g><g class="link" data-from="gamedev_b2b" data-to="services">
+    <path d="M 593 598 L 593 -310 Q 593 -326 609 -326 L 1333 -326 Q 1349 -326 1349 -310 L 1349 1516" class="lk-halo" fill="none"/>
+    <path d="M 593 598 L 593 -310 Q 593 -326 609 -326 L 1333 -326 Q 1349 -326 1349 -310 L 1349 1516" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="936.425" y="-346" width="69.15" height="19" rx="9.5"/>
+       <text x="971" y="-332.5" class="lk-text">build fee</text></g></g><g class="link" data-from="client" data-to="models_b2b">
+    <path d="M 356 689.5 C 402 689.5, 406 743, 452 743" class="lk-halo" fill="none"/>
+    <path d="M 356 689.5 C 402 689.5, 406 743, 452 743" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="359.9" y="706" width="88.19999999999999" height="19" rx="9.5"/>
+       <text x="404" y="719.5" class="lk-text">order bodies</text></g></g><g class="link" data-from="models_b2b" data-to="services">
+    <path d="M 566 706 L 566 -336 Q 566 -352 582 -352 L 1333 -352 Q 1349 -352 1349 -336 L 1349 1516" class="lk-halo" fill="none"/>
+    <path d="M 566 706 L 566 -336 Q 566 -352 582 -352 L 1333 -352 Q 1349 -352 1349 -336 L 1349 1516" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="923.425" y="-372" width="69.15" height="19" rx="9.5"/>
+       <text x="958" y="-358.5" class="lk-text">model fee</text></g></g><g class="link" data-from="brand" data-to="social_mgmt">
+    <path d="M 314 1021 C 376.1 1021, 389.9 1715, 452 1715" class="lk-halo" fill="none"/>
+    <path d="M 314 1021 C 376.1 1021, 389.9 1715, 452 1715" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="351.6" y="1358" width="62.8" height="19" rx="9.5"/>
+       <text x="383" y="1371.5" class="lk-text">retainer</text></g></g><g class="link" data-from="social_mgmt" data-to="services">
+    <path d="M 584 1678 L 584 -362 Q 584 -378 600 -378 L 1333 -378 Q 1349 -378 1349 -362 L 1349 1516" class="lk-halo" fill="none"/>
+    <path d="M 584 1678 L 584 -362 Q 584 -378 600 -378 L 1333 -378 Q 1349 -378 1349 -362 L 1349 1516" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="926.075" y="-398" width="81.85" height="19" rx="9.5"/>
+       <text x="967" y="-384.5" class="lk-text">content fee</text></g></g><g class="link" data-from="clip" data-to="social_mgmt">
+    <path d="M 452 1067 L -302 1067 Q -318 1067 -318 1083 L -318 2272 Q -318 2288 -302 2288 L 2194 2288 Q 2210 2288 2210 2272 L 2210 1731 Q 2210 1715 2194 1715 L 716 1715" class="lk-halo" fill="none"/>
+    <path d="M 452 1067 L -302 1067 Q -318 1067 -318 1083 L -318 2272 Q -318 2288 -302 2288 L 2194 2288 Q 2210 2288 2210 2272 L 2210 1731 Q 2210 1715 2194 1715 L 716 1715" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="911.425" y="2292" width="69.15" height="19" rx="9.5"/>
+       <text x="946" y="2305.5" class="lk-text">cuts feed</text></g></g><g class="link" data-from="brand" data-to="vtuber_studio">
+    <path d="M 314 1021 C 376.1 1021, 389.9 1607, 452 1607" class="lk-halo" fill="none"/>
+    <path d="M 314 1021 C 376.1 1021, 389.9 1607, 452 1607" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="338.9" y="1304" width="88.19999999999999" height="19" rx="9.5"/>
+       <text x="383" y="1317.5" class="lk-text">books avatar</text></g></g><g class="link" data-from="vtuber_studio" data-to="services">
+    <path d="M 563 1570 L 563 -388 Q 563 -404 579 -404 L 1333 -404 Q 1349 -404 1349 -388 L 1349 1516" class="lk-halo" fill="none"/>
+    <path d="M 563 1570 L 563 -388 Q 563 -404 579 -404 L 1333 -404 Q 1349 -404 1349 -388 L 1349 1516" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="924.6" y="-424" width="62.8" height="19" rx="9.5"/>
+       <text x="956" y="-410.5" class="lk-text">show fee</text></g></g><g class="link" data-from="clip" data-to="vtuber_studio">
+    <path d="M 452 1067 L -318 1067 Q -334 1067 -334 1083 L -334 2298 Q -334 2314 -318 2314 L 2210 2314 Q 2226 2314 2226 2298 L 2226 1623 Q 2226 1607 2210 1607 L 674 1607" class="lk-halo" fill="none"/>
+    <path d="M 452 1067 L -318 1067 Q -334 1067 -334 1083 L -334 2298 Q -334 2314 -318 2314 L 2210 2314 Q 2226 2314 2226 2298 L 2226 1623 Q 2226 1607 2210 1607 L 674 1607" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="911.425" y="2318" width="69.15" height="19" rx="9.5"/>
+       <text x="946" y="2331.5" class="lk-text">cuts feed</text></g></g><g class="link" data-from="brand" data-to="influencer_mgmt">
+    <path d="M 314 1021 C 376.1 1021, 389.9 1175, 452 1175" class="lk-halo" fill="none"/>
+    <path d="M 314 1021 C 376.1 1021, 389.9 1175, 452 1175" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="351.6" y="1088" width="62.8" height="19" rx="9.5"/>
+       <text x="383" y="1101.5" class="lk-text">retainer</text></g></g><g class="link" data-from="influencer_mgmt" data-to="services">
+    <path d="M 578 1138 L 578 -414 Q 578 -430 594 -430 L 1333 -430 Q 1349 -430 1349 -414 L 1349 1516" class="lk-halo" fill="none"/>
+    <path d="M 578 1138 L 578 -414 Q 578 -430 594 -430 L 1333 -430 Q 1349 -430 1349 -414 L 1349 1516" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="935.775" y="-450" width="56.449999999999996" height="19" rx="9.5"/>
+       <text x="964" y="-436.5" class="lk-text">UGC fee</text></g></g><g class="link" data-from="brand" data-to="merch_store">
+    <path d="M 314 1021 C 376.1 1021, 389.9 1283, 452 1283" class="lk-halo" fill="none"/>
+    <path d="M 314 1021 C 376.1 1021, 389.9 1283, 452 1283" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="361.125" y="1142" width="43.75" height="19" rx="9.5"/>
+       <text x="383" y="1155.5" class="lk-text">drops</text></g></g><g class="link" data-from="merch_store" data-to="services">
+    <path d="M 569 1246 L 569 -440 Q 569 -456 585 -456 L 1333 -456 Q 1349 -456 1349 -440 L 1349 1516" class="lk-halo" fill="none"/>
+    <path d="M 569 1246 L 569 -440 Q 569 -456 585 -456 L 1333 -456 Q 1349 -456 1349 -440 L 1349 1516" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="924.425" y="-476" width="69.15" height="19" rx="9.5"/>
+       <text x="959" y="-462.5" class="lk-text">merch cut</text></g></g><g class="link" data-from="brand" data-to="music_studio">
+    <path d="M 314 1021 C 376.1 1021, 389.9 1391, 452 1391" class="lk-halo" fill="none"/>
+    <path d="M 314 1021 C 376.1 1021, 389.9 1391, 452 1391" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="338.9" y="1196" width="88.19999999999999" height="19" rx="9.5"/>
+       <text x="383" y="1209.5" class="lk-text">orders track</text></g></g><g class="link" data-from="music_studio" data-to="services">
+    <path d="M 566 1354 L 566 -466 Q 566 -482 582 -482 L 1333 -482 Q 1349 -482 1349 -466 L 1349 1516" class="lk-halo" fill="none"/>
+    <path d="M 566 1354 L 566 -466 Q 566 -482 582 -482 L 1333 -482 Q 1349 -482 1349 -466 L 1349 1516" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="926.6" y="-502" width="62.8" height="19" rx="9.5"/>
+       <text x="958" y="-488.5" class="lk-text">sync fee</text></g></g><g class="link" data-from="brand" data-to="seo_blog">
+    <path d="M 314 1021 C 376.1 1021, 389.9 1499, 452 1499" class="lk-halo" fill="none"/>
+    <path d="M 314 1021 C 376.1 1021, 389.9 1499, 452 1499" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="335.725" y="1250" width="94.55" height="19" rx="9.5"/>
+       <text x="383" y="1263.5" class="lk-text">monthly posts</text></g></g><g class="link" data-from="seo_blog" data-to="services">
+    <path d="M 566 1462 L 566 -492 Q 566 -508 582 -508 L 1333 -508 Q 1349 -508 1349 -492 L 1349 1516" class="lk-halo" fill="none"/>
+    <path d="M 566 1462 L 566 -492 Q 566 -508 582 -508 L 1333 -508 Q 1349 -508 1349 -492 L 1349 1516" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="913.9" y="-528" width="88.19999999999999" height="19" rx="9.5"/>
+       <text x="958" y="-514.5" class="lk-text">retainer cut</text></g></g><g class="link" data-from="seo_blog" data-to="social_mgmt">
+    <path d="M 452 1499 L -334 1499 Q -350 1499 -350 1515 L -350 2324 Q -350 2340 -334 2340 L 2226 2340 Q 2242 2340 2242 2324 L 2242 1731 Q 2242 1715 2226 1715 L 716 1715" class="lk-halo" fill="none"/>
+    <path d="M 452 1499 L -334 1499 Q -350 1499 -350 1515 L -350 2324 Q -350 2340 -334 2340 L 2226 2340 Q 2242 2340 2242 2324 L 2242 1731 Q 2242 1715 2226 1715 L 716 1715" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="911.425" y="2344" width="69.15" height="19" rx="9.5"/>
+       <text x="946" y="2357.5" class="lk-text">rank loop</text></g></g><g class="node" id="n-student" data-node="student" data-kind="client"><clipPath id="clip-architecture-student"><rect class="box" x="56" y="429" width="258" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="student"><title>Student bot — plans $8 · books $5-9 · free 5/day</title><g class="nd-inner"><rect class="box" x="56" y="429" width="258" height="74" rx="10"/><rect x="57" y="438" width="3" height="56" rx="1.5" class="nd-bar"/><text x="301" y="447" class="nd-chip">client</text><g class="nd-text" clip-path="url(#clip-architecture-student)"><text x="78" y="460.5" class="nd-label">Student bot</text><text x="78" y="481.5" class="nd-sub">plans $8 · books $5-9 · free 5/day</text></g></g></g></g><g class="node" id="n-fan" data-node="fan" data-kind="client"><clipPath id="clip-architecture-fan"><rect class="box" x="56" y="537" width="294" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="fan"><title>Fan — tickets 10-100 sparks · bets 2x · quests</title><g class="nd-inner"><rect class="box" x="56" y="537" width="294" height="74" rx="10"/><rect x="57" y="546" width="3" height="56" rx="1.5" class="nd-bar"/><text x="337" y="555" class="nd-chip">client</text><g class="nd-text" clip-path="url(#clip-architecture-fan)"><text x="78" y="568.5" class="nd-label">Fan</text><text x="78" y="589.5" class="nd-sub">tickets 10-100 sparks · bets 2x · quests</text></g></g></g></g><g class="node" id="n-client" data-node="client" data-kind="client"><clipPath id="clip-architecture-client"><rect class="box" x="56" y="645" width="300" height="89" rx="10"/></clipPath><g class="nd-hit" data-node="client"><title>Job poster — client jobs $2-25 · B2B builds · retainers</title><g class="nd-inner"><rect class="box" x="56" y="645" width="300" height="89" rx="10"/><rect x="57" y="654" width="3" height="71" rx="1.5" class="nd-bar"/><text x="343" y="663" class="nd-chip">client</text><g class="nd-text" clip-path="url(#clip-architecture-client)"><text x="78" y="676.5" class="nd-label">Job poster</text><text x="78" y="697.5" class="nd-sub">client jobs $2-25 · B2B builds ·</text><text x="78" y="712.5" class="nd-sub">retainers</text></g></g></g></g><g class="node" id="n-pay_sparks" data-node="pay_sparks" data-kind="service"><clipPath id="clip-architecture-pay_sparks"><rect class="box" x="56" y="768" width="246" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="pay_sparks"><title>Pay: Sparks — 1 spark = $1 · 6 decimals · play</title><g class="nd-inner"><rect class="box" x="56" y="768" width="246" height="74" rx="10"/><rect x="57" y="777" width="3" height="56" rx="1.5" class="nd-bar"/><text x="289" y="786" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-pay_sparks)"><text x="78" y="799.5" class="nd-label">Pay: Sparks</text><text x="78" y="820.5" class="nd-sub">1 spark = $1 · 6 decimals · play</text></g></g></g></g><g class="node" id="n-api_dev" data-node="api_dev" data-kind="client"><clipPath id="clip-architecture-api_dev"><rect class="box" x="56" y="876" width="264" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="api_dev"><title>API developer — over-quota calls · $0.25-9 per tool</title><g class="nd-inner"><rect class="box" x="56" y="876" width="264" height="74" rx="10"/><rect x="57" y="885" width="3" height="56" rx="1.5" class="nd-bar"/><text x="307" y="894" class="nd-chip">client</text><g class="nd-text" clip-path="url(#clip-architecture-api_dev)"><text x="78" y="907.5" class="nd-label">API developer</text><text x="78" y="928.5" class="nd-sub">over-quota calls · $0.25-9 per tool</text></g></g></g></g><g class="node" id="n-brand" data-node="brand" data-kind="client"><clipPath id="clip-architecture-brand"><rect class="box" x="56" y="984" width="258" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="brand"><title>Brand / creator — clips + content + social retainers</title><g class="nd-inner"><rect class="box" x="56" y="984" width="258" height="74" rx="10"/><rect x="57" y="993" width="3" height="56" rx="1.5" class="nd-bar"/><text x="301" y="1002" class="nd-chip">client</text><g class="nd-text" clip-path="url(#clip-architecture-brand)"><text x="78" y="1015.5" class="nd-label">Brand / creator</text><text x="78" y="1036.5" class="nd-sub">clips + content + social retainers</text></g></g></g></g><g class="node" id="n-fighter" data-node="fighter" data-kind="client"><clipPath id="clip-architecture-fighter"><rect class="box" x="56" y="1092" width="282" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="fighter"><title>Fighter — battle/race entry escrow · Novice+ rep</title><g class="nd-inner"><rect class="box" x="56" y="1092" width="282" height="74" rx="10"/><rect x="57" y="1101" width="3" height="56" rx="1.5" class="nd-bar"/><text x="325" y="1110" class="nd-chip">client</text><g class="nd-text" clip-path="url(#clip-architecture-fighter)"><text x="78" y="1123.5" class="nd-label">Fighter</text><text x="78" y="1144.5" class="nd-sub">battle/race entry escrow · Novice+ rep</text></g></g></g></g><g class="node" id="n-pay_usdc" data-node="pay_usdc" data-kind="service"><clipPath id="clip-architecture-pay_usdc"><rect class="box" x="56" y="1200" width="246" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="pay_usdc"><title>Pay: USDC — x402 rail · quote→intent→confirm</title><g class="nd-inner"><rect class="box" x="56" y="1200" width="246" height="74" rx="10"/><rect x="57" y="1209" width="3" height="56" rx="1.5" class="nd-bar"/><text x="289" y="1218" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-pay_usdc)"><text x="78" y="1231.5" class="nd-label">Pay: USDC</text><text x="78" y="1252.5" class="nd-sub">x402 rail · quote→intent→confirm</text></g></g></g></g><g class="node" id="n-pay_sol" data-node="pay_sol" data-kind="service"><clipPath id="clip-architecture-pay_sol"><rect class="box" x="56" y="1308" width="222" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="pay_sol"><title>Pay: SOL — gas + SHADDAI/SOL pair depth</title><g class="nd-inner"><rect class="box" x="56" y="1308" width="222" height="74" rx="10"/><rect x="57" y="1317" width="3" height="56" rx="1.5" class="nd-bar"/><text x="265" y="1326" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-pay_sol)"><text x="78" y="1339.5" class="nd-label">Pay: SOL</text><text x="78" y="1360.5" class="nd-sub">gas + SHADDAI/SOL pair depth</text></g></g></g></g><g class="node" id="n-pay_sub" data-node="pay_sub" data-kind="service"><clipPath id="clip-architecture-pay_sub"><rect class="box" x="56" y="1416" width="228" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="pay_sub"><title>Pay: Subscription — $49/$199/$999 tiers past free</title><g class="nd-inner"><rect class="box" x="56" y="1416" width="228" height="74" rx="10"/><rect x="57" y="1425" width="3" height="56" rx="1.5" class="nd-bar"/><text x="271" y="1434" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-pay_sub)"><text x="78" y="1447.5" class="nd-label">Pay: Subscription</text><text x="78" y="1468.5" class="nd-sub">$49/$199/$999 tiers past free</text></g></g></g></g><g class="node" id="n-shop" data-node="shop" data-kind="service"><clipPath id="clip-architecture-shop"><rect class="box" x="452" y="166" width="282" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="shop"><title>Academy shop — /api/catalog→buy→pay · owned[]+receipt</title><g class="nd-inner"><rect class="box" x="452" y="166" width="282" height="74" rx="10"/><rect x="453" y="175" width="3" height="56" rx="1.5" class="nd-bar"/><text x="721" y="184" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-shop)"><text x="474" y="197.5" class="nd-label">Academy shop</text><text x="474" y="218.5" class="nd-sub">/api/catalog→buy→pay · owned[]+receipt</text></g></g></g></g><g class="node" id="n-gate" data-node="gate" data-kind="service"><clipPath id="clip-architecture-gate"><rect class="box" x="452" y="274" width="258" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="gate"><title>Colosseum gate — 5 tiers · seat check · 3/event cap</title><g class="nd-inner"><rect class="box" x="452" y="274" width="258" height="74" rx="10"/><rect x="453" y="283" width="3" height="56" rx="1.5" class="nd-bar"/><text x="697" y="292" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-gate)"><text x="474" y="305.5" class="nd-label">Colosseum gate</text><text x="474" y="326.5" class="nd-sub">5 tiers · seat check · 3/event cap</text></g></g></g></g><g class="node" id="n-dash" data-node="dash" data-kind="service"><clipPath id="clip-architecture-dash"><rect class="box" x="452" y="382" width="276" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="dash"><title>Dashboard — account · shop · quests · leaderboard</title><g class="nd-inner"><rect class="box" x="452" y="382" width="276" height="74" rx="10"/><rect x="453" y="391" width="3" height="56" rx="1.5" class="nd-bar"/><text x="715" y="400" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-dash)"><text x="474" y="413.5" class="nd-label">Dashboard</text><text x="474" y="434.5" class="nd-sub">account · shop · quests · leaderboard</text></g></g></g></g><g class="node" id="n-bridge" data-node="bridge" data-kind="service"><clipPath id="clip-architecture-bridge"><rect class="box" x="452" y="490" width="234" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="bridge"><title>Bridge hire — Muse · Grok · tasks · 15/50/35</title><g class="nd-inner"><rect class="box" x="452" y="490" width="234" height="74" rx="10"/><rect x="453" y="499" width="3" height="56" rx="1.5" class="nd-bar"/><text x="673" y="508" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-bridge)"><text x="474" y="521.5" class="nd-label">Bridge hire</text><text x="474" y="542.5" class="nd-sub">Muse · Grok · tasks · 15/50/35</text></g></g></g></g><g class="node" id="n-gamedev_b2b" data-node="gamedev_b2b" data-kind="service"><clipPath id="clip-architecture-gamedev_b2b"><rect class="box" x="452" y="598" width="282" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="gamedev_b2b"><title>Game-dev B2B — genre builds · arena kits · fixed bids</title><g class="nd-inner"><rect class="box" x="452" y="598" width="282" height="74" rx="10"/><rect x="453" y="607" width="3" height="56" rx="1.5" class="nd-bar"/><text x="721" y="616" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-gamedev_b2b)"><text x="474" y="629.5" class="nd-label">Game-dev B2B</text><text x="474" y="650.5" class="nd-sub">genre builds · arena kits · fixed bids</text></g></g></g></g><g class="node" id="n-models_b2b" data-node="models_b2b" data-kind="service"><clipPath id="clip-architecture-models_b2b"><rect class="box" x="452" y="706" width="228" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="models_b2b"><title>Model-making B2B — 3D bodies · wearables · $2-25</title><g class="nd-inner"><rect class="box" x="452" y="706" width="228" height="74" rx="10"/><rect x="453" y="715" width="3" height="56" rx="1.5" class="nd-bar"/><text x="667" y="724" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-models_b2b)"><text x="474" y="737.5" class="nd-label">Model-making B2B</text><text x="474" y="758.5" class="nd-sub">3D bodies · wearables · $2-25</text></g></g></g></g><g class="node" id="n-mcp_use" data-node="mcp_use" data-kind="service"><clipPath id="clip-architecture-mcp_use"><rect class="box" x="452" y="814" width="264" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="mcp_use"><title>MCP use — 23 tools · ask-first · logged+audit</title><g class="nd-inner"><rect class="box" x="452" y="814" width="264" height="74" rx="10"/><rect x="453" y="823" width="3" height="56" rx="1.5" class="nd-bar"/><text x="703" y="832" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-mcp_use)"><text x="474" y="845.5" class="nd-label">MCP use</text><text x="474" y="866.5" class="nd-sub">23 tools · ask-first · logged+audit</text></g></g></g></g><g class="node" id="n-avenue" data-node="avenue" data-kind="service"><clipPath id="clip-architecture-avenue"><rect class="box" x="452" y="922" width="246" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="avenue"><title>Office Avenue — 7 offices · per-tool USDC prices</title><g class="nd-inner"><rect class="box" x="452" y="922" width="246" height="74" rx="10"/><rect x="453" y="931" width="3" height="56" rx="1.5" class="nd-bar"/><text x="685" y="940" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-avenue)"><text x="474" y="953.5" class="nd-label">Office Avenue</text><text x="474" y="974.5" class="nd-sub">7 offices · per-tool USDC prices</text></g></g></g></g><g class="node" id="n-clip" data-node="clip" data-kind="service"><clipPath id="clip-architecture-clip"><rect class="box" x="452" y="1030" width="240" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="clip"><title>Video clipper — media · cuts · timestamps · /cp</title><g class="nd-inner"><rect class="box" x="452" y="1030" width="240" height="74" rx="10"/><rect x="453" y="1039" width="3" height="56" rx="1.5" class="nd-bar"/><text x="679" y="1048" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-clip)"><text x="474" y="1061.5" class="nd-label">Video clipper</text><text x="474" y="1082.5" class="nd-sub">media · cuts · timestamps · /cp</text></g></g></g></g><g class="node" id="n-influencer_mgmt" data-node="influencer_mgmt" data-kind="service"><clipPath id="clip-architecture-influencer_mgmt"><rect class="box" x="452" y="1138" width="252" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="influencer_mgmt"><title>Influencer mgmt — AI UGC for businesses · retainers</title><g class="nd-inner"><rect class="box" x="452" y="1138" width="252" height="74" rx="10"/><rect x="453" y="1147" width="3" height="56" rx="1.5" class="nd-bar"/><text x="691" y="1156" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-influencer_mgmt)"><text x="474" y="1169.5" class="nd-label">Influencer mgmt</text><text x="474" y="1190.5" class="nd-sub">AI UGC for businesses · retainers</text></g></g></g></g><g class="node" id="n-merch_store" data-node="merch_store" data-kind="service"><clipPath id="clip-architecture-merch_store"><rect class="box" x="452" y="1246" width="234" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="merch_store"><title>Merch + drops — print-on-demand · limited runs</title><g class="nd-inner"><rect class="box" x="452" y="1246" width="234" height="74" rx="10"/><rect x="453" y="1255" width="3" height="56" rx="1.5" class="nd-bar"/><text x="673" y="1264" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-merch_store)"><text x="474" y="1277.5" class="nd-label">Merch + drops</text><text x="474" y="1298.5" class="nd-sub">print-on-demand · limited runs</text></g></g></g></g><g class="node" id="n-music_studio" data-node="music_studio" data-kind="service"><clipPath id="clip-architecture-music_studio"><rect class="box" x="452" y="1354" width="228" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="music_studio"><title>Music creation — tracks · jingles · sync $5-25</title><g class="nd-inner"><rect class="box" x="452" y="1354" width="228" height="74" rx="10"/><rect x="453" y="1363" width="3" height="56" rx="1.5" class="nd-bar"/><text x="667" y="1372" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-music_studio)"><text x="474" y="1385.5" class="nd-label">Music creation</text><text x="474" y="1406.5" class="nd-sub">tracks · jingles · sync $5-25</text></g></g></g></g><g class="node" id="n-seo_blog" data-node="seo_blog" data-kind="service"><clipPath id="clip-architecture-seo_blog"><rect class="box" x="452" y="1462" width="228" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="seo_blog"><title>SEO + blog — posts · rank loop · retainers</title><g class="nd-inner"><rect class="box" x="452" y="1462" width="228" height="74" rx="10"/><rect x="453" y="1471" width="3" height="56" rx="1.5" class="nd-bar"/><text x="667" y="1480" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-seo_blog)"><text x="474" y="1493.5" class="nd-label">SEO + blog</text><text x="474" y="1514.5" class="nd-sub">posts · rank loop · retainers</text></g></g></g></g><g class="node" id="n-vtuber_studio" data-node="vtuber_studio" data-kind="service"><clipPath id="clip-architecture-vtuber_studio"><rect class="box" x="452" y="1570" width="222" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="vtuber_studio"><title>VTuber studio — bodies+persona+voice · shows</title><g class="nd-inner"><rect class="box" x="452" y="1570" width="222" height="74" rx="10"/><rect x="453" y="1579" width="3" height="56" rx="1.5" class="nd-bar"/><text x="661" y="1588" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-vtuber_studio)"><text x="474" y="1601.5" class="nd-label">VTuber studio</text><text x="474" y="1622.5" class="nd-sub">bodies+persona+voice · shows</text></g></g></g></g><g class="node" id="n-social_mgmt" data-node="social_mgmt" data-kind="service"><clipPath id="clip-architecture-social_mgmt"><rect class="box" x="452" y="1678" width="264" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="social_mgmt"><title>Social mgmt — calendar→profit machine · retainers</title><g class="nd-inner"><rect class="box" x="452" y="1678" width="264" height="74" rx="10"/><rect x="453" y="1687" width="3" height="56" rx="1.5" class="nd-bar"/><text x="703" y="1696" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-social_mgmt)"><text x="474" y="1709.5" class="nd-label">Social mgmt</text><text x="474" y="1730.5" class="nd-sub">calendar→profit machine · retainers</text></g></g></g></g><g class="node" id="n-sparks" data-node="sparks" data-kind="tool"><clipPath id="clip-architecture-sparks"><rect class="box" x="830" y="699" width="300" height="89" rx="10"/></clipPath><g class="nd-hit" data-node="sparks"><title>Sparks ledger — server truth · cache locally · sinks≥faucets</title><g class="nd-inner"><rect class="box" x="830" y="699" width="300" height="89" rx="10"/><rect x="831" y="708" width="3" height="71" rx="1.5" class="nd-bar"/><text x="1117" y="717" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-sparks)"><text x="852" y="730.5" class="nd-label">Sparks ledger</text><text x="852" y="751.5" class="nd-sub">server truth · cache locally ·</text><text x="852" y="766.5" class="nd-sub">sinks≥faucets</text></g></g></g></g><g class="node" id="n-quotes" data-node="quotes" data-kind="tool"><clipPath id="clip-architecture-quotes"><rect class="box" x="830" y="822" width="252" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="quotes"><title>Academy quotes — quote_id only · cap $20tx/$100day</title><g class="nd-inner"><rect class="box" x="830" y="822" width="252" height="74" rx="10"/><rect x="831" y="831" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1069" y="840" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-quotes)"><text x="852" y="853.5" class="nd-label">Academy quotes</text><text x="852" y="874.5" class="nd-sub">quote_id only · cap $20tx/$100day</text></g></g></g></g><g class="node" id="n-x402" data-node="x402" data-kind="external"><clipPath id="clip-architecture-x402"><rect class="box" x="830" y="930" width="294" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="x402"><title>x402 PayBox — Solana USDC · quote-only now · needs gas</title><g class="nd-inner"><rect class="box" x="830" y="930" width="294" height="74" rx="10"/><rect x="831" y="939" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1111" y="948" class="nd-chip">external</text><g class="nd-text" clip-path="url(#clip-architecture-x402)"><text x="852" y="961.5" class="nd-label">x402 PayBox</text><text x="852" y="982.5" class="nd-sub">Solana USDC · quote-only now · needs gas</text></g></g></g></g><g class="node" id="n-meter" data-node="meter" data-kind="tool"><clipPath id="clip-architecture-meter"><rect class="box" x="830" y="1038" width="258" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="meter"><title>Metered API — 5 free/day, then 402 per-call USDC</title><g class="nd-inner"><rect class="box" x="830" y="1038" width="258" height="74" rx="10"/><rect x="831" y="1047" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1075" y="1056" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-meter)"><text x="852" y="1069.5" class="nd-label">Metered API</text><text x="852" y="1090.5" class="nd-sub">5 free/day, then 402 per-call USDC</text></g></g></g></g><g class="node" id="n-aura" data-node="aura" data-kind="tool"><clipPath id="clip-architecture-aura"><rect class="box" x="830" y="1146" width="294" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="aura"><title>AURA saver — cache+skills first · 61% hits · LLM last</title><g class="nd-inner"><rect class="box" x="830" y="1146" width="294" height="74" rx="10"/><rect x="831" y="1155" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1111" y="1164" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-aura)"><text x="852" y="1177.5" class="nd-label">AURA saver</text><text x="852" y="1198.5" class="nd-sub">cache+skills first · 61% hits · LLM last</text></g></g></g></g><g class="node" id="n-tickrev" data-node="tickrev" data-kind="database"><clipPath id="clip-architecture-tickrev"><rect class="box" x="1226" y="328" width="258" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="tickrev"><title>Ticket share — 80 owner / 20 hall · refund window</title><g class="nd-inner"><rect class="box" x="1226" y="328" width="258" height="74" rx="10"/><rect x="1227" y="337" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1471" y="346" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-tickrev)"><text x="1248" y="359.5" class="nd-label">Ticket share</text><text x="1248" y="380.5" class="nd-sub">80 owner / 20 hall · refund window</text></g></g></g></g><g class="node" id="n-royalty" data-node="royalty" data-kind="database"><clipPath id="clip-architecture-royalty"><rect class="box" x="1226" y="436" width="246" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="royalty"><title>Mastery 75% — 75% to creator on each pack sale</title><g class="nd-inner"><rect class="box" x="1226" y="436" width="246" height="74" rx="10"/><rect x="1227" y="445" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1459" y="454" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-royalty)"><text x="1248" y="467.5" class="nd-label">Mastery 75%</text><text x="1248" y="488.5" class="nd-sub">75% to creator on each pack sale</text></g></g></g></g><g class="node" id="n-purse" data-node="purse" data-kind="database"><clipPath id="clip-architecture-purse"><rect class="box" x="1226" y="544" width="234" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="purse"><title>Purse settle — winner 70 / owner 15 / hall 15</title><g class="nd-inner"><rect class="box" x="1226" y="544" width="234" height="74" rx="10"/><rect x="1227" y="553" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1447" y="562" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-purse)"><text x="1248" y="575.5" class="nd-label">Purse settle</text><text x="1248" y="596.5" class="nd-sub">winner 70 / owner 15 / hall 15</text></g></g></g></g><g class="node" id="n-refer" data-node="refer" data-kind="database"><clipPath id="clip-architecture-refer"><rect class="box" x="1226" y="652" width="264" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="refer"><title>Referrals — +100 inviter / +50 friend · +2 asks</title><g class="nd-inner"><rect class="box" x="1226" y="652" width="264" height="74" rx="10"/><rect x="1227" y="661" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1477" y="670" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-refer)"><text x="1248" y="683.5" class="nd-label">Referrals</text><text x="1248" y="704.5" class="nd-sub">+100 inviter / +50 friend · +2 asks</text></g></g></g></g><g class="node" id="n-quests" data-node="quests" data-kind="database"><clipPath id="clip-architecture-quests"><rect class="box" x="1226" y="760" width="288" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="quests"><title>Quests + bonus — +25 daily · +10 roll/+20 win/+25 invite</title><g class="nd-inner"><rect class="box" x="1226" y="760" width="288" height="74" rx="10"/><rect x="1227" y="769" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1501" y="778" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-quests)"><text x="1248" y="791.5" class="nd-label">Quests + bonus</text><text x="1248" y="812.5" class="nd-sub">+25 daily · +10 roll/+20 win/+25 invite</text></g></g></g></g><g class="node" id="n-yield" data-node="yield" data-kind="database"><clipPath id="clip-architecture-yield"><rect class="box" x="1226" y="868" width="246" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="yield"><title>Plot yield — 72/day · banks 24h · max 3 plots</title><g class="nd-inner"><rect class="box" x="1226" y="868" width="246" height="74" rx="10"/><rect x="1227" y="877" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1459" y="886" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-yield)"><text x="1248" y="899.5" class="nd-label">Plot yield</text><text x="1248" y="920.5" class="nd-sub">72/day · banks 24h · max 3 plots</text></g></g></g></g><g class="node" id="n-deals" data-node="deals" data-kind="database"><clipPath id="clip-architecture-deals"><rect class="box" x="1226" y="976" width="216" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="deals"><title>Deal commissions — ZEROX pct · bridge 15/50/35</title><g class="nd-inner"><rect class="box" x="1226" y="976" width="216" height="74" rx="10"/><rect x="1227" y="985" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1429" y="994" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-deals)"><text x="1248" y="1007.5" class="nd-label">Deal commissions</text><text x="1248" y="1028.5" class="nd-sub">ZEROX pct · bridge 15/50/35</text></g></g></g></g><g class="node" id="n-subpay" data-node="subpay" data-kind="database"><clipPath id="clip-architecture-subpay"><rect class="box" x="1226" y="1084" width="246" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="subpay"><title>Sub attribution — $0.10 per task · cost accounting</title><g class="nd-inner"><rect class="box" x="1226" y="1084" width="246" height="74" rx="10"/><rect x="1227" y="1093" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1459" y="1102" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-subpay)"><text x="1248" y="1115.5" class="nd-label">Sub attribution</text><text x="1248" y="1136.5" class="nd-sub">$0.10 per task · cost accounting</text></g></g></g></g><g class="node" id="n-paybox" data-node="paybox" data-kind="database"><clipPath id="clip-architecture-paybox"><rect class="box" x="1226" y="1192" width="246" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="paybox"><title>Teacher paybox — per-agent treasury · append-only</title><g class="nd-inner"><rect class="box" x="1226" y="1192" width="246" height="74" rx="10"/><rect x="1227" y="1201" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1459" y="1210" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-paybox)"><text x="1248" y="1223.5" class="nd-label">Teacher paybox</text><text x="1248" y="1244.5" class="nd-sub">per-agent treasury · append-only</text></g></g></g></g><g class="node" id="n-hall" data-node="hall" data-kind="database"><clipPath id="clip-architecture-hall"><rect class="box" x="1226" y="1300" width="270" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="hall"><title>Hall ledger — owner 85 / hall 15 · monthly payouts</title><g class="nd-inner"><rect class="box" x="1226" y="1300" width="270" height="74" rx="10"/><rect x="1227" y="1309" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1483" y="1318" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-hall)"><text x="1248" y="1331.5" class="nd-label">Hall ledger</text><text x="1248" y="1352.5" class="nd-sub">owner 85 / hall 15 · monthly payouts</text></g></g></g></g><g class="node" id="n-win" data-node="win" data-kind="database"><clipPath id="clip-architecture-win"><rect class="box" x="1226" y="1408" width="240" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="win"><title>Arena winnings — 2x bets land on winner · sparks</title><g class="nd-inner"><rect class="box" x="1226" y="1408" width="240" height="74" rx="10"/><rect x="1227" y="1417" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1453" y="1426" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-win)"><text x="1248" y="1439.5" class="nd-label">Arena winnings</text><text x="1248" y="1460.5" class="nd-sub">2x bets land on winner · sparks</text></g></g></g></g><g class="node" id="n-services" data-node="services" data-kind="database"><clipPath id="clip-architecture-services"><rect class="box" x="1226" y="1516" width="246" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="services"><title>Creator services — clips · decks · automation $2-25</title><g class="nd-inner"><rect class="box" x="1226" y="1516" width="246" height="74" rx="10"/><rect x="1227" y="1525" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1459" y="1534" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-services)"><text x="1248" y="1547.5" class="nd-label">Creator services</text><text x="1248" y="1568.5" class="nd-sub">clips · decks · automation $2-25</text></g></g></g></g><g class="node" id="n-wallets" data-node="wallets" data-kind="external"><clipPath id="clip-architecture-wallets"><rect class="box" x="1610" y="706" width="228" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="wallets"><title>Base + Solana — UNFUNDED: needs ETH + SOL gas</title><g class="nd-inner"><rect class="box" x="1610" y="706" width="228" height="74" rx="10"/><rect x="1611" y="715" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1825" y="724" class="nd-chip">external</text><g class="nd-text" clip-path="url(#clip-architecture-wallets)"><text x="1632" y="737.5" class="nd-label">Base + Solana</text><text x="1632" y="758.5" class="nd-sub">UNFUNDED: needs ETH + SOL gas</text></g></g></g></g><g class="node" id="n-plots" data-node="plots" data-kind="agent"><clipPath id="clip-architecture-plots"><rect class="box" x="1610" y="814" width="246" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="plots"><title>Realm plots — 100 sparks · classroom per track</title><g class="nd-inner"><rect class="box" x="1610" y="814" width="246" height="74" rx="10"/><rect x="1611" y="823" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1843" y="832" class="nd-chip">agent</text><g class="nd-text" clip-path="url(#clip-architecture-plots)"><text x="1632" y="845.5" class="nd-label">Realm plots</text><text x="1632" y="866.5" class="nd-sub">100 sparks · classroom per track</text></g></g></g></g><g class="node" id="n-tg" data-node="tg" data-kind="external"><clipPath id="clip-architecture-tg"><rect class="box" x="1610" y="922" width="252" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="tg"><title>Telegram — receipts + digests + fight nights</title><g class="nd-inner"><rect class="box" x="1610" y="922" width="252" height="74" rx="10"/><rect x="1611" y="931" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1849" y="940" class="nd-chip">external</text><g class="nd-text" clip-path="url(#clip-architecture-tg)"><text x="1632" y="953.5" class="nd-label">Telegram</text><text x="1632" y="974.5" class="nd-sub">receipts + digests + fight nights</text></g></g></g></g><g class="node" id="n-payouts" data-node="payouts" data-kind="external"><clipPath id="clip-architecture-payouts"><rect class="box" x="1610" y="1030" width="210" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="payouts"><title>USDC payouts — monthly · owner share owed</title><g class="nd-inner"><rect class="box" x="1610" y="1030" width="210" height="74" rx="10"/><rect x="1611" y="1039" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1807" y="1048" class="nd-chip">external</text><g class="nd-text" clip-path="url(#clip-architecture-payouts)"><text x="1632" y="1061.5" class="nd-label">USDC payouts</text><text x="1632" y="1082.5" class="nd-sub">monthly · owner share owed</text></g></g></g></g><g class="node" id="n-pikadon" data-node="pikadon" data-kind="agent"><clipPath id="clip-architecture-pikadon"><rect class="box" x="1610" y="1138" width="216" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="pikadon"><title>PIKADON gate — veto before any payout runs</title><g class="nd-inner"><rect class="box" x="1610" y="1138" width="216" height="74" rx="10"/><rect x="1611" y="1147" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1813" y="1156" class="nd-chip">agent</text><g class="nd-text" clip-path="url(#clip-architecture-pikadon)"><text x="1632" y="1169.5" class="nd-label">PIKADON gate</text><text x="1632" y="1190.5" class="nd-sub">veto before any payout runs</text></g></g></g></g></g></svg></div>
+
+  <footer>
+    <span>shaddai-diagrams · architecture · 2128×2462px</span>
+    <span>schema v1 · showcase profile</span>
+    <span>8 region(s)</span>
+  </footer>
+</div>
+<script>
+(function(){
+  var svg=document.querySelector('.dg-svg'), stage=document.getElementById('stage');
+  if(!svg) return;
+  var adj={};
+  svg.querySelectorAll('.link').forEach(function(l){
+    var a=l.dataset.from,b=l.dataset.to;
+    (adj[a]=adj[a]||[]).push(b); (adj[b]=adj[b]||[]).push(a);
+  });
+  var sel=null;
+  function clear(){
+    sel=null; stage.classList.remove('trace');
+    svg.querySelectorAll('.keep').forEach(function(e){e.classList.remove('keep')});
+    svg.querySelectorAll('.sel').forEach(function(e){e.classList.remove('sel')});
+    document.querySelectorAll('.bar .on[data-trace]').forEach(function(b){b.classList.remove('on')});
+  }
+  function trace(id){
+    var keep={}; keep[id]=1;
+    (adj[id]||[]).forEach(function(n){keep[n]=1});
+    svg.querySelectorAll('.keep,.sel').forEach(function(e){e.classList.remove('keep','sel')});
+    svg.querySelectorAll('[data-node],[data-from]').forEach(function(e){
+      var k=e.dataset.node||((keep[e.dataset.from]&&keep[e.dataset.to])?'t':null);
+      if(e.dataset.node!==undefined&&keep[e.dataset.node]) {e.classList.add('keep','sel');return;}
+      if(e.dataset.from!==undefined&&keep[e.dataset.from]&&keep[e.dataset.to]) e.classList.add('keep');
+    });
+    stage.classList.add('trace'); sel=id;
+    document.querySelectorAll('.bar [data-trace]').forEach(function(b){b.classList.add('on')});
+  }
+  svg.addEventListener('click',function(ev){
+    var hit=ev.target.closest('[data-node]');
+    if(hit){ var id=hit.dataset.node; if(sel===id) clear(); else trace(id); return; }
+    clear();
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') clear(); });
+  document.querySelectorAll('[data-trace]').forEach(function(b){b.addEventListener('click',clear)});
+  var t=document.getElementById('themeBtn');
+  if(t) t.addEventListener('click',function(){
+    var cur=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
+    document.documentElement.setAttribute('data-theme',cur);
+    t.textContent=cur==='light'?'Dark':'Light';
+  });
+  var f=document.getElementById('fitBtn');
+  if(f) f.addEventListener('click',function(){
+    svg.style.width=''; svg.style.maxWidth='none';
+    var w=stage.clientWidth-40, vb=svg.viewBox.baseVal.width;
+    svg.style.maxWidth=(w<vb?w:vb)+'px';
+    f.classList.toggle('on');
+  });
+  var d=document.getElementById('dlBtn');
+  if(d) d.addEventListener('click',function(){
+    var clone=svg.cloneNode(true);
+    clone.setAttribute('xmlns','http://www.w3.org/2000/svg');
+    var src='<?xml version="1.0" encoding="UTF-8"?>\n'+new XMLSerializer().serializeToString(clone);
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([src],{type:'image/svg+xml'}));
+    a.download=(document.title||'diagram').replace(/[^a-z0-9]+/gi,'-').toLowerCase()+'.svg';
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+  var fit=document.getElementById('fitBtn'); if(fit) fit.click();
+})();
+</script>
+</body>
+</html>

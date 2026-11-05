@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SHADDAI Scale Simulator — animated</title>
+<style>
+  :root { --bg:#06080b; --panel:#0b1110; --line:#1c2624; --txt:#e7f3ee; --dim:#7fa79b;
+          --gold:#e8c45c; --green:#00ff9c; --blue:#38bdf8; --pink:#f472b6; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--txt); font-family:'Space Grotesk',system-ui,sans-serif; padding:20px; }
+  h1 { font-size:22px; } h1 b { color:var(--gold); }
+  h2 { font-size:13px; color:var(--dim); margin:14px 0 8px; font-family:'JetBrains Mono',monospace; }
+  .sub { color:var(--dim); font-size:12px; margin:4px 0 14px; font-family:'JetBrains Mono',monospace; }
+  .sub b { color:var(--gold); }
+  .wrap { max-width:1240px; margin:0 auto; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px; }
+  svg { width:100%; height:auto; display:block; }
+  .node { fill:#0e1513; stroke:#2a3a36; }
+  .nlabel { fill:var(--txt); font-size:12px; font-weight:600; }
+  .nsub { fill:var(--dim); font-size:9.5px; font-family:'JetBrains Mono',monospace; }
+  .flow { fill:none; stroke-width:2; opacity:.55; stroke-dasharray:6 8; animation:dash 1.2s linear infinite; }
+  @keyframes dash { to { stroke-dashoffset:-28; } }
+  .coin { stroke:#000; stroke-width:1; }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  th { text-align:left; color:var(--dim); font-family:'JetBrains Mono',monospace; font-size:10px; padding:6px; border-bottom:1px solid var(--line); }
+  td { padding:6px; border-bottom:1px solid #121a18; font-family:'JetBrains Mono',monospace; }
+  td.r, th.r { text-align:right; }
+  input[type=number] { width:76px; background:#0e1513; border:1px solid var(--line); color:var(--txt);
+    border-radius:5px; padding:5px 7px; font-family:'JetBrains Mono',monospace; font-size:12px; }
+  input[type=range] { width:180px; accent-color:var(--green); }
+  input[type=checkbox] { width:16px; height:16px; accent-color:var(--green); }
+  .counters { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+  .ctr { flex:1; min-width:140px; background:#0e1513; border:1px solid var(--line); border-radius:8px; padding:10px 12px; }
+  .ctr small { color:var(--dim); font-size:10px; font-family:'JetBrains Mono',monospace; }
+  .ctr div { font-size:22px; font-weight:700; color:var(--green); font-family:'JetBrains Mono',monospace; }
+  .ctr.hall div { color:var(--gold); }
+  .btns { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; align-items:center; }
+  button { padding:8px 14px; font-size:12px; border:1px solid var(--green); background:rgba(0,255,156,.12);
+           color:var(--green); border-radius:6px; cursor:pointer; font-family:inherit; }
+  button:hover { background:rgba(0,255,156,.28); }
+  button.gold { border-color:var(--gold); color:var(--gold); background:rgba(232,196,92,.1); }
+  button:disabled { opacity:.4; cursor:default; }
+  #log { margin-top:10px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--dim); min-height:20px; }
+  #log b { color:var(--txt); }
+  .cfg { color:var(--dim); font-size:11px; font-family:'JetBrains Mono',monospace; margin-top:8px; }
+  .cfg b { color:var(--blue); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>SHADDAI <b>Scale Simulator</b> — animated</h1>
+  <div class="sub">1 spark = <b>$1.00</b> peg · toggle streams · set customers/day · edit any price · run N days · prices master: <b>prices.json</b></div>
+  <div class="card">
+  <svg viewBox="0 0 1200 560" id="map" role="img" aria-label="Money flow map">
+    <text x="20" y="22" class="nsub">PAYERS</text>
+    <text x="255" y="22" class="nsub">STOREFRONTS</text>
+    <text x="490" y="22" class="nsub">CAPTURE</text>
+    <text x="725" y="22" class="nsub">SPLITS</text>
+    <text x="960" y="22" class="nsub">LANDS + GUARDS</text>
+    <g><rect class="node" x="20" y="40" width="150" height="46"/><text class="nlabel" x="32" y="60">Student bot</text><text class="nsub" x="32" y="76">plans $8 · books $5-9</text></g>
+    <g><rect class="node" x="20" y="150" width="150" height="46"/><text class="nlabel" x="32" y="170">Fighter</text><text class="nsub" x="32" y="186">entry escrow</text></g>
+    <g><rect class="node" x="20" y="260" width="150" height="46"/><text class="nlabel" x="32" y="280">Fan</text><text class="nsub" x="32" y="296">tickets 10-100</text></g>
+    <g><rect class="node" x="20" y="370" width="150" height="46"/><text class="nlabel" x="32" y="390">Job poster</text><text class="nsub" x="32" y="406">jobs $2-25</text></g>
+    <g><rect class="node" x="255" y="40" width="150" height="46"/><text class="nlabel" x="267" y="60">Academy shop</text><text class="nsub" x="267" y="76">buy → pay</text></g>
+    <g><rect class="node" x="255" y="150" width="150" height="46"/><text class="nlabel" x="267" y="170">Office Avenue</text><text class="nsub" x="267" y="186">7 offices · USDC</text></g>
+    <g><rect class="node" x="255" y="260" width="150" height="46"/><text class="nlabel" x="267" y="280">Colosseum gate</text><text class="nsub" x="267" y="296">tiers + check</text></g>
+    <g><rect class="node" x="490" y="40" width="150" height="46"/><text class="nlabel" x="502" y="60">Quotes</text><text class="nsub" x="502" y="76">quote_id · capped</text></g>
+    <g><rect class="node" x="490" y="150" width="150" height="46"/><text class="nlabel" x="502" y="170">x402 PayBox</text><text class="nsub" x="502" y="186">Solana USDC</text></g>
+    <g><rect class="node" x="490" y="260" width="150" height="46"/><text class="nlabel" x="502" y="280">Sparks</text><text class="nsub" x="502" y="296">server truth</text></g>
+    <g><rect class="node" x="725" y="40" width="170" height="46"/><text class="nlabel" x="737" y="60">Teacher paybox</text><text class="nsub" x="737" y="76">100% treasury</text></g>
+    <g><rect class="node" x="725" y="130" width="170" height="46"/><text class="nlabel" x="737" y="150">Mastery 75%</text><text class="nsub" x="737" y="166">to creator</text></g>
+    <g><rect class="node" x="725" y="220" width="170" height="46"/><text class="nlabel" x="737" y="240">Hall ledger</text><text class="nsub" x="737" y="256">owner 85 / hall 15</text></g>
+    <g><rect class="node" x="725" y="310" width="170" height="46"/><text class="nlabel" x="737" y="330">Purse 70/15/15</text><text class="nsub" x="737" y="346">winner/owner/hall</text></g>
+    <g><rect class="node" x="725" y="400" width="170" height="46"/><text class="nlabel" x="737" y="420">Tickets 80/20</text><text class="nsub" x="737" y="436">owner / hall</text></g>
+    <g><rect class="node" x="960" y="130" width="220" height="46"/><text class="nlabel" x="972" y="150">Realm plots</text><text class="nsub" x="972" y="166">100 · 72/day · max 3</text></g>
+    <g><rect class="node" x="960" y="220" width="220" height="46"/><text class="nlabel" x="972" y="240">Base + Solana</text><text class="nsub" x="972" y="256">UNFUNDED — needs gas</text></g>
+    <g><rect class="node" x="960" y="310" width="220" height="46"/><text class="nlabel" x="972" y="330">PIKADON veto</text><text class="nsub" x="972" y="346">before any payout</text></g>
+    <path id="p-plan" class="flow" stroke="#00ff9c" d="M170,63 C215,63 215,63 255,63 M405,63 C450,63 450,63 490,63 M640,63 C685,63 685,63 725,63"/>
+    <path id="p-pack" class="flow" stroke="#f472b6" d="M170,63 C215,63 215,100 255,120 M405,153 C450,153 450,153 490,153 M640,63 C685,63 685,120 725,140"/>
+    <path id="p-tool" class="flow" stroke="#38bdf8" d="M170,393 C215,393 215,173 255,173 M405,173 C450,173 450,173 490,173 M640,173 C685,173 685,243 725,243"/>
+    <path id="p-battle" class="flow" stroke="#e8c45c" d="M170,173 C300,173 380,240 490,273 M640,283 C685,283 685,333 725,333"/>
+    <path id="p-ticket" class="flow" stroke="#00ff9c" d="M170,283 C215,283 215,283 255,283 M405,283 C450,283 450,283 490,283 M640,283 C685,283 685,423 725,423"/>
+    <path id="p-plot" class="flow" stroke="#f472b6" d="M640,283 C700,283 850,240 960,243 M895,153 C930,153 930,153 960,153"/>
+  </svg>
+  </div>
+
+  <h2>STREAMS — toggle · price $ · customers/day (1 spark = $1)</h2>
+  <div class="card"><table id="streams"><thead><tr><th>ON</th><th>STREAM</th><th class="r">PRICE</th><th class="r">CUST/DAY</th><th class="r">HALL%</th><th class="r">DAY $</th><th class="r">TOTAL $</th></tr></thead><tbody></tbody></table></div>
+
+  <h2>SUBSCRIPTIONS — dashboard tiers past free (MRR)</h2>
+  <div class="card"><table id="tiers"><thead><tr><th>TIER</th><th class="r">$/MO</th><th class="r">SUBS</th><th class="r">MRR</th></tr></thead><tbody></tbody></table></div>
+
+  <div class="btns">
+    <button class="gold" id="run">▶ Run</button>
+    <button id="reset">Reset</button>
+    <span class="cfg">days <input type="range" id="days" min="1" max="90" value="7"/> <b id="daysv">7</b></span>
+    <span class="cfg">speed <input type="range" id="speed" min="30" max="1000" value="300"/> <b id="speedv">300ms/day</b></span>
+    <span class="cfg" id="dayv">day 0/7</span>
+  </div>
+  <div class="counters">
+    <div class="ctr"><small>GROSS (SIM)</small><div id="c-gross">$0</div></div>
+    <div class="ctr hall"><small>HALL CUT</small><div id="c-hall">$0</div></div>
+    <div class="ctr"><small>OWNERS / CREATORS / WINNERS</small><div id="c-own">$0</div></div>
+    <div class="ctr"><small>MRR / ARR RUN-RATE</small><div id="c-mrr">$0</div></div>
+  </div>
+  <div id="log">Set customers, toggle streams, edit prices, Run. Live chain: 0 receipts · wallets unfunded · paywall off.</div>
+  <div class="cfg">Master prices live in <b>prices.json</b> — this page tries to load it (serve over http), else uses these inputs. Edit either; they mirror each other.</div>
+</div>
+<script>
+const INLINE = {
+  streams: [
+    { id:'plans',   label:'Plans + books',      path:'p-plan',   color:'#00ff9c', price:8,  cust:3,  hall:0,  own:100 },
+    { id:'mastery', label:'Mastery packs',      path:'p-pack',   color:'#f472b6', price:49, cust:1,  hall:25, own:75 },
+    { id:'tools',   label:'Tool / API calls',   path:'p-tool',   color:'#38bdf8', price:2,  cust:20, hall:15, own:85 },
+    { id:'bazaar',  label:'Bazaar A2A deals',    path:'p-tool',   color:'#38bdf8', price:15, cust:2,  hall:10, own:85 },
+    { id:'battles', label:'Battle entries',     path:'p-battle', color:'#e8c45c', price:10, cust:4,  hall:15, own:85 },
+    { id:'tickets', label:'Tickets (sparks)',   path:'p-ticket', color:'#00ff9c', price:25, cust:10, hall:20, own:80 },
+    { id:'plots',   label:'Plot buys (sparks)', path:'p-plot',   color:'#f472b6', price:100,cust:1,  hall:0,  own:0 },
+  ],
+  tiers: [
+    { id:'builder',    label:'Builder',    monthly:49,  subs:10 },
+    { id:'mastermind', label:'Mastermind', monthly:199, subs:2 },
+    { id:'empire',     label:'Empire',     monthly:999, subs:0 },
+  ]
+};
+let CFG = JSON.parse(JSON.stringify(INLINE));
+fetch('prices.json').then(r=>{ if(!r.ok) throw 0; return r.json(); }).then(P=>{
+  CFG.streams.find(s=>s.id==='plans').price = P.catalog.plan_base_usd;
+  CFG.streams.find(s=>s.id==='mastery').price = 49;
+  CFG.streams.find(s=>s.id==='bazaar').price = P.bazaar.avg_deal_usd;
+  CFG.streams.find(s=>s.id==='tickets').price = P.colosseum.avg_ticket_sparks * P.peg.spark_usd;
+  CFG.streams.find(s=>s.id==='plots').price = P.plots.cost_sparks * P.peg.spark_usd;
+  P.tiers.filter(t=>t.monthly>0).forEach(t=>{ const c=CFG.tiers.find(x=>x.id===t.id); if(c) c.monthly=t.monthly; });
+  build(); log('Loaded <b>prices.json</b> master. Editing inputs below overrides for this run.');
+}).catch(()=>{});
+const $ = id => document.getElementById(id);
+const fmt = n => '$' + Math.round(n).toLocaleString();
+let T = null, running = false;
+function rowHTML(s){
+  return `<tr><td><input type="checkbox" data-on="${s.id}" checked/></td><td>${s.label}</td>` +
+    `<td class="r"><input type="number" data-price="${s.id}" value="${s.price}" min="0" step="0.5"/></td>` +
+    `<td class="r"><input type="number" data-cust="${s.id}" value="${s.cust}" min="0" step="1"/></td>` +
+    `<td class="r">${s.hall}%</td><td class="r" id="day-${s.id}">$0</td><td class="r" id="tot-${s.id}">$0</td></tr>`;
+}
+function build(){
+  document.querySelector('#streams tbody').innerHTML = CFG.streams.map(rowHTML).join('');
+  document.querySelector('#tiers tbody').innerHTML = CFG.tiers.map(t=>
+    `<tr><td>${t.label}</td><td class="r">$${t.monthly}</td>` +
+    `<td class="r"><input type="number" data-sub="${t.id}" value="${t.subs}" min="0" step="1"/></td>` +
+    `<td class="r" id="mrr-${t.id}">$0</td></tr>`).join('');
+  drawMRR();
+}
+const val = (sel,id) => Number(document.querySelector(`[data-${sel}="${id}"]`).value || 0);
+const on = id => document.querySelector(`[data-on="${id}"]`).checked;
+function drawMRR(){
+  let mrr = 0;
+  CFG.tiers.forEach(t=>{ const m = t.monthly * val('sub',t.id); mrr += m;
+    const el = $('mrr-'+t.id); if(el) el.textContent = fmt(m); });
+  $('c-mrr').textContent = fmt(mrr) + ' / ' + fmt(mrr*12);
+  return mrr;
+}
+function fly(pid,color,ms){
+  return new Promise(res=>{
+    const svg=$('map'), path=svg.querySelector('#'+pid), L=path.getTotalLength();
+    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('r',8); c.setAttribute('fill',color); c.setAttribute('class','coin'); svg.appendChild(c);
+    const t0=performance.now();
+    (function step(t){ const k=Math.min(1,(t-t0)/ms), p=path.getPointAtLength(k*L);
+      c.setAttribute('cx',p.x); c.setAttribute('cy',p.y);
+      if(k<1) requestAnimationFrame(step); else { c.remove(); res(); } })(t0);
+  });
+}
+function log(m){ $('log').innerHTML = m; }
+$('days').oninput = e => { $('daysv').textContent = e.target.value; $('dayv').textContent = `day 0/${e.target.value}`; };
+$('speed').oninput = e => { $('speedv').textContent = e.target.value + 'ms/day'; };
+function snapshot(){
+  return CFG.streams.map(s=>({ ...s, price:val('price',s.id), cust:val('cust',s.id), enabled:on(s.id), total:0 }));
+}
+$('run').onclick = async ()=>{
+  if(running) return; running = true; $('run').disabled = true;
+  const days = Number($('days').value), ms = Number($('speed').value);
+  const S = snapshot(); let G=0,H=0,O=0;
+  S.forEach(s=>{ $('tot-'+s.id).textContent='$0'; });
+  for(let d=1; d<=days; d++){
+    $('dayv').textContent = `day ${d}/${days}`;
+    const flights = [];
+    S.forEach(s=>{
+      if(!s.enabled || s.cust<=0) { $('day-'+s.id).textContent='$0'; return; }
+      const amt = s.price * s.cust;
+      s.total += amt; G += amt; H += amt*s.hall/100; O += amt*s.own/100;
+      $('day-'+s.id).textContent = fmt(amt); $('tot-'+s.id).textContent = fmt(s.total);
+      flights.push(fly(s.path, s.color, Math.min(ms,400)));
+    });
+    $('c-gross').textContent=fmt(G); $('c-hall').textContent=fmt(H); $('c-own').textContent=fmt(O);
+    await Promise.all(flights);
+    await new Promise(r=>setTimeout(r, ms));
+  }
+  const mrr = drawMRR();
+  log(`<b>${days} days settled.</b> Gross ${fmt(G)} · hall ${fmt(H)} · owners/creators/winners ${fmt(O)} · MRR ${fmt(mrr)} (ARR ${fmt(mrr*12)}). Sparks move 1:1 with $ at peg.`);
+  running = false; $('run').disabled = false;
+};
+$('reset').onclick = ()=>{ ['c-gross','c-hall','c-own'].forEach(id=>$(id).textContent='$0');
+  $('c-mrr').textContent='$0'; $('dayv').textContent=`day 0/${$('days').value}`; build();
+  log('Reset. Inputs restored to master defaults.'); };
+build();
+</script>
+</body>
+</html>

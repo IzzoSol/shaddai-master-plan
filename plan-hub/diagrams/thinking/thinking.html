@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seven Ways of Thinking — Diderot tree · graphic organisers · 9 behaviours · 20 paradoxes · 7 logics · values map · thinking maps — one taxonomy for teaching agents.</title>
+<meta name="generator" content="shaddai-diagrams">
+<meta name="description" content="Diderot tree · graphic organisers · 9 behaviours · 20 paradoxes · 7 logics · values map · thinking maps — one taxonomy for teaching agents.">
+<style>
+:root{
+  --bg:#070a0e; --panel:#0b1117; --line:rgba(126,158,142,.20); --line-2:rgba(126,158,142,.36);
+  --ink:#e8f0ea; --muted:#8fa39a; --accent:#00e5a0; --accent-ink:#04120c;
+  --node:#0f1720; --node-line:rgba(126,158,142,.34); --edge:rgba(190,215,205,.72);
+  --region:rgba(255,255,255,.028);
+  --k-client:#7dd3fc; --k-frontend:#38bdf8; --k-backend:#a78bfa; --k-service:#00e5a0;
+  --k-agent:#fbbf24; --k-database:#f472b6; --k-store:#fb7185; --k-queue:#c084fc;
+  --k-cloud:#94a3b8; --k-security:#f87171; --k-messagebus:#22d3ee; --k-external:#64748b;
+  --k-tool:#facc15; --k-other:#94a3b8; --k-start:#00e5a0; --k-task:#00e5a0;
+  --k-decision:#fbbf24; --k-gate:#f87171; --k-retry:#facc15; --k-end:#00e5a0;
+  --font:'Rajdhani','Inter',system-ui,-apple-system,sans-serif;
+  --mono:'Share Tech Mono',ui-monospace,'Cascadia Mono',monospace;
+}
+html[data-theme=light]{
+  --bg:#f4f7f6; --panel:#ffffff; --line:rgba(20,50,40,.16); --line-2:rgba(20,50,40,.34);
+  --ink:#0d1a15; --muted:#5b6f66; --node:#ffffff; --node-line:rgba(20,50,40,.28);
+  --edge:rgba(20,50,40,.70); --region:rgba(10,40,30,.035);
+  --k-client:#0369a1; --k-frontend:#0369a1; --k-backend:#6d28d9; --k-service:#047857;
+  --k-agent:#a16207; --k-database:#be185d; --k-store:#be123c; --k-queue:#7e22ce;
+  --k-cloud:#475569; --k-security:#b91c1c; --k-messagebus:#0e7490; --k-external:#64748b;
+  --k-tool:#a16207; --k-other:#475569; --k-start:#047857; --k-task:#047857;
+  --k-decision:#a16207; --k-gate:#b91c1c; --k-retry:#a16207; --k-end:#047857;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--font);
+  background-image:radial-gradient(circle at 15% 0%,rgba(0,229,160,.06),transparent 46%),
+                   radial-gradient(circle at 90% 100%,rgba(56,189,248,.05),transparent 45%);}
+.wrap{max-width:1680px;margin:0 auto;padding:26px 30px 60px}
+header{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;
+  padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:8px}
+h1{margin:0;font-size:27px;letter-spacing:.02em;font-weight:700}
+h1 em{font-style:normal;color:var(--accent)}
+.sub{margin:5px 0 0;color:var(--muted);font-size:14px;max-width:74ch}
+.badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;
+  border:1px solid var(--line-2);background:var(--panel);font:600 10.5px/1 var(--mono);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.badge.ok{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+.badge b{font-weight:700;color:var(--ink)}
+.src{font:11px/1 var(--mono);color:var(--muted);margin-top:10px;word-break:break-all}
+.src a{color:var(--accent);text-decoration:none}
+.src a:hover{text-decoration:underline}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:16px 0 12px}
+button{font:600 11px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+  min-height:32px;padding:0 13px;border-radius:8px;border:1px solid var(--line-2);
+  background:var(--panel);color:var(--ink);transition:.15s}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 14px;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:7px;font:600 11px/1 var(--mono);
+  letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.legend i{width:11px;height:11px;border-radius:3px;background:var(--c);box-shadow:0 0 0 1px var(--node-line)}
+.stage{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:16px;
+  padding:18px;overflow:auto;background-image:linear-gradient(var(--line) 1px,transparent 1px),
+  linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:44px 44px;
+  background-position:-1px -1px}
+.stage::before{content:"";position:absolute;inset:0;background:var(--panel);opacity:.86;pointer-events:none}
+.stage>*{position:relative}
+.dg-svg{display:block;margin:0 auto;max-width:none;height:auto;overflow:visible}
+footer{margin-top:16px;font:11px/1.6 var(--mono);color:var(--muted);display:flex;gap:18px;flex-wrap:wrap}
+hint{display:block;color:var(--muted);font-size:11.5px}
+
+/* --- nodes --- */
+.nd-inner>.box{fill:var(--node);stroke:var(--node-line);stroke-width:1.4}
+.node{cursor:pointer;transition:opacity .16s}
+.node:hover .nd-inner>.box{stroke:var(--accent);stroke-width:1.9}
+.nd-bar{fill:var(--k-other);stroke:none}
+.node[data-kind=client] .nd-bar,.node[data-kind=frontend] .nd-bar{fill:var(--k-frontend)}
+.node[data-kind=backend] .nd-bar,.node[data-kind=service] .nd-bar{fill:var(--k-service)}
+.node[data-kind=agent] .nd-bar{fill:var(--k-agent)}
+.node[data-kind=database] .nd-bar,.node[data-kind=store] .nd-bar{fill:var(--k-database)}
+.node[data-kind=queue] .nd-bar,.node[data-kind=messagebus] .nd-bar{fill:var(--k-messagebus)}
+.node[data-kind=cloud] .nd-bar,.node[data-kind=external] .nd-bar{fill:var(--k-cloud)}
+.node[data-kind=security] .nd-bar,.node[data-kind=gate] .nd-bar{fill:var(--k-security)}
+.node[data-kind=tool] .nd-bar,.node[data-kind=retry] .nd-bar{fill:var(--k-tool)}
+.node[data-kind=start] .nd-bar,.node[data-kind=end] .nd-bar,.node[data-kind=task] .nd-bar{fill:var(--k-start)}
+.node[data-kind=decision] .nd-bar{fill:var(--k-decision)}
+.node[data-kind=client] .nd-inner>.box,.node[data-kind=client] .nd-inner>.box{stroke:var(--k-client)}
+.node[data-kind=frontend] .nd-inner>.box,.node[data-kind=frontend] .nd-inner>.box{stroke:var(--k-frontend)}
+.node[data-kind=backend] .nd-inner>.box,.node[data-kind=backend] .nd-inner>.box{stroke:var(--k-backend)}
+.node[data-kind=agent] .nd-inner>.box,.node[data-kind=agent] .nd-inner>.box{stroke:var(--k-agent)}
+.node[data-kind=database] .nd-inner>.box,.node[data-kind=database] .nd-inner>.box{stroke:var(--k-database)}
+.node[data-kind=store] .nd-inner>.box,.node[data-kind=store] .nd-inner>.box{stroke:var(--k-store)}
+.node[data-kind=queue] .nd-inner>.box,.node[data-kind=queue] .nd-inner>.box{stroke:var(--k-queue)}
+.node[data-kind=messagebus] .nd-inner>.box,.node[data-kind=messagebus] .nd-inner>.box{stroke:var(--k-messagebus)}
+.node[data-kind=security] .nd-inner>.box,.node[data-kind=security] .nd-inner>.box{stroke:var(--k-security)}
+.node[data-kind=cloud] .nd-inner>.box,.node[data-kind=cloud] .nd-inner>.box{stroke:var(--k-cloud)}
+.node[data-kind=external] .nd-inner>.box,.node[data-kind=external] .nd-inner>.box{stroke:var(--k-external)}
+.node[data-kind=tool] .nd-inner>.box,.node[data-kind=tool] .nd-inner>.box{stroke:var(--k-tool)}
+.node[data-kind=start] .nd-inner>.box,.node[data-kind=end] .nd-inner>.box{stroke:var(--k-start);stroke-width:1.8}
+.node[data-kind=decision] .nd-inner>.box{stroke:var(--k-decision);stroke-width:1.8}
+.node[data-kind=gate] .nd-inner>.box{stroke:var(--k-gate);stroke-width:1.8}
+.node[data-kind=retry] .nd-inner>.box{stroke:var(--k-retry);stroke-dasharray:5 3}
+.nd-label{fill:var(--ink);font:600 13px/1 var(--font);letter-spacing:.005em;dominant-baseline:middle}
+.nd-sub{fill:var(--muted);font:400 11px/1 var(--font);dominant-baseline:middle}
+.nd-chip{fill:var(--muted);font:600 9.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  text-anchor:end;opacity:.7;dominant-baseline:middle}
+.node.sel .nd-inner>.box,.node.sel .nd-inner>.box{stroke:var(--accent);stroke-width:2.4}
+.node.sel .nd-inner{filter:drop-shadow(0 0 12px color-mix(in srgb,var(--accent) 55%,transparent))}
+
+/* --- regions, links --- */
+.region-box{fill:var(--region);stroke:var(--line-2);stroke-width:1.3;stroke-dasharray:7 6}
+.region-text{fill:var(--muted);font:600 10.5px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase}
+.region-label rect{fill:var(--panel);stroke:var(--line-2);stroke-width:1}
+.lk-path{stroke:var(--edge);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.lk-halo{stroke:var(--panel);stroke-width:5.4;opacity:.9}
+.link[data-kind=error] .lk-path{stroke:#f87171}
+.link[data-kind=auth] .lk-path{stroke:#fbbf24}
+.link[data-kind=data] .lk-path,.link[data-kind=async] .lk-path{stroke:#38bdf8}
+.link[data-kind=no] .lk-path{stroke:#fb7185}
+.link[data-kind=yes] .lk-path{stroke:#00e5a0}
+.link[data-kind=return] .lk-path{stroke:var(--muted)}
+.lk-label rect{fill:var(--panel);stroke:var(--line);stroke-width:1;rx:9.5}
+.lk-text{fill:var(--ink);font:600 11px/1 var(--font);text-anchor:middle;dominant-baseline:middle}
+.lk-note{fill:var(--muted);font:400 10.5px/1 var(--font);text-anchor:middle}
+.lifeline{stroke:var(--line-2);stroke-width:1.3;stroke-dasharray:5 6}
+.arrow-head{fill:var(--edge)}
+.link[data-kind=error] .arrow-head{fill:#f87171}
+.link[data-kind=auth] .arrow-head{fill:#fbbf24}
+.link[data-kind=data] .arrow-head,.link[data-kind=async] .arrow-head{fill:#38bdf8}
+.link[data-kind=no] .arrow-head{fill:#fb7185}
+.link[data-kind=yes] .arrow-head{fill:#00e5a0}
+
+/* --- reach trace --- */
+.stage.trace .node:not(.keep){opacity:.14}
+.stage.trace .link:not(.keep){opacity:.1}
+.stage.trace .region{opacity:.25}
+.hint{position:sticky;bottom:0;margin-top:12px;font:11px/1.6 var(--mono);color:var(--muted)}
+@media print{body{background:#fff}.bar{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Seven Ways of Thinking</h1>
+      <p class="sub">Diderot tree · graphic organisers · 9 behaviours · 20 paradoxes · 7 logics · values map · thinking maps — one taxonomy for teaching agents.</p>
+      <div class="src">source · <b>shaddai/shaddai-n8n</b> @ <a href="https://github.com/shaddai/shaddai-n8n/tree/2026-10-15" target="_blank" rel="noopener">2026-10-15</a> — 7 source posters in OneDrive Pictures; elements sampled, full sets live in thinking-graphs page</div>
+    </div>
+    <div class="badges">
+      <span class="badge">architecture</span>
+      <span class="badge">quality <b>showcase</b></span>
+      <span class="badge">59 nodes</span>
+      <span class="badge">63 edges</span>
+      <span class="badge ok">✓ finalized 2026-10-15 19:52 UTC</span>
+    </div>
+  </header>
+
+  <div class="bar">
+    <button id="themeBtn">Light</button>
+    <button id="fitBtn">Fit width</button>
+    <button id="dlBtn">Download SVG</button>
+    <button data-trace>Reset trace</button>
+    <span class="hint">click any node to trace its immediate reach · Esc resets</span>
+  </div>
+
+  <ul class="legend"><li><i style="--c:var(--k-service)"></i>Framework</li><li><i style="--c:var(--k-tool)"></i>Element</li><li><i style="--c:var(--k-agent)"></i>Root</li></ul>
+
+  <div class="stage" id="stage"><svg class="dg-svg" viewBox="0 0 1826 3092" width="1826" height="3092"
+  xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Seven Ways of Thinking"
+  data-type="architecture" data-direction="lr"><defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" class="arrow-head"/>
+      </marker>
+    </defs><g transform="translate(60 980)"><g class="region" data-region="g_par">
+    <rect x="344" y="20" width="1246" height="1868" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="358" y="10" width="88.60000000000001" height="21" rx="10.5"/>
+    <text x="369" y="24.5" class="region-text">paradoxes</text></g>
+  </g><g class="region" data-region="g_val">
+    <rect x="344" y="452" width="936" height="1544" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="358" y="442" width="66.4" height="21" rx="10.5"/>
+    <text x="369" y="456.5" class="region-text">values</text></g>
+  </g><g class="region" data-region="g_beh">
+    <rect x="344" y="627" width="654" height="1369" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="358" y="617" width="96" height="21" rx="10.5"/>
+    <text x="369" y="631.5" class="region-text">behaviours</text></g>
+  </g><g class="region" data-region="g_log">
+    <rect x="344" y="1059" width="972" height="829" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="358" y="1049" width="66.4" height="21" rx="10.5"/>
+    <text x="369" y="1063.5" class="region-text">logics</text></g>
+  </g><g class="region" data-region="g_map">
+    <rect x="344" y="776" width="934" height="572" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="358" y="766" width="51.6" height="21" rx="10.5"/>
+    <text x="369" y="780.5" class="region-text">maps</text></g>
+  </g><g class="region" data-region="g_org">
+    <rect x="344" y="344" width="660" height="572" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="358" y="334" width="96" height="21" rx="10.5"/>
+    <text x="369" y="348.5" class="region-text">organisers</text></g>
+  </g><g class="region" data-region="g_did">
+    <rect x="344" y="20" width="642" height="531" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="358" y="10" width="110.80000000000001" height="21" rx="10.5"/>
+    <text x="369" y="24.5" class="region-text">diderot tree</text></g>
+  </g><g class="link" data-from="seven" data-to="f_diderot">
+    <path d="M 278 808 C 324 808, 328 484, 374 484" class="lk-halo" fill="none"/>
+    <path d="M 278 808 C 324 808, 328 484, 374 484" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="294.6" y="636" width="62.8" height="19" rx="9.5"/>
+       <text x="326" y="649.5" class="lk-text">taxonomy</text></g></g><g class="link" data-from="seven" data-to="f_organ">
+    <path d="M 278 808 C 324 808, 328 592, 374 592" class="lk-halo" fill="none"/>
+    <path d="M 278 808 C 324 808, 328 592, 374 592" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="304.125" y="690" width="43.75" height="19" rx="9.5"/>
+       <text x="326" y="703.5" class="lk-text">tools</text></g></g><g class="link" data-from="seven" data-to="f_behav">
+    <path d="M 278 808 C 324 808, 328 700, 374 700" class="lk-halo" fill="none"/>
+    <path d="M 278 808 C 324 808, 328 700, 374 700" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="291.425" y="744" width="69.15" height="19" rx="9.5"/>
+       <text x="326" y="757.5" class="lk-text">standards</text></g></g><g class="link" data-from="seven" data-to="f_paradox">
+    <path d="M 278 808 C 324 808, 328 808, 374 808" class="lk-halo" fill="none"/>
+    <path d="M 278 808 C 324 808, 328 808, 374 808" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="300.95" y="798" width="50.099999999999994" height="19" rx="9.5"/>
+       <text x="326" y="811.5" class="lk-text">wisdom</text></g></g><g class="link" data-from="seven" data-to="f_logic">
+    <path d="M 278 808 C 324 808, 328 1132, 374 1132" class="lk-halo" fill="none"/>
+    <path d="M 278 808 C 324 808, 328 1132, 374 1132" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="291.425" y="960" width="69.15" height="19" rx="9.5"/>
+       <text x="326" y="973.5" class="lk-text">reasoning</text></g></g><g class="link" data-from="seven" data-to="f_values">
+    <path d="M 278 808 C 324 808, 328 916, 374 916" class="lk-halo" fill="none"/>
+    <path d="M 278 808 C 324 808, 328 916, 374 916" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="297.775" y="852" width="56.449999999999996" height="19" rx="9.5"/>
+       <text x="326" y="865.5" class="lk-text">motives</text></g></g><g class="link" data-from="seven" data-to="f_maps">
+    <path d="M 278 808 C 324 808, 328 1024, 374 1024" class="lk-halo" fill="none"/>
+    <path d="M 278 808 C 324 808, 328 1024, 374 1024" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="307.3" y="906" width="37.4" height="19" rx="9.5"/>
+       <text x="326" y="919.5" class="lk-text">maps</text></g></g><g class="link" data-from="f_diderot" data-to="d_memory">
+    <path d="M 602 484 C 656 484, 668 93, 722 93" class="lk-halo" fill="none"/>
+    <path d="M 602 484 C 656 484, 668 93, 722 93" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="646.475" y="279" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="662" y="292.5" class="lk-text">has</text></g></g><g class="link" data-from="f_diderot" data-to="d_reason">
+    <path d="M 602 484 C 656 484, 668 201, 722 201" class="lk-halo" fill="none"/>
+    <path d="M 602 484 C 656 484, 668 201, 722 201" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="646.475" y="333" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="662" y="346.5" class="lk-text">has</text></g></g><g class="link" data-from="f_diderot" data-to="d_imag">
+    <path d="M 602 484 C 656 484, 668 309, 722 309" class="lk-halo" fill="none"/>
+    <path d="M 602 484 C 656 484, 668 309, 722 309" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="646.475" y="387" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="662" y="400.5" class="lk-text">has</text></g></g><g class="link" data-from="f_organ" data-to="o_recall">
+    <path d="M 554 592 C 629.6 592, 646.4 417, 722 417" class="lk-halo" fill="none"/>
+    <path d="M 554 592 C 629.6 592, 646.4 417, 722 417" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="622.475" y="495" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="638" y="508.5" class="lk-text">has</text></g></g><g class="link" data-from="f_organ" data-to="o_seq">
+    <path d="M 554 592 C 629.6 592, 646.4 525, 722 525" class="lk-halo" fill="none"/>
+    <path d="M 554 592 C 629.6 592, 646.4 525, 722 525" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="622.475" y="549" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="638" y="562.5" class="lk-text">has</text></g></g><g class="link" data-from="f_organ" data-to="o_cause">
+    <path d="M 554 592 C 629.6 592, 646.4 633, 722 633" class="lk-halo" fill="none"/>
+    <path d="M 554 592 C 629.6 592, 646.4 633, 722 633" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="622.475" y="603" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="638" y="616.5" class="lk-text">has</text></g></g><g class="link" data-from="f_organ" data-to="o_analy">
+    <path d="M 554 592 C 629.6 592, 646.4 741, 722 741" class="lk-halo" fill="none"/>
+    <path d="M 554 592 C 629.6 592, 646.4 741, 722 741" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="622.475" y="657" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="638" y="670.5" class="lk-text">has</text></g></g><g class="link" data-from="f_organ" data-to="o_decide">
+    <path d="M 554 592 C 629.6 592, 646.4 849, 722 849" class="lk-halo" fill="none"/>
+    <path d="M 554 592 C 629.6 592, 646.4 849, 722 849" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="622.475" y="711" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="638" y="724.5" class="lk-text">has</text></g></g><g class="link" data-from="f_behav" data-to="b_clarity">
+    <path d="M 626 700 C 672 700, 676 957, 722 957" class="lk-halo" fill="none"/>
+    <path d="M 626 700 C 672 700, 676 957, 722 957" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="658.475" y="819" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="674" y="832.5" class="lk-text">has</text></g></g><g class="link" data-from="f_behav" data-to="b_accuracy">
+    <path d="M 626 700 C 672 700, 676 1065, 722 1065" class="lk-halo" fill="none"/>
+    <path d="M 626 700 C 672 700, 676 1065, 722 1065" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="658.475" y="873" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="674" y="886.5" class="lk-text">has</text></g></g><g class="link" data-from="f_behav" data-to="b_precision">
+    <path d="M 626 700 C 672 700, 676 1173, 722 1173" class="lk-halo" fill="none"/>
+    <path d="M 626 700 C 672 700, 676 1173, 722 1173" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="658.475" y="927" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="674" y="940.5" class="lk-text">has</text></g></g><g class="link" data-from="f_behav" data-to="b_relevance">
+    <path d="M 626 700 C 672 700, 676 1281, 722 1281" class="lk-halo" fill="none"/>
+    <path d="M 626 700 C 672 700, 676 1281, 722 1281" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="658.475" y="981" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="674" y="994.5" class="lk-text">has</text></g></g><g class="link" data-from="f_behav" data-to="b_depth">
+    <path d="M 626 700 C 672 700, 676 1389, 722 1389" class="lk-halo" fill="none"/>
+    <path d="M 626 700 C 672 700, 676 1389, 722 1389" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="658.475" y="1035" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="674" y="1048.5" class="lk-text">has</text></g></g><g class="link" data-from="f_behav" data-to="b_breadth">
+    <path d="M 626 700 C 672 700, 676 1497, 722 1497" class="lk-halo" fill="none"/>
+    <path d="M 626 700 C 672 700, 676 1497, 722 1497" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="658.475" y="1089" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="674" y="1102.5" class="lk-text">has</text></g></g><g class="link" data-from="f_behav" data-to="b_logic">
+    <path d="M 626 700 C 672 700, 676 1605, 722 1605" class="lk-halo" fill="none"/>
+    <path d="M 626 700 C 672 700, 676 1605, 722 1605" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="658.475" y="1143" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="674" y="1156.5" class="lk-text">has</text></g></g><g class="link" data-from="f_behav" data-to="b_fair">
+    <path d="M 626 700 C 672 700, 676 1929, 722 1929" class="lk-halo" fill="none"/>
+    <path d="M 626 700 C 672 700, 676 1929, 722 1929" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="658.475" y="1305" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="674" y="1318.5" class="lk-text">has</text></g></g><g class="link" data-from="f_behav" data-to="b_signif">
+    <path d="M 626 700 C 672 700, 676 1713, 722 1713" class="lk-halo" fill="none"/>
+    <path d="M 626 700 C 672 700, 676 1713, 722 1713" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="658.475" y="1197" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="674" y="1210.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_growth">
+    <path d="M 552 808 C 628.5 808, 645.5 1821, 722 1821" class="lk-halo" fill="none"/>
+    <path d="M 552 808 C 628.5 808, 645.5 1821, 722 1821" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="621.475" y="1305" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="637" y="1318.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_effort">
+    <path d="M 463 771 L 463 -76 Q 463 -92 479 -92 L 1143 -92 Q 1159 -92 1159 -76 L 1159 56" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -76 Q 463 -92 479 -92 L 1143 -92 Q 1159 -92 1159 -76 L 1159 56" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="795.475" y="-112" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="811" y="-98.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_fail">
+    <path d="M 463 771 L 463 -102 Q 463 -118 479 -118 L 1143 -118 Q 1159 -118 1159 -102 L 1159 164" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -102 Q 463 -118 479 -118 L 1143 -118 Q 1159 -118 1159 -102 L 1159 164" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="795.475" y="-138" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="811" y="-124.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_money">
+    <path d="M 463 771 L 463 -128 Q 463 -144 479 -144 L 1143 -144 Q 1159 -144 1159 -128 L 1159 272" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -128 Q 463 -144 479 -144 L 1143 -144 Q 1159 -144 1159 -128 L 1159 272" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="795.475" y="-164" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="811" y="-150.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_speed">
+    <path d="M 463 771 L 463 -154 Q 463 -170 479 -170 L 1143 -170 Q 1159 -170 1159 -154 L 1159 380" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -154 Q 463 -170 479 -170 L 1143 -170 Q 1159 -170 1159 -154 L 1159 380" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="795.475" y="-190" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="811" y="-176.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_persuade">
+    <path d="M 463 771 L 463 -180 Q 463 -196 479 -196 L 1455 -196 Q 1471 -196 1471 -180 L 1471 56" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -180 Q 463 -196 479 -196 L 1455 -196 Q 1471 -196 1471 -180 L 1471 56" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-216" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-202.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_wisdom">
+    <path d="M 463 771 L 463 -206 Q 463 -222 479 -222 L 1455 -222 Q 1471 -222 1471 -206 L 1471 164" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -206 Q 463 -222 479 -222 L 1455 -222 Q 1471 -222 1471 -206 L 1471 164" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-242" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-228.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_product">
+    <path d="M 463 771 L 463 -232 Q 463 -248 479 -248 L 1455 -248 Q 1471 -248 1471 -232 L 1471 272" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -232 Q 463 -248 479 -248 L 1455 -248 Q 1471 -248 1471 -232 L 1471 272" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-268" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-254.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_news">
+    <path d="M 463 771 L 463 -258 Q 463 -274 479 -274 L 1455 -274 Q 1471 -274 1471 -258 L 1471 380" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -258 Q 463 -274 479 -274 L 1455 -274 Q 1471 -274 1471 -258 L 1471 380" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-294" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-280.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_icarus">
+    <path d="M 463 771 L 463 -284 Q 463 -300 479 -300 L 1455 -300 Q 1471 -300 1471 -284 L 1471 488" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -284 Q 463 -300 479 -300 L 1455 -300 Q 1471 -300 1471 -284 L 1471 488" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-320" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-306.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_shrink">
+    <path d="M 463 771 L 463 -310 Q 463 -326 479 -326 L 1455 -326 Q 1471 -326 1471 -310 L 1471 596" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -310 Q 463 -326 479 -326 L 1455 -326 Q 1471 -326 1471 -310 L 1471 596" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-346" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-332.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_robbins">
+    <path d="M 463 771 L 463 -336 Q 463 -352 479 -352 L 1455 -352 Q 1471 -352 1471 -336 L 1471 704" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -336 Q 463 -352 479 -352 L 1455 -352 Q 1471 -352 1471 -336 L 1471 704" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-372" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-358.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_death">
+    <path d="M 463 771 L 463 -362 Q 463 -378 479 -378 L 1455 -378 Q 1471 -378 1471 -362 L 1471 812" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -362 Q 463 -378 479 -378 L 1455 -378 Q 1471 -378 1471 -362 L 1471 812" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-398" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-384.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_sayno">
+    <path d="M 463 771 L 463 -388 Q 463 -404 479 -404 L 1455 -404 Q 1471 -404 1471 -388 L 1471 920" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -388 Q 463 -404 479 -404 L 1455 -404 Q 1471 -404 1471 -388 L 1471 920" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-424" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-410.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_talk">
+    <path d="M 463 771 L 463 -414 Q 463 -430 479 -430 L 1455 -430 Q 1471 -430 1471 -414 L 1471 1028" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -414 Q 463 -430 479 -430 L 1455 -430 Q 1471 -430 1471 -414 L 1471 1028" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-450" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-436.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_connect">
+    <path d="M 463 771 L 463 -440 Q 463 -456 479 -456 L 1455 -456 Q 1471 -456 1471 -440 L 1471 1136" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -440 Q 463 -456 479 -456 L 1455 -456 Q 1471 -456 1471 -440 L 1471 1136" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-476" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-462.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_control">
+    <path d="M 463 771 L 463 -466 Q 463 -482 479 -482 L 1455 -482 Q 1471 -482 1471 -466 L 1471 1244" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -466 Q 463 -482 479 -482 L 1455 -482 Q 1471 -482 1471 -466 L 1471 1244" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-502" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-488.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_look">
+    <path d="M 463 771 L 463 -492 Q 463 -508 479 -508 L 1455 -508 Q 1471 -508 1471 -492 L 1471 1352" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -492 Q 463 -508 479 -508 L 1455 -508 Q 1471 -508 1471 -492 L 1471 1352" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-528" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-514.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_change">
+    <path d="M 463 771 L 463 -518 Q 463 -534 479 -534 L 1455 -534 Q 1471 -534 1471 -518 L 1471 1460" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -518 Q 463 -534 479 -534 L 1455 -534 Q 1471 -534 1471 -518 L 1471 1460" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-554" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-540.5" class="lk-text">has</text></g></g><g class="link" data-from="f_paradox" data-to="p_fear">
+    <path d="M 463 771 L 463 -544 Q 463 -560 479 -560 L 1455 -560 Q 1471 -560 1471 -544 L 1471 1568" class="lk-halo" fill="none"/>
+    <path d="M 463 771 L 463 -544 Q 463 -560 479 -560 L 1455 -560 Q 1471 -560 1471 -544 L 1471 1568" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="951.475" y="-580" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="967" y="-566.5" class="lk-text">has</text></g></g><g class="link" data-from="f_logic" data-to="l_ded">
+    <path d="M 463 1095 L 463 -570 Q 463 -586 479 -586 L 1143 -586 Q 1159 -586 1159 -570 L 1159 1352" class="lk-halo" fill="none"/>
+    <path d="M 463 1095 L 463 -570 Q 463 -586 479 -586 L 1143 -586 Q 1159 -586 1159 -570 L 1159 1352" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="795.475" y="-606" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="811" y="-592.5" class="lk-text">has</text></g></g><g class="link" data-from="f_logic" data-to="l_ind">
+    <path d="M 463 1095 L 463 -596 Q 463 -612 479 -612 L 1143 -612 Q 1159 -612 1159 -596 L 1159 1460" class="lk-halo" fill="none"/>
+    <path d="M 463 1095 L 463 -596 Q 463 -612 479 -612 L 1143 -612 Q 1159 -612 1159 -596 L 1159 1460" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="795.475" y="-632" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="811" y="-618.5" class="lk-text">has</text></g></g><g class="link" data-from="f_logic" data-to="l_abd">
+    <path d="M 463 1095 L 463 -622 Q 463 -638 479 -638 L 1143 -638 Q 1159 -638 1159 -622 L 1159 1568" class="lk-halo" fill="none"/>
+    <path d="M 463 1095 L 463 -622 Q 463 -638 479 -638 L 1143 -638 Q 1159 -638 1159 -622 L 1159 1568" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="795.475" y="-658" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="811" y="-644.5" class="lk-text">has</text></g></g><g class="link" data-from="f_logic" data-to="l_fuzzy">
+    <path d="M 463 1095 L 463 -648 Q 463 -664 479 -664 L 1143 -664 Q 1159 -664 1159 -648 L 1159 1676" class="lk-halo" fill="none"/>
+    <path d="M 463 1095 L 463 -648 Q 463 -664 479 -664 L 1143 -664 Q 1159 -664 1159 -648 L 1159 1676" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="795.475" y="-684" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="811" y="-670.5" class="lk-text">has</text></g></g><g class="link" data-from="f_logic" data-to="l_dial">
+    <path d="M 463 1095 L 463 -674 Q 463 -690 479 -690 L 1162 -690 Q 1178 -690 1178 -674 L 1178 1784" class="lk-halo" fill="none"/>
+    <path d="M 463 1095 L 463 -674 Q 463 -690 479 -690 L 1162 -690 Q 1178 -690 1178 -674 L 1178 1784" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="805.475" y="-710" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="821" y="-696.5" class="lk-text">has</text></g></g><g class="link" data-from="f_values" data-to="v_self">
+    <path d="M 464 879 L 464 -700 Q 464 -716 480 -716 L 1144 -716 Q 1160 -716 1160 -700 L 1160 488" class="lk-halo" fill="none"/>
+    <path d="M 464 879 L 464 -700 Q 464 -716 480 -716 L 1144 -716 Q 1160 -716 1160 -700 L 1160 488" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="796.475" y="-736" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="812" y="-722.5" class="lk-text">has</text></g></g><g class="link" data-from="f_values" data-to="v_ach">
+    <path d="M 464 879 L 464 -726 Q 464 -742 480 -742 L 1143 -742 Q 1159 -742 1159 -726 L 1159 1892" class="lk-halo" fill="none"/>
+    <path d="M 464 879 L 464 -726 Q 464 -742 480 -742 L 1143 -742 Q 1159 -742 1159 -726 L 1159 1892" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="796.475" y="-762" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="812" y="-748.5" class="lk-text">has</text></g></g><g class="link" data-from="f_values" data-to="v_ben">
+    <path d="M 464 879 L 464 -752 Q 464 -768 480 -768 L 1143 -768 Q 1159 -768 1159 -752 L 1159 596" class="lk-halo" fill="none"/>
+    <path d="M 464 879 L 464 -752 Q 464 -768 480 -768 L 1143 -768 Q 1159 -768 1159 -752 L 1159 596" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="796.475" y="-788" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="812" y="-774.5" class="lk-text">has</text></g></g><g class="link" data-from="f_values" data-to="v_sec">
+    <path d="M 464 879 L 464 -778 Q 464 -794 480 -794 L 1143 -794 Q 1159 -794 1159 -778 L 1159 704" class="lk-halo" fill="none"/>
+    <path d="M 464 879 L 464 -778 Q 464 -794 480 -794 L 1143 -794 Q 1159 -794 1159 -778 L 1159 704" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="796.475" y="-814" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="812" y="-800.5" class="lk-text">has</text></g></g><g class="link" data-from="f_maps" data-to="m_circle">
+    <path d="M 467 987 L 467 -804 Q 467 -820 483 -820 L 1143 -820 Q 1159 -820 1159 -804 L 1159 920" class="lk-halo" fill="none"/>
+    <path d="M 467 987 L 467 -804 Q 467 -820 483 -820 L 1143 -820 Q 1159 -820 1159 -804 L 1159 920" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="797.475" y="-840" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="813" y="-826.5" class="lk-text">has</text></g></g><g class="link" data-from="f_maps" data-to="m_bubble">
+    <path d="M 467 987 L 467 -830 Q 467 -846 483 -846 L 1143 -846 Q 1159 -846 1159 -830 L 1159 1028" class="lk-halo" fill="none"/>
+    <path d="M 467 987 L 467 -830 Q 467 -846 483 -846 L 1143 -846 Q 1159 -846 1159 -830 L 1159 1028" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="797.475" y="-866" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="813" y="-852.5" class="lk-text">has</text></g></g><g class="link" data-from="f_maps" data-to="m_tree">
+    <path d="M 467 987 L 467 -856 Q 467 -872 483 -872 L 1143 -872 Q 1159 -872 1159 -856 L 1159 1136" class="lk-halo" fill="none"/>
+    <path d="M 467 987 L 467 -856 Q 467 -872 483 -872 L 1143 -872 Q 1159 -872 1159 -856 L 1159 1136" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="797.475" y="-892" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="813" y="-878.5" class="lk-text">has</text></g></g><g class="link" data-from="f_maps" data-to="m_flow">
+    <path d="M 467 987 L 467 -882 Q 467 -898 483 -898 L 1143 -898 Q 1159 -898 1159 -882 L 1159 812" class="lk-halo" fill="none"/>
+    <path d="M 467 987 L 467 -882 Q 467 -898 483 -898 L 1143 -898 Q 1159 -898 1159 -882 L 1159 812" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="797.475" y="-918" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="813" y="-904.5" class="lk-text">has</text></g></g><g class="link" data-from="f_maps" data-to="m_bridge">
+    <path d="M 467 987 L 467 -908 Q 467 -924 483 -924 L 1143 -924 Q 1159 -924 1159 -908 L 1159 1244" class="lk-halo" fill="none"/>
+    <path d="M 467 987 L 467 -908 Q 467 -924 483 -924 L 1143 -924 Q 1159 -924 1159 -908 L 1159 1244" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="797.475" y="-944" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="813" y="-930.5" class="lk-text">has</text></g></g><g class="link" data-from="b_logic" data-to="f_logic">
+    <path d="M 722 1605 L -46 1605 Q -62 1605 -62 1621 L -62 2070 Q -62 2086 -46 2086 L 1636 2086 Q 1652 2086 1652 2070 L 1652 1148 Q 1652 1132 1636 1132 L 552 1132" class="lk-halo" fill="none"/>
+    <path d="M 722 1605 L -46 1605 Q -62 1605 -62 1621 L -62 2070 Q -62 2086 -46 2086 L 1636 2086 Q 1652 2086 1652 2070 L 1652 1148 Q 1652 1132 1636 1132 L 552 1132" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="776.3" y="2090" width="37.4" height="19" rx="9.5"/>
+       <text x="795" y="2103.5" class="lk-text">uses</text></g></g><g class="link" data-from="o_cause" data-to="m_bridge">
+    <path d="M 974 633 C 1020 633, 1024 1281, 1070 1281" class="lk-halo" fill="none"/>
+    <path d="M 974 633 C 1020 633, 1024 1281, 1070 1281" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="1000.125" y="947" width="43.75" height="19" rx="9.5"/>
+       <text x="1022" y="960.5" class="lk-text">pairs</text></g></g><g class="link" data-from="o_seq" data-to="m_flow">
+    <path d="M 944 525 C 1000.7 525, 1013.3 849, 1070 849" class="lk-halo" fill="none"/>
+    <path d="M 944 525 C 1000.7 525, 1013.3 849, 1070 849" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="985.125" y="677" width="43.75" height="19" rx="9.5"/>
+       <text x="1007" y="690.5" class="lk-text">pairs</text></g></g><g class="link" data-from="p_money" data-to="v_ach">
+    <path d="M 1070 309 L -62 309 Q -78 309 -78 325 L -78 2096 Q -78 2112 -62 2112 L 1652 2112 Q 1668 2112 1668 2096 L 1668 1945 Q 1668 1929 1652 1929 L 1248 1929" class="lk-halo" fill="none"/>
+    <path d="M 1070 309 L -62 309 Q -78 309 -78 325 L -78 2096 Q -78 2112 -62 2112 L 1652 2112 Q 1668 2112 1668 2096 L 1668 1945 Q 1668 1929 1652 1929 L 1248 1929" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="769.95" y="2116" width="50.099999999999994" height="19" rx="9.5"/>
+       <text x="795" y="2129.5" class="lk-text">drives</text></g></g><g class="link" data-from="l_dial" data-to="b_fair">
+    <path d="M 1070 1821 L -78 1821 Q -94 1821 -94 1837 L -94 2122 Q -94 2138 -78 2138 L 1668 2138 Q 1684 2138 1684 2122 L 1684 1945 Q 1684 1929 1668 1929 L 944 1929" class="lk-halo" fill="none"/>
+    <path d="M 1070 1821 L -78 1821 Q -94 1821 -94 1837 L -94 2122 Q -94 2138 -78 2138 L 1668 2138 Q 1684 2138 1684 2122 L 1684 1945 Q 1684 1929 1668 1929 L 944 1929" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="773.125" y="2142" width="43.75" height="19" rx="9.5"/>
+       <text x="795" y="2155.5" class="lk-text">needs</text></g></g><g class="node" id="n-seven" data-node="seven" data-kind="agent"><clipPath id="clip-architecture-seven"><rect class="box" x="56" y="771" width="222" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="seven"><title>Seven Ways — thinking canon · teach order</title><g class="nd-inner"><rect class="box" x="56" y="771" width="222" height="74" rx="10"/><rect x="57" y="780" width="3" height="56" rx="1.5" class="nd-bar"/><text x="265" y="789" class="nd-chip">agent</text><g class="nd-text" clip-path="url(#clip-architecture-seven)"><text x="78" y="802.5" class="nd-label">Seven Ways</text><text x="78" y="823.5" class="nd-sub">thinking canon · teach order</text></g></g></g></g><g class="node" id="n-f_diderot" data-node="f_diderot" data-kind="service"><clipPath id="clip-architecture-f_diderot"><rect class="box" x="374" y="447" width="228" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="f_diderot"><title>Diderot tree — memory · reason · imagination</title><g class="nd-inner"><rect class="box" x="374" y="447" width="228" height="74" rx="10"/><rect x="375" y="456" width="3" height="56" rx="1.5" class="nd-bar"/><text x="589" y="465" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-f_diderot)"><text x="396" y="478.5" class="nd-label">Diderot tree</text><text x="396" y="499.5" class="nd-sub">memory · reason · imagination</text></g></g></g></g><g class="node" id="n-f_organ" data-node="f_organ" data-kind="service"><clipPath id="clip-architecture-f_organ"><rect class="box" x="374" y="555" width="180" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="f_organ"><title>Organisers — 15 tools · 5 purposes</title><g class="nd-inner"><rect class="box" x="374" y="555" width="180" height="74" rx="10"/><rect x="375" y="564" width="3" height="56" rx="1.5" class="nd-bar"/><text x="541" y="573" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-f_organ)"><text x="396" y="586.5" class="nd-label">Organisers</text><text x="396" y="607.5" class="nd-sub">15 tools · 5 purposes</text></g></g></g></g><g class="node" id="n-f_behav" data-node="f_behav" data-kind="service"><clipPath id="clip-architecture-f_behav"><rect class="box" x="374" y="663" width="252" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="f_behav"><title>9 Behaviours — Paul-Elder · clarity→significance</title><g class="nd-inner"><rect class="box" x="374" y="663" width="252" height="74" rx="10"/><rect x="375" y="672" width="3" height="56" rx="1.5" class="nd-bar"/><text x="613" y="681" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-f_behav)"><text x="396" y="694.5" class="nd-label">9 Behaviours</text><text x="396" y="715.5" class="nd-sub">Paul-Elder · clarity→significance</text></g></g></g></g><g class="node" id="n-f_paradox" data-node="f_paradox" data-kind="service"><clipPath id="clip-architecture-f_paradox"><rect class="box" x="374" y="771" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="f_paradox"><title>20 Paradoxes — Bloom · growth→fear</title><g class="nd-inner"><rect class="box" x="374" y="771" width="178" height="74" rx="10"/><rect x="375" y="780" width="3" height="56" rx="1.5" class="nd-bar"/><text x="539" y="789" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-f_paradox)"><text x="396" y="802.5" class="nd-label">20 Paradoxes</text><text x="396" y="823.5" class="nd-sub">Bloom · growth→fear</text></g></g></g></g><g class="node" id="n-f_values" data-node="f_values" data-kind="service"><clipPath id="clip-architecture-f_values"><rect class="box" x="374" y="879" width="180" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="f_values"><title>Values map — intrinsic ↔ extrinsic</title><g class="nd-inner"><rect class="box" x="374" y="879" width="180" height="74" rx="10"/><rect x="375" y="888" width="3" height="56" rx="1.5" class="nd-bar"/><text x="541" y="897" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-f_values)"><text x="396" y="910.5" class="nd-label">Values map</text><text x="396" y="931.5" class="nd-sub">intrinsic ↔ extrinsic</text></g></g></g></g><g class="node" id="n-f_maps" data-node="f_maps" data-kind="service"><clipPath id="clip-architecture-f_maps"><rect class="box" x="374" y="987" width="186" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="f_maps"><title>Thinking Maps — 8 maps · circle→bridge</title><g class="nd-inner"><rect class="box" x="374" y="987" width="186" height="74" rx="10"/><rect x="375" y="996" width="3" height="56" rx="1.5" class="nd-bar"/><text x="547" y="1005" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-f_maps)"><text x="396" y="1018.5" class="nd-label">Thinking Maps</text><text x="396" y="1039.5" class="nd-sub">8 maps · circle→bridge</text></g></g></g></g><g class="node" id="n-f_logic" data-node="f_logic" data-kind="service"><clipPath id="clip-architecture-f_logic"><rect class="box" x="374" y="1095" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="f_logic"><title>7 Logics — deductive→informal</title><g class="nd-inner"><rect class="box" x="374" y="1095" width="178" height="74" rx="10"/><rect x="375" y="1104" width="3" height="56" rx="1.5" class="nd-bar"/><text x="539" y="1113" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-f_logic)"><text x="396" y="1126.5" class="nd-label">7 Logics</text><text x="396" y="1147.5" class="nd-sub">deductive→informal</text></g></g></g></g><g class="node" id="n-d_memory" data-node="d_memory" data-kind="tool"><clipPath id="clip-architecture-d_memory"><rect class="box" x="722" y="56" width="234" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="d_memory"><title>Memory — history · sacred/civil/natural</title><g class="nd-inner"><rect class="box" x="722" y="56" width="234" height="74" rx="10"/><rect x="723" y="65" width="3" height="56" rx="1.5" class="nd-bar"/><text x="943" y="74" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-d_memory)"><text x="744" y="87.5" class="nd-label">Memory</text><text x="744" y="108.5" class="nd-sub">history · sacred/civil/natural</text></g></g></g></g><g class="node" id="n-d_reason" data-node="d_reason" data-kind="tool"><clipPath id="clip-architecture-d_reason"><rect class="box" x="722" y="164" width="216" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="d_reason"><title>Reason — philosophy · science of man</title><g class="nd-inner"><rect class="box" x="722" y="164" width="216" height="74" rx="10"/><rect x="723" y="173" width="3" height="56" rx="1.5" class="nd-bar"/><text x="925" y="182" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-d_reason)"><text x="744" y="195.5" class="nd-label">Reason</text><text x="744" y="216.5" class="nd-sub">philosophy · science of man</text></g></g></g></g><g class="node" id="n-d_imag" data-node="d_imag" data-kind="tool"><clipPath id="clip-architecture-d_imag"><rect class="box" x="722" y="272" width="192" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="d_imag"><title>Imagination — poetry · sacred/profane</title><g class="nd-inner"><rect class="box" x="722" y="272" width="192" height="74" rx="10"/><rect x="723" y="281" width="3" height="56" rx="1.5" class="nd-bar"/><text x="901" y="290" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-d_imag)"><text x="744" y="303.5" class="nd-label">Imagination</text><text x="744" y="324.5" class="nd-sub">poetry · sacred/profane</text></g></g></g></g><g class="node" id="n-o_recall" data-node="o_recall" data-kind="tool"><clipPath id="clip-architecture-o_recall"><rect class="box" x="722" y="380" width="240" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="o_recall"><title>Recall — spider · affinity · concept map</title><g class="nd-inner"><rect class="box" x="722" y="380" width="240" height="74" rx="10"/><rect x="723" y="389" width="3" height="56" rx="1.5" class="nd-bar"/><text x="949" y="398" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-o_recall)"><text x="744" y="411.5" class="nd-label">Recall</text><text x="744" y="432.5" class="nd-sub">spider · affinity · concept map</text></g></g></g></g><g class="node" id="n-o_seq" data-node="o_seq" data-kind="tool"><clipPath id="clip-architecture-o_seq"><rect class="box" x="722" y="488" width="222" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="o_seq"><title>Sequence — cycle · flow chart · twister</title><g class="nd-inner"><rect class="box" x="722" y="488" width="222" height="74" rx="10"/><rect x="723" y="497" width="3" height="56" rx="1.5" class="nd-bar"/><text x="931" y="506" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-o_seq)"><text x="744" y="519.5" class="nd-label">Sequence</text><text x="744" y="540.5" class="nd-sub">cycle · flow chart · twister</text></g></g></g></g><g class="node" id="n-o_cause" data-node="o_cause" data-kind="tool"><clipPath id="clip-architecture-o_cause"><rect class="box" x="722" y="596" width="252" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="o_cause"><title>Cause-effect — futures wheel · bridge · fishbone</title><g class="nd-inner"><rect class="box" x="722" y="596" width="252" height="74" rx="10"/><rect x="723" y="605" width="3" height="56" rx="1.5" class="nd-bar"/><text x="961" y="614" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-o_cause)"><text x="744" y="627.5" class="nd-label">Cause-effect</text><text x="744" y="648.5" class="nd-sub">futures wheel · bridge · fishbone</text></g></g></g></g><g class="node" id="n-o_analy" data-node="o_analy" data-kind="tool"><clipPath id="clip-architecture-o_analy"><rect class="box" x="722" y="704" width="198" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="o_analy"><title>Analysis — Y chart · T chart · Venn</title><g class="nd-inner"><rect class="box" x="722" y="704" width="198" height="74" rx="10"/><rect x="723" y="713" width="3" height="56" rx="1.5" class="nd-bar"/><text x="907" y="722" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-o_analy)"><text x="744" y="735.5" class="nd-label">Analysis</text><text x="744" y="756.5" class="nd-sub">Y chart · T chart · Venn</text></g></g></g></g><g class="node" id="n-o_decide" data-node="o_decide" data-kind="tool"><clipPath id="clip-architecture-o_decide"><rect class="box" x="722" y="812" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="o_decide"><title>Decide — scales · comic · ECG</title><g class="nd-inner"><rect class="box" x="722" y="812" width="178" height="74" rx="10"/><rect x="723" y="821" width="3" height="56" rx="1.5" class="nd-bar"/><text x="887" y="830" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-o_decide)"><text x="744" y="843.5" class="nd-label">Decide</text><text x="744" y="864.5" class="nd-sub">scales · comic · ECG</text></g></g></g></g><g class="node" id="n-b_clarity" data-node="b_clarity" data-kind="tool"><clipPath id="clip-architecture-b_clarity"><rect class="box" x="722" y="920" width="246" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="b_clarity"><title>Clarity — elaborate · illustrate · example</title><g class="nd-inner"><rect class="box" x="722" y="920" width="246" height="74" rx="10"/><rect x="723" y="929" width="3" height="56" rx="1.5" class="nd-bar"/><text x="955" y="938" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-b_clarity)"><text x="744" y="951.5" class="nd-label">Clarity</text><text x="744" y="972.5" class="nd-sub">elaborate · illustrate · example</text></g></g></g></g><g class="node" id="n-b_accuracy" data-node="b_accuracy" data-kind="tool"><clipPath id="clip-architecture-b_accuracy"><rect class="box" x="722" y="1028" width="210" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="b_accuracy"><title>Accuracy — check · test · verify true</title><g class="nd-inner"><rect class="box" x="722" y="1028" width="210" height="74" rx="10"/><rect x="723" y="1037" width="3" height="56" rx="1.5" class="nd-bar"/><text x="919" y="1046" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-b_accuracy)"><text x="744" y="1059.5" class="nd-label">Accuracy</text><text x="744" y="1080.5" class="nd-sub">check · test · verify true</text></g></g></g></g><g class="node" id="n-b_precision" data-node="b_precision" data-kind="tool"><clipPath id="clip-architecture-b_precision"><rect class="box" x="722" y="1136" width="210" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="b_precision"><title>Precision — specific · details · exact</title><g class="nd-inner"><rect class="box" x="722" y="1136" width="210" height="74" rx="10"/><rect x="723" y="1145" width="3" height="56" rx="1.5" class="nd-bar"/><text x="919" y="1154" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-b_precision)"><text x="744" y="1167.5" class="nd-label">Precision</text><text x="744" y="1188.5" class="nd-sub">specific · details · exact</text></g></g></g></g><g class="node" id="n-b_relevance" data-node="b_relevance" data-kind="tool"><clipPath id="clip-architecture-b_relevance"><rect class="box" x="722" y="1244" width="186" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="b_relevance"><title>Relevance — relate · answer · help</title><g class="nd-inner"><rect class="box" x="722" y="1244" width="186" height="74" rx="10"/><rect x="723" y="1253" width="3" height="56" rx="1.5" class="nd-bar"/><text x="895" y="1262" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-b_relevance)"><text x="744" y="1275.5" class="nd-label">Relevance</text><text x="744" y="1296.5" class="nd-sub">relate · answer · help</text></g></g></g></g><g class="node" id="n-b_depth" data-node="b_depth" data-kind="tool"><clipPath id="clip-architecture-b_depth"><rect class="box" x="722" y="1352" width="240" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="b_depth"><title>Depth — difficulties · outcomes · ahead</title><g class="nd-inner"><rect class="box" x="722" y="1352" width="240" height="74" rx="10"/><rect x="723" y="1361" width="3" height="56" rx="1.5" class="nd-bar"/><text x="949" y="1370" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-b_depth)"><text x="744" y="1383.5" class="nd-label">Depth</text><text x="744" y="1404.5" class="nd-sub">difficulties · outcomes · ahead</text></g></g></g></g><g class="node" id="n-b_breadth" data-node="b_breadth" data-kind="tool"><clipPath id="clip-architecture-b_breadth"><rect class="box" x="722" y="1460" width="210" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="b_breadth"><title>Breadth — other views · perspectives</title><g class="nd-inner"><rect class="box" x="722" y="1460" width="210" height="74" rx="10"/><rect x="723" y="1469" width="3" height="56" rx="1.5" class="nd-bar"/><text x="919" y="1478" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-b_breadth)"><text x="744" y="1491.5" class="nd-label">Breadth</text><text x="744" y="1512.5" class="nd-sub">other views · perspectives</text></g></g></g></g><g class="node" id="n-b_logic" data-node="b_logic" data-kind="tool"><clipPath id="clip-architecture-b_logic"><rect class="box" x="722" y="1568" width="204" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="b_logic"><title>Logic — sense together · evidence</title><g class="nd-inner"><rect class="box" x="722" y="1568" width="204" height="74" rx="10"/><rect x="723" y="1577" width="3" height="56" rx="1.5" class="nd-bar"/><text x="913" y="1586" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-b_logic)"><text x="744" y="1599.5" class="nd-label">Logic</text><text x="744" y="1620.5" class="nd-sub">sense together · evidence</text></g></g></g></g><g class="node" id="n-b_signif" data-node="b_signif" data-kind="tool"><clipPath id="clip-architecture-b_signif"><rect class="box" x="722" y="1676" width="186" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="b_signif"><title>Significance — most important · focus</title><g class="nd-inner"><rect class="box" x="722" y="1676" width="186" height="74" rx="10"/><rect x="723" y="1685" width="3" height="56" rx="1.5" class="nd-bar"/><text x="895" y="1694" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-b_signif)"><text x="744" y="1707.5" class="nd-label">Significance</text><text x="744" y="1728.5" class="nd-sub">most important · focus</text></g></g></g></g><g class="node" id="n-p_growth" data-node="p_growth" data-kind="tool"><clipPath id="clip-architecture-p_growth"><rect class="box" x="722" y="1784" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_growth"><title>Growth — slow then sudden</title><g class="nd-inner"><rect class="box" x="722" y="1784" width="178" height="74" rx="10"/><rect x="723" y="1793" width="3" height="56" rx="1.5" class="nd-bar"/><text x="887" y="1802" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_growth)"><text x="744" y="1815.5" class="nd-label">Growth</text><text x="744" y="1836.5" class="nd-sub">slow then sudden</text></g></g></g></g><g class="node" id="n-b_fair" data-node="b_fair" data-kind="tool"><clipPath id="clip-architecture-b_fair"><rect class="box" x="722" y="1892" width="222" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="b_fair"><title>Fairness — others&#39; thoughts · open mind</title><g class="nd-inner"><rect class="box" x="722" y="1892" width="222" height="74" rx="10"/><rect x="723" y="1901" width="3" height="56" rx="1.5" class="nd-bar"/><text x="931" y="1910" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-b_fair)"><text x="744" y="1923.5" class="nd-label">Fairness</text><text x="744" y="1944.5" class="nd-sub">others&#39; thoughts · open mind</text></g></g></g></g><g class="node" id="n-p_effort" data-node="p_effort" data-kind="tool"><clipPath id="clip-architecture-p_effort"><rect class="box" x="1070" y="56" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_effort"><title>Effort — work → effortless</title><g class="nd-inner"><rect class="box" x="1070" y="56" width="178" height="74" rx="10"/><rect x="1071" y="65" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="74" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_effort)"><text x="1092" y="87.5" class="nd-label">Effort</text><text x="1092" y="108.5" class="nd-sub">work → effortless</text></g></g></g></g><g class="node" id="n-p_fail" data-node="p_fail" data-kind="tool"><clipPath id="clip-architecture-p_fail"><rect class="box" x="1070" y="164" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_fail"><title>Failure — fail more → win more</title><g class="nd-inner"><rect class="box" x="1070" y="164" width="178" height="74" rx="10"/><rect x="1071" y="173" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="182" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_fail)"><text x="1092" y="195.5" class="nd-label">Failure</text><text x="1092" y="216.5" class="nd-sub">fail more → win more</text></g></g></g></g><g class="node" id="n-p_money" data-node="p_money" data-kind="tool"><clipPath id="clip-architecture-p_money"><rect class="box" x="1070" y="272" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_money"><title>Money — lose → make</title><g class="nd-inner"><rect class="box" x="1070" y="272" width="178" height="74" rx="10"/><rect x="1071" y="281" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="290" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_money)"><text x="1092" y="303.5" class="nd-label">Money</text><text x="1092" y="324.5" class="nd-sub">lose → make</text></g></g></g></g><g class="node" id="n-p_speed" data-node="p_speed" data-kind="tool"><clipPath id="clip-architecture-p_speed"><rect class="box" x="1070" y="380" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_speed"><title>Speed — slow down → speed up</title><g class="nd-inner"><rect class="box" x="1070" y="380" width="178" height="74" rx="10"/><rect x="1071" y="389" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="398" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_speed)"><text x="1092" y="411.5" class="nd-label">Speed</text><text x="1092" y="432.5" class="nd-sub">slow down → speed up</text></g></g></g></g><g class="node" id="n-v_self" data-node="v_self" data-kind="tool"><clipPath id="clip-architecture-v_self"><rect class="box" x="1070" y="488" width="180" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="v_self"><title>Self-direction — curious · independent</title><g class="nd-inner"><rect class="box" x="1070" y="488" width="180" height="74" rx="10"/><rect x="1071" y="497" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1237" y="506" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-v_self)"><text x="1092" y="519.5" class="nd-label">Self-direction</text><text x="1092" y="540.5" class="nd-sub">curious · independent</text></g></g></g></g><g class="node" id="n-v_ben" data-node="v_ben" data-kind="tool"><clipPath id="clip-architecture-v_ben"><rect class="box" x="1070" y="596" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="v_ben"><title>Benevolence — helpful · loyal</title><g class="nd-inner"><rect class="box" x="1070" y="596" width="178" height="74" rx="10"/><rect x="1071" y="605" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="614" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-v_ben)"><text x="1092" y="627.5" class="nd-label">Benevolence</text><text x="1092" y="648.5" class="nd-sub">helpful · loyal</text></g></g></g></g><g class="node" id="n-v_sec" data-node="v_sec" data-kind="tool"><clipPath id="clip-architecture-v_sec"><rect class="box" x="1070" y="704" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="v_sec"><title>Security — order · belonging</title><g class="nd-inner"><rect class="box" x="1070" y="704" width="178" height="74" rx="10"/><rect x="1071" y="713" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="722" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-v_sec)"><text x="1092" y="735.5" class="nd-label">Security</text><text x="1092" y="756.5" class="nd-sub">order · belonging</text></g></g></g></g><g class="node" id="n-m_flow" data-node="m_flow" data-kind="tool"><clipPath id="clip-architecture-m_flow"><rect class="box" x="1070" y="812" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="m_flow"><title>Flow — sequencing</title><g class="nd-inner"><rect class="box" x="1070" y="812" width="178" height="74" rx="10"/><rect x="1071" y="821" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="830" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-m_flow)"><text x="1092" y="843.5" class="nd-label">Flow</text><text x="1092" y="864.5" class="nd-sub">sequencing</text></g></g></g></g><g class="node" id="n-m_circle" data-node="m_circle" data-kind="tool"><clipPath id="clip-architecture-m_circle"><rect class="box" x="1070" y="920" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="m_circle"><title>Circle — defining in context</title><g class="nd-inner"><rect class="box" x="1070" y="920" width="178" height="74" rx="10"/><rect x="1071" y="929" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="938" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-m_circle)"><text x="1092" y="951.5" class="nd-label">Circle</text><text x="1092" y="972.5" class="nd-sub">defining in context</text></g></g></g></g><g class="node" id="n-m_bubble" data-node="m_bubble" data-kind="tool"><clipPath id="clip-architecture-m_bubble"><rect class="box" x="1070" y="1028" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="m_bubble"><title>Bubble — describing qualities</title><g class="nd-inner"><rect class="box" x="1070" y="1028" width="178" height="74" rx="10"/><rect x="1071" y="1037" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="1046" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-m_bubble)"><text x="1092" y="1059.5" class="nd-label">Bubble</text><text x="1092" y="1080.5" class="nd-sub">describing qualities</text></g></g></g></g><g class="node" id="n-m_tree" data-node="m_tree" data-kind="tool"><clipPath id="clip-architecture-m_tree"><rect class="box" x="1070" y="1136" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="m_tree"><title>Tree — classifying</title><g class="nd-inner"><rect class="box" x="1070" y="1136" width="178" height="74" rx="10"/><rect x="1071" y="1145" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="1154" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-m_tree)"><text x="1092" y="1167.5" class="nd-label">Tree</text><text x="1092" y="1188.5" class="nd-sub">classifying</text></g></g></g></g><g class="node" id="n-m_bridge" data-node="m_bridge" data-kind="tool"><clipPath id="clip-architecture-m_bridge"><rect class="box" x="1070" y="1244" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="m_bridge"><title>Bridge — seeing analogies</title><g class="nd-inner"><rect class="box" x="1070" y="1244" width="178" height="74" rx="10"/><rect x="1071" y="1253" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="1262" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-m_bridge)"><text x="1092" y="1275.5" class="nd-label">Bridge</text><text x="1092" y="1296.5" class="nd-sub">seeing analogies</text></g></g></g></g><g class="node" id="n-l_ded" data-node="l_ded" data-kind="tool"><clipPath id="clip-architecture-l_ded"><rect class="box" x="1070" y="1352" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="l_ded"><title>Deductive — general → specific</title><g class="nd-inner"><rect class="box" x="1070" y="1352" width="178" height="74" rx="10"/><rect x="1071" y="1361" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="1370" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-l_ded)"><text x="1092" y="1383.5" class="nd-label">Deductive</text><text x="1092" y="1404.5" class="nd-sub">general → specific</text></g></g></g></g><g class="node" id="n-l_ind" data-node="l_ind" data-kind="tool"><clipPath id="clip-architecture-l_ind"><rect class="box" x="1070" y="1460" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="l_ind"><title>Inductive — specific → general</title><g class="nd-inner"><rect class="box" x="1070" y="1460" width="178" height="74" rx="10"/><rect x="1071" y="1469" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="1478" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-l_ind)"><text x="1092" y="1491.5" class="nd-label">Inductive</text><text x="1092" y="1512.5" class="nd-sub">specific → general</text></g></g></g></g><g class="node" id="n-l_abd" data-node="l_abd" data-kind="tool"><clipPath id="clip-architecture-l_abd"><rect class="box" x="1070" y="1568" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="l_abd"><title>Abductive — best explanation</title><g class="nd-inner"><rect class="box" x="1070" y="1568" width="178" height="74" rx="10"/><rect x="1071" y="1577" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="1586" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-l_abd)"><text x="1092" y="1599.5" class="nd-label">Abductive</text><text x="1092" y="1620.5" class="nd-sub">best explanation</text></g></g></g></g><g class="node" id="n-l_fuzzy" data-node="l_fuzzy" data-kind="tool"><clipPath id="clip-architecture-l_fuzzy"><rect class="box" x="1070" y="1676" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="l_fuzzy"><title>Fuzzy — truth on spectrum</title><g class="nd-inner"><rect class="box" x="1070" y="1676" width="178" height="74" rx="10"/><rect x="1071" y="1685" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="1694" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-l_fuzzy)"><text x="1092" y="1707.5" class="nd-label">Fuzzy</text><text x="1092" y="1728.5" class="nd-sub">truth on spectrum</text></g></g></g></g><g class="node" id="n-l_dial" data-node="l_dial" data-kind="tool"><clipPath id="clip-architecture-l_dial"><rect class="box" x="1070" y="1784" width="216" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="l_dial"><title>Dialectical — thesis→antithesis→synthesis</title><g class="nd-inner"><rect class="box" x="1070" y="1784" width="216" height="74" rx="10"/><rect x="1071" y="1793" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1273" y="1802" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-l_dial)"><text x="1092" y="1815.5" class="nd-label">Dialectical</text><text x="1092" y="1836.5" class="nd-sub">thesis→antithesis→synthesis</text></g></g></g></g><g class="node" id="n-v_ach" data-node="v_ach" data-kind="tool"><clipPath id="clip-architecture-v_ach"><rect class="box" x="1070" y="1892" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="v_ach"><title>Achievement — ambitious · capable</title><g class="nd-inner"><rect class="box" x="1070" y="1892" width="178" height="74" rx="10"/><rect x="1071" y="1901" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1235" y="1910" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-v_ach)"><text x="1092" y="1923.5" class="nd-label">Achievement</text><text x="1092" y="1944.5" class="nd-sub">ambitious · capable</text></g></g></g></g><g class="node" id="n-p_persuade" data-node="p_persuade" data-kind="tool"><clipPath id="clip-architecture-p_persuade"><rect class="box" x="1382" y="56" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_persuade"><title>Persuasion — observe → persuade</title><g class="nd-inner"><rect class="box" x="1382" y="56" width="178" height="74" rx="10"/><rect x="1383" y="65" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="74" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_persuade)"><text x="1404" y="87.5" class="nd-label">Persuasion</text><text x="1404" y="108.5" class="nd-sub">observe → persuade</text></g></g></g></g><g class="node" id="n-p_wisdom" data-node="p_wisdom" data-kind="tool"><clipPath id="clip-architecture-p_wisdom"><rect class="box" x="1382" y="164" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_wisdom"><title>Wisdom — learn → unknowing</title><g class="nd-inner"><rect class="box" x="1382" y="164" width="178" height="74" rx="10"/><rect x="1383" y="173" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="182" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_wisdom)"><text x="1404" y="195.5" class="nd-label">Wisdom</text><text x="1404" y="216.5" class="nd-sub">learn → unknowing</text></g></g></g></g><g class="node" id="n-p_product" data-node="p_product" data-kind="tool"><clipPath id="clip-architecture-p_product"><rect class="box" x="1382" y="272" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_product"><title>Productivity — longer → less</title><g class="nd-inner"><rect class="box" x="1382" y="272" width="178" height="74" rx="10"/><rect x="1383" y="281" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="290" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_product)"><text x="1404" y="303.5" class="nd-label">Productivity</text><text x="1404" y="324.5" class="nd-sub">longer → less</text></g></g></g></g><g class="node" id="n-p_news" data-node="p_news" data-kind="tool"><clipPath id="clip-architecture-p_news"><rect class="box" x="1382" y="380" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_news"><title>News — more → less informed</title><g class="nd-inner"><rect class="box" x="1382" y="380" width="178" height="74" rx="10"/><rect x="1383" y="389" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="398" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_news)"><text x="1404" y="411.5" class="nd-label">News</text><text x="1404" y="432.5" class="nd-sub">more → less informed</text></g></g></g></g><g class="node" id="n-p_icarus" data-node="p_icarus" data-kind="tool"><clipPath id="clip-architecture-p_icarus"><rect class="box" x="1382" y="488" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_icarus"><title>Icarus — success → downfall</title><g class="nd-inner"><rect class="box" x="1382" y="488" width="178" height="74" rx="10"/><rect x="1383" y="497" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="506" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_icarus)"><text x="1404" y="519.5" class="nd-label">Icarus</text><text x="1404" y="540.5" class="nd-sub">success → downfall</text></g></g></g></g><g class="node" id="n-p_shrink" data-node="p_shrink" data-kind="tool"><clipPath id="clip-architecture-p_shrink"><rect class="box" x="1382" y="596" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_shrink"><title>Shrinking — shrink → grow</title><g class="nd-inner"><rect class="box" x="1382" y="596" width="178" height="74" rx="10"/><rect x="1383" y="605" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="614" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_shrink)"><text x="1404" y="627.5" class="nd-label">Shrinking</text><text x="1404" y="648.5" class="nd-sub">shrink → grow</text></g></g></g></g><g class="node" id="n-p_robbins" data-node="p_robbins" data-kind="tool"><clipPath id="clip-architecture-p_robbins"><rect class="box" x="1382" y="704" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_robbins"><title>No-edge — no advantage → edge</title><g class="nd-inner"><rect class="box" x="1382" y="704" width="178" height="74" rx="10"/><rect x="1383" y="713" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="722" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_robbins)"><text x="1404" y="735.5" class="nd-label">No-edge</text><text x="1404" y="756.5" class="nd-sub">no advantage → edge</text></g></g></g></g><g class="node" id="n-p_death" data-node="p_death" data-kind="tool"><clipPath id="clip-architecture-p_death"><rect class="box" x="1382" y="812" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_death"><title>Death — memento → alive</title><g class="nd-inner"><rect class="box" x="1382" y="812" width="178" height="74" rx="10"/><rect x="1383" y="821" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="830" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_death)"><text x="1404" y="843.5" class="nd-label">Death</text><text x="1404" y="864.5" class="nd-sub">memento → alive</text></g></g></g></g><g class="node" id="n-p_sayno" data-node="p_sayno" data-kind="tool"><clipPath id="clip-architecture-p_sayno"><rect class="box" x="1382" y="920" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_sayno"><title>Say No — less → more</title><g class="nd-inner"><rect class="box" x="1382" y="920" width="178" height="74" rx="10"/><rect x="1383" y="929" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="938" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_sayno)"><text x="1404" y="951.5" class="nd-label">Say No</text><text x="1404" y="972.5" class="nd-sub">less → more</text></g></g></g></g><g class="node" id="n-p_talk" data-node="p_talk" data-kind="tool"><clipPath id="clip-architecture-p_talk"><rect class="box" x="1382" y="1028" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_talk"><title>Talking — listen twice</title><g class="nd-inner"><rect class="box" x="1382" y="1028" width="178" height="74" rx="10"/><rect x="1383" y="1037" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="1046" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_talk)"><text x="1404" y="1059.5" class="nd-label">Talking</text><text x="1404" y="1080.5" class="nd-sub">listen twice</text></g></g></g></g><g class="node" id="n-p_connect" data-node="p_connect" data-kind="tool"><clipPath id="clip-architecture-p_connect"><rect class="box" x="1382" y="1136" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_connect"><title>Connected — linked → lonely</title><g class="nd-inner"><rect class="box" x="1382" y="1136" width="178" height="74" rx="10"/><rect x="1383" y="1145" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="1154" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_connect)"><text x="1404" y="1167.5" class="nd-label">Connected</text><text x="1404" y="1188.5" class="nd-sub">linked → lonely</text></g></g></g></g><g class="node" id="n-p_control" data-node="p_control" data-kind="tool"><clipPath id="clip-architecture-p_control"><rect class="box" x="1382" y="1244" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_control"><title>Control — grip → slip</title><g class="nd-inner"><rect class="box" x="1382" y="1244" width="178" height="74" rx="10"/><rect x="1383" y="1253" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="1262" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_control)"><text x="1404" y="1275.5" class="nd-label">Control</text><text x="1404" y="1296.5" class="nd-sub">grip → slip</text></g></g></g></g><g class="node" id="n-p_look" data-node="p_look" data-kind="tool"><clipPath id="clip-architecture-p_look"><rect class="box" x="1382" y="1352" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_look"><title>Looking — stop → find</title><g class="nd-inner"><rect class="box" x="1382" y="1352" width="178" height="74" rx="10"/><rect x="1383" y="1361" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="1370" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_look)"><text x="1404" y="1383.5" class="nd-label">Looking</text><text x="1404" y="1404.5" class="nd-sub">stop → find</text></g></g></g></g><g class="node" id="n-p_change" data-node="p_change" data-kind="tool"><clipPath id="clip-architecture-p_change"><rect class="box" x="1382" y="1460" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_change"><title>Change — done changing → done</title><g class="nd-inner"><rect class="box" x="1382" y="1460" width="178" height="74" rx="10"/><rect x="1383" y="1469" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="1478" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_change)"><text x="1404" y="1491.5" class="nd-label">Change</text><text x="1404" y="1512.5" class="nd-sub">done changing → done</text></g></g></g></g><g class="node" id="n-p_fear" data-node="p_fear" data-kind="tool"><clipPath id="clip-architecture-p_fear"><rect class="box" x="1382" y="1568" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="p_fear"><title>Fear — feared → first</title><g class="nd-inner"><rect class="box" x="1382" y="1568" width="178" height="74" rx="10"/><rect x="1383" y="1577" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1547" y="1586" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-p_fear)"><text x="1404" y="1599.5" class="nd-label">Fear</text><text x="1404" y="1620.5" class="nd-sub">feared → first</text></g></g></g></g></g></svg></div>
+
+  <footer>
+    <span>shaddai-diagrams · architecture · 1826×3092px</span>
+    <span>schema v1 · showcase profile</span>
+    <span>7 region(s)</span>
+  </footer>
+</div>
+<script>
+(function(){
+  var svg=document.querySelector('.dg-svg'), stage=document.getElementById('stage');
+  if(!svg) return;
+  var adj={};
+  svg.querySelectorAll('.link').forEach(function(l){
+    var a=l.dataset.from,b=l.dataset.to;
+    (adj[a]=adj[a]||[]).push(b); (adj[b]=adj[b]||[]).push(a);
+  });
+  var sel=null;
+  function clear(){
+    sel=null; stage.classList.remove('trace');
+    svg.querySelectorAll('.keep').forEach(function(e){e.classList.remove('keep')});
+    svg.querySelectorAll('.sel').forEach(function(e){e.classList.remove('sel')});
+    document.querySelectorAll('.bar .on[data-trace]').forEach(function(b){b.classList.remove('on')});
+  }
+  function trace(id){
+    var keep={}; keep[id]=1;
+    (adj[id]||[]).forEach(function(n){keep[n]=1});
+    svg.querySelectorAll('.keep,.sel').forEach(function(e){e.classList.remove('keep','sel')});
+    svg.querySelectorAll('[data-node],[data-from]').forEach(function(e){
+      var k=e.dataset.node||((keep[e.dataset.from]&&keep[e.dataset.to])?'t':null);
+      if(e.dataset.node!==undefined&&keep[e.dataset.node]) {e.classList.add('keep','sel');return;}
+      if(e.dataset.from!==undefined&&keep[e.dataset.from]&&keep[e.dataset.to]) e.classList.add('keep');
+    });
+    stage.classList.add('trace'); sel=id;
+    document.querySelectorAll('.bar [data-trace]').forEach(function(b){b.classList.add('on')});
+  }
+  svg.addEventListener('click',function(ev){
+    var hit=ev.target.closest('[data-node]');
+    if(hit){ var id=hit.dataset.node; if(sel===id) clear(); else trace(id); return; }
+    clear();
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') clear(); });
+  document.querySelectorAll('[data-trace]').forEach(function(b){b.addEventListener('click',clear)});
+  var t=document.getElementById('themeBtn');
+  if(t) t.addEventListener('click',function(){
+    var cur=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
+    document.documentElement.setAttribute('data-theme',cur);
+    t.textContent=cur==='light'?'Dark':'Light';
+  });
+  var f=document.getElementById('fitBtn');
+  if(f) f.addEventListener('click',function(){
+    svg.style.width=''; svg.style.maxWidth='none';
+    var w=stage.clientWidth-40, vb=svg.viewBox.baseVal.width;
+    svg.style.maxWidth=(w<vb?w:vb)+'px';
+    f.classList.toggle('on');
+  });
+  var d=document.getElementById('dlBtn');
+  if(d) d.addEventListener('click',function(){
+    var clone=svg.cloneNode(true);
+    clone.setAttribute('xmlns','http://www.w3.org/2000/svg');
+    var src='<?xml version="1.0" encoding="UTF-8"?>\n'+new XMLSerializer().serializeToString(clone);
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([src],{type:'image/svg+xml'}));
+    a.download=(document.title||'diagram').replace(/[^a-z0-9]+/gi,'-').toLowerCase()+'.svg';
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+  var fit=document.getElementById('fitBtn'); if(fit) fit.click();
+})();
+</script>
+</body>
+</html>

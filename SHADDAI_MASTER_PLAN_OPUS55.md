@@ -406,6 +406,26 @@ Opus 5.5 executes Thursday. Budget: $100 fal hard cap, 6 HF keys, 20d Claude Pro
 5. Push `feat/world3d`, sync Shaddai-Beta `site/`, merge to main (fast-forward possible, 91+ commits). Render auto-deploys main and Beta master.
 6. Write `docs/OPUS-AUDIT-REPORT.md` listing what changed, what was verified (how), what is still open, next 10 items.
 
+### Phase W — World + Forge finish (owner order 2026-11-05)
+Targets: `shaddai-backup.onrender.com/forge-demo.html` (finish the models and the flow) and `/SHADDAI-WORLD-3D.html` (loading, lag, loading screen, character select, side popups, mode buttons, hide buttons, nothing in the way, removable help notices, smooth Navi, mounts + hoverboard + hover moves fully working). Source: `Shaddai-3d` (IzzoSol/Shaddai), branch `polish/world-finish-p1`, tag `pre-world-polish-p1-20261105`. Plan hub: `plan-hub/index.html` (design-studio diagrams + economy blueprint + 3D maps, merged).
+
+**Measured on live (headless SwiftShader, 2026-11-05):** 165 s to playable, 825 requests, ~30 MB, heap 411 MB. Console: shader compile failure (`'instanceMatrix' : undeclared identifier`), `ZEROX.glb` (12.9 MB) dropped mid-download (QUIC error).
+
+Done (branch `polish/world-finish-p1`, not yet deployed):
+1. ✅ Shader fix: the dragon and VFX decal ShaderMaterials guard `instanceMatrix` with `USE_INSTANCING`. Boot bundles rebuilt (`node tools/build-dist.cjs --check` clean).
+2. ✅ F2 = hide all UI: session-only, restores exactly what was showing, keeps opened panels (Navi, dossier, districts), and keeps notices hidden while off. Toast confirms; `?hideui=0` disables it. Added to the controls strip.
+3. ✅ Key conflict: `\` toggled fight/passive mode AND placed a campfire. Now `\` = passive/fight (matches Navi and the touch buttons) and Shift+`\` = campfire.
+4. ✅ Forge demo, real bodies: the Body step offers the 7 council GLBs (the bodies the world can wear, `VALID_MODELS`). The chosen body builds as a skinned hologram, materialises into its real textures and idles. The field bot is your real body, walking while it works. Verified headless: SHADDAI and NEXUS load, build and materialise.
+5. ✅ Forge demo, flow end: "Enter Shaddai World" registers the operative via `POST /api/operatives` (owner set from the session, model = chosen body), then opens the world. If the server is unreachable it says so and saves on the device. Verified headless end to end (Bind → Body → License → Labor → PayBox 100 Sparks → Enter).
+6. ✅ PIKADON: `POST /api/operatives` now accepts only the creative fields. Before this, a client `id` could overwrite another user's record, and economy/stats/inventory/tokenId were client-settable. Test: `tools/tests/operatives-route.redteam.cjs` (9/9).
+
+Open, in order:
+1. Lag, by measured priority: shadow casting only near the player, hide realm towns beyond 1.2 km and titans beyond 2.5 km, merge static meshes per material (`world-static-batch.js` / `world-merge.js`), lazy-load the council GLBs with LODs (§2.3). Measure before and after each change with `tools/_ui-probe.cjs` on a machine with ≥1.5 GB free (this laptop kept dropping to ~360 MB free with other apps open).
+2. `ZEROX.glb` 12.9 MB: the only council body without meshopt + webp (the others are 0.7–5 MB). Run the same pipeline as NEXUS/ORACLE/QUILL. `ZEROX_packed_old.glb` (4.8 MB) exists and was set aside once, so the owner checks the look before it replaces the live file.
+3. Character select: the cards are 2D portraits. Show the real bodies (one shared renderer, small turntables).
+4. In-game verification still owed (the world could not run headless at session time): O hoverboard + tricks + wall-ride, I mounts & travel, Y Navi open/close smoothing, F2 in every realm and interior.
+5. `rarity` on `POST /api/operatives` is still client-relayed (forge.html passes what `/api/forge` returned). Move it server-side (Phase 7 item 2).
+
 ---
 
 ## 7. OPEN DECISIONS (owner must decide)

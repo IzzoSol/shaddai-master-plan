@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SHADDAI Diagrams — portfolio</title>
+<meta name="generator" content="shaddai-diagrams / portfolio.mjs">
+<style>
+:root{
+  --bg:#070a0e; --panel:#0b1117; --line:rgba(126,158,142,.20); --line-2:rgba(126,158,142,.36);
+  --ink:#e8f0ea; --muted:#8fa39a; --accent:#00e5a0; --accent-ink:#04120c;
+  --k-client:#7dd3fc; --k-frontend:#38bdf8; --k-backend:#a78bfa; --k-service:#00e5a0;
+  --k-agent:#fbbf24; --k-database:#f472b6; --k-store:#fb7185; --k-security:#f87171;
+  --k-tool:#facc15; --k-external:#64748b; --k-other:#94a3b8;
+  --font:'Rajdhani','Inter',system-ui,-apple-system,sans-serif;
+  --mono:'Share Tech Mono',ui-monospace,'Cascadia Mono',monospace;
+}
+html[data-theme=light]{
+  --bg:#f4f7f6; --panel:#ffffff; --line:rgba(20,50,40,.16); --line-2:rgba(20,50,40,.34);
+  --ink:#0d1a15; --muted:#5b6f66;
+  --k-client:#0369a1; --k-frontend:#0369a1; --k-backend:#6d28d9; --k-service:#047857;
+  --k-agent:#a16207; --k-database:#be185d; --k-store:#be123c; --k-security:#b91c1c;
+  --k-tool:#a16207; --k-external:#64748b; --k-other:#475569;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--font);
+  background-image:radial-gradient(circle at 15% 0%,rgba(0,229,160,.06),transparent 46%),
+                   radial-gradient(circle at 90% 100%,rgba(56,189,248,.05),transparent 45%);}
+.wrap{max-width:1440px;margin:0 auto;padding:30px 32px 70px}
+header{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:space-between;
+  padding-bottom:18px;border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:30px;letter-spacing:.02em;font-weight:700}
+h1 em{font-style:normal;color:var(--accent)}
+.sub{margin:6px 0 0;color:var(--muted);font-size:14px;max-width:72ch}
+.badges{display:flex;gap:8px;flex-wrap:wrap}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.filters button.on{border-color:var(--accent);color:var(--accent)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:999px;
+  border:1px solid var(--line-2);background:var(--panel);font:600 10.5px/1 var(--mono);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.badge b{font-weight:700;color:var(--ink)}
+.badge.ok{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+button{font:600 11px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+  min-height:32px;padding:0 13px;border-radius:8px;border:1px solid var(--line-2);
+  background:var(--panel);color:var(--ink)}
+button:hover{border-color:var(--accent);color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:20px;margin-top:24px}
+.card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;
+  background:var(--panel);overflow:hidden;transition:.18s}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);
+  box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.thumb{position:relative;aspect-ratio:16/10;background:var(--bg);overflow:hidden;border-bottom:1px solid var(--line)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:.25s;filter:saturate(.92)}
+.card:hover .thumb img{filter:saturate(1.05)}
+.thumb .type-chip{position:absolute;top:10px;left:10px;padding:3px 9px;border-radius:999px;
+  background:var(--panel);border:1px solid var(--line-2);font:600 10px/1 var(--mono);
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.thumb .state{position:absolute;top:10px;right:10px;display:flex;gap:6px;align-items:center;
+  padding:3px 9px;border-radius:999px;font:600 10px/1 var(--mono);letter-spacing:.1em}
+.thumb .state.pass{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);
+  border:1px solid color-mix(in srgb,var(--accent) 45%,transparent)}
+.thumb .state.miss{background:color-mix(in srgb,#f87171 16%,transparent);color:#f87171;
+  border:1px solid rgba(248,113,113,.45)}
+.body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:9px;flex:1}
+.body h3{margin:0;font-size:18px;font-weight:700;letter-spacing:.01em}
+.body p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.meta .m{font:600 10.5px/1 var(--mono);letter-spacing:.08em;color:var(--muted)}
+.meta .m b{color:var(--ink);font-weight:700}
+.srcm{font:10.5px/1.4 var(--mono);color:var(--muted);word-break:break-all}
+.srcm a{color:var(--accent);text-decoration:none}
+footer{margin-top:34px;font:11px/1.6 var(--mono);color:var(--muted)}
+a.open{align-self:flex-start;margin-top:8px;text-decoration:none;font:600 11px/1 var(--font);
+  letter-spacing:.1em;text-transform:uppercase;padding:9px 15px;border-radius:9px;
+  background:var(--accent);color:var(--accent-ink)}
+a.open:hover{filter:brightness(1.08)}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<p style="margin:0 0 14px"><a href="../index.html" style="color:var(--accent);text-decoration:none;font:600 12px/1 var(--mono);letter-spacing:.1em">&larr; PLAN HUB</a></p><header>
+  <div>
+    <h1>SHADDAI <em>Diagrams</em></h1>
+    <p class="sub">The IzzoSol portfolio, drawn by our own engine — validated JSON in, gated HTML out. Click any card to open the interactive diagram.</p>
+  </div>
+  <div class="badges">
+    <span class="badge"><b>16</b> diagrams</span>
+    <span class="badge">architecture · workflow · sequence</span>
+    <span class="badge">1 needs attention</span>
+    <button id="themeBtn" type="button">Light</button>
+  </div>
+</header>
+<div class="filters" id="typeFilters">
+  <button type="button" data-filter="all" class="on">All</button>
+  <button type="button" data-filter="hub">hub</button><button type="button" data-filter="architecture">architecture</button><button type="button" data-filter="workflow">workflow</button><button type="button" data-filter="sequence">sequence</button>
+</div>
+<div class="grid" id="grid">
+<article class="card" data-type="hub">
+  <div class="thumb"><img src="hub/dossier.png" alt="" loading="lazy"><span class="type-chip">hub</span><span class="state pass">!! 1 gates pass</span></div>
+  <div class="body">
+    <h3>SHADDAI Economy — dossier</h3>
+    <p>Whitepaper + prices + splits + token + founders + siege + brand wall + maps. 1 spark = $1 peg.</p>
+    <div class="meta"><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>shaddai/shaddai-n8n</b> @ <span>2026-10-15</span></div>
+    <a class="open" href="hub/dossier.html">Open diagram &rarr;</a>
+  </div>
+</article>
+<article class="card" data-type="hub">
+  <div class="thumb"><img src="hub/realm.png" alt="" loading="lazy"><span class="type-chip">hub</span><span class="state pass">!! 1 gates pass</span></div>
+  <div class="body">
+    <h3>SHADDAI Economy Realm</h3>
+    <p>3D showcase: treasury, pools, founders, farms, siege castle, market. Click any building.</p>
+    <div class="meta"><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>shaddai/shaddai-n8n</b> @ <span>2026-10-15</span></div>
+    <a class="open" href="hub/realm.html">Open diagram &rarr;</a>
+  </div>
+</article>
+<article class="card" data-type="hub">
+  <div class="thumb"><img src="hub/simulator.png" alt="" loading="lazy"><span class="type-chip">hub</span><span class="state pass">!! 1 gates pass</span></div>
+  <div class="body">
+    <h3>SHADDAI Scale Simulator</h3>
+    <p>Toggle streams, set customers/day, edit prices, run N days. prices.json is master.</p>
+    <div class="meta"><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>shaddai/shaddai-n8n</b> @ <span>2026-10-15</span></div>
+    <a class="open" href="hub/simulator.html">Open diagram &rarr;</a>
+  </div>
+</article>
+<article class="card" data-type="hub">
+  <div class="thumb"><img src="hub/thinking.png" alt="" loading="lazy"><span class="type-chip">hub</span><span class="state pass">!! 1 gates pass</span></div>
+  <div class="body">
+    <h3>Seven Ways — bars, donut, tree</h3>
+    <p>One thinking canon, three graphs + source posters + SHADDAI use per system.</p>
+    <div class="meta"><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>shaddai/shaddai-n8n</b> @ <span>2026-10-15</span></div>
+    <a class="open" href="hub/thinking-graphs.html">Open diagram &rarr;</a>
+  </div>
+</article>
+<article class="card" data-type="architecture">
+  <div class="thumb"><img src="content-engine/content-engine.png" alt="" loading="lazy"><span class="type-chip">architecture</span><span class="state pass">!! 5 gates pass</span></div>
+  <div class="body">
+    <h3>SHADDAI Content Engine (proposed)</h3>
+    <p>From raw video to publishable clips: ingest, transcribe, match the right moment, then edit and ship — built on the RAG brain and the video-perception skill.</p>
+    <div class="meta"><span class="m">nodes <b>10</b></span><span class="m">edges <b>10</b></span><span class="m">regions <b>1</b></span><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>IzzoSol/shaddai-design-studio</b> @ <span>main</span></div>
+    <a class="open" href="content-engine/content-engine.html">Open diagram &rarr;</a>
+  </div>
+</article>
+<article class="card" data-type="architecture">
+  <div class="thumb"><img src="gamedev/gamedev.png" alt="" loading="lazy"><span class="type-chip">architecture</span><span class="state pass">!! 5 gates pass</span></div>
+  <div class="body">
+    <h3>gamedev-tools kit</h3>
+    <p>A flat library + genre templates + skill packs, connected by a tiny MCP bridge — one kit, every path into it stops at the same SHADDAI design system.</p>
+    <div class="meta"><span class="m">nodes <b>8</b></span><span class="m">edges <b>12</b></span><span class="m">regions <b>5</b></span><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>IzzoSol/gamedev-tools</b> @ <span>main</span></div>
+    <a class="open" href="gamedev/gamedev.html">Open diagram &rarr;</a>
+  </div>
+</article>
+<article class="card" data-type="architecture">
+  <div class="thumb"><div style="height:100%;display:grid;place-items:center;color:var(--muted);font:12px/1 var(--mono)">no preview</div><span class="type-chip">architecture</span><span class="state miss">not rendered</span></div>
+  <div class="body">
+    <h3>SHADDAI Master Mind Map</h3>
+    <p>Every diagram, hub page and operating loop — how we think, how money moves, how we build, where it lives.</p>
+    <div class="meta"><span class="m">nodes <b>34</b></span><span class="m">edges <b>48</b></span><span class="m">regions <b>4</b></span><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>shaddai/local-backend</b> @ <span>2026-10-15</span></div>
+    
+  </div>
+</article>
+<article class="card" data-type="architecture">
+  <div class="thumb"><img src="master/master.png" alt="" loading="lazy"><span class="type-chip">architecture</span><span class="state pass">!! 5 gates pass</span></div>
+  <div class="body">
+    <h3>SHADDAI Master Mind Map</h3>
+    <p>Every diagram, hub page and operating loop — how we think, how money moves, how we build, where it lives.</p>
+    <div class="meta"><span class="m">nodes <b>32</b></span><span class="m">edges <b>45</b></span><span class="m">regions <b>4</b></span><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>shaddai/local-backend</b> @ <span>2026-10-15</span></div>
+    <a class="open" href="master/master.html">Open diagram &rarr;</a>
+  </div>
+</article>
+<article class="card" data-type="architecture">
+  <div class="thumb"><img src="mcp-surface/mcp-surface.png" alt="" loading="lazy"><span class="type-chip">architecture</span><span class="state pass">!! 5 gates pass</span></div>
+  <div class="body">
+    <h3>One registry. Every bot.</h3>
+    <p>1,074 tools · 1,633 workflows · 1,356 n8n exports · 270 curated skills over a 3,022 catalogue · 16 frameworks</p>
+    <div class="meta"><span class="m">nodes <b>16</b></span><span class="m">edges <b>17</b></span><span class="m">regions <b>3</b></span><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>IzzoSol/Shaddai-Beta</b> @ <span>master</span></div>
+    <a class="open" href="mcp-surface/mcp-surface.html">Open diagram &rarr;</a>
+  </div>
+</article>
+<article class="card" data-type="architecture">
+  <div class="thumb"><img src="mcp/mcp.png" alt="" loading="lazy"><span class="type-chip">architecture</span><span class="state pass">!! 5 gates pass</span></div>
+  <div class="body">
+    <h3>SHADDAI MCP Server</h3>
+    <p>One unified MCP endpoint — how a host agent&#39;s tool call reaches the brain, the backend, and the chain.</p>
+    <div class="meta"><span class="m">nodes <b>10</b></span><span class="m">edges <b>10</b></span><span class="m">regions <b>2</b></span><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>IzzoSol/Shaddai-Beta</b> @ <span>master</span></div>
+    <a class="open" href="mcp/mcp.html">Open diagram &rarr;</a>
+  </div>
+</article>
+<article class="card" data-type="architecture">
+  <div class="thumb"><img src="revenue/revenue.png" alt="" loading="lazy"><span class="type-chip">architecture</span><span class="state pass">!! 5 gates pass</span></div>
+  <div class="body">
+    <h3>SHADDAI Money Streams</h3>
+    <p>Every revenue path — what the house earns and how USERS earn: who pays, what captures it, how it splits, where it lands.</p>
+    <div class="meta"><span class="m">nodes <b>33</b></span><span class="m">edges <b>39</b></span><span class="m">regions <b>6</b></span><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>shaddai/local-backend</b> @ <span>2026-10-15</span></div>
+    <a class="open" href="revenue/revenue.html">Open diagram &rarr;</a>
+  </div>
+</article>
+<article class="card" data-type="architecture">
+  <div class="thumb"><img src="revenue2/revenue2.png" alt="" loading="lazy"><span class="type-chip">architecture</span><span class="state pass">!! 5 gates pass</span></div>
+  <div class="body">
+    <h3>SHADDAI Money Streams ADVANCED</h3>
+    <p>Map 2.0: OG structure + selectable payment rails, per-node fee detail, MCP/AURA/B2B/social/vtuber/merch/music/SEO streams — click any node to trace its reach.</p>
+    <div class="meta"><span class="m">nodes <b>47</b></span><span class="m">edges <b>68</b></span><span class="m">regions <b>8</b></span><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>shaddai/local-backend</b> @ <span>2026-10-15</span></div>
+    <a class="open" href="revenue2/revenue2.html">Open diagram &rarr;</a>
+  </div>
+</article>
+<article class="card" data-type="architecture">
+  <div class="thumb"><img src="shaddai/shaddai.png" alt="" loading="lazy"><span class="type-chip">architecture</span><span class="state pass">!! 5 gates pass</span></div>
+  <div class="body">
+    <h3>SHADDAI Platform</h3>
+    <p>One monolith, many faces — how a user, an agent, and a Telegram bot all reach the same brain, guard rails, and store.</p>
+    <div class="meta"><span class="m">nodes <b>13</b></span><span class="m">edges <b>12</b></span><span class="m">regions <b>3</b></span><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>IzzoSol/Shaddai</b> @ <span>feat/market-intel</span></div>
+    <a class="open" href="shaddai/shaddai.html">Open diagram &rarr;</a>
+  </div>
+</article>
+<article class="card" data-type="architecture">
+  <div class="thumb"><img src="thinking/thinking.png" alt="" loading="lazy"><span class="type-chip">architecture</span><span class="state pass">!! 5 gates pass</span></div>
+  <div class="body">
+    <h3>Seven Ways of Thinking</h3>
+    <p>Diderot tree · graphic organisers · 9 behaviours · 20 paradoxes · 7 logics · values map · thinking maps — one taxonomy for teaching agents.</p>
+    <div class="meta"><span class="m">nodes <b>59</b></span><span class="m">edges <b>63</b></span><span class="m">regions <b>7</b></span><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>shaddai/shaddai-n8n</b> @ <span>2026-10-15</span></div>
+    <a class="open" href="thinking/thinking.html">Open diagram &rarr;</a>
+  </div>
+</article>
+<article class="card" data-type="workflow">
+  <div class="thumb"><img src="aura/aura.png" alt="" loading="lazy"><span class="type-chip">workflow</span><span class="state pass">!! 5 gates pass</span></div>
+  <div class="body">
+    <h3>AURA — ask → answer → remember</h3>
+    <p>Deterministic token saver: cache and skills answer first, compute takes the cheap routes, the LLM is the last resort — and every answer seeds the cache.</p>
+    <div class="meta"><span class="m">nodes <b>13</b></span><span class="m">edges <b>15</b></span><span class="m">regions <b>3</b></span><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>IzzoSol/Aura</b> @ <span>main</span></div>
+    <a class="open" href="aura/aura.html">Open diagram &rarr;</a>
+  </div>
+</article>
+<article class="card" data-type="sequence">
+  <div class="thumb"><img src="mcp/seq-rag-nav.png" alt="" loading="lazy"><span class="type-chip">sequence</span><span class="state pass">!! 5 gates pass</span></div>
+  <div class="body">
+    <h3>hall_rag_nav request lifecycle</h3>
+    <p>A host agent asks the brain a question — cache first, then BM25 over the per-agent KBs, then the annotated answer travels back.</p>
+    <div class="meta"><span class="m">nodes <b>5</b></span><span class="m">edges <b>9</b></span><span class="m">regions <b>2</b></span><span class="m">quality <b>showcase</b></span></div>
+    <div class="srcm">source · <b>IzzoSol/Shaddai-Beta</b> @ <span>master</span></div>
+    <a class="open" href="mcp/seq-rag-nav.html">Open diagram &rarr;</a>
+  </div>
+</article>
+</div>
+<footer>generated by tools/portfolio.mjs · 2026-10-21T17:43:24.701Z · candidate JSON → validate → layout → render → 5-gate finalize · screenshots are pixel-measured, not human-reviewed</footer>
+</div>
+<script>
+(function(){
+var btns=document.querySelectorAll('#typeFilters button');
+btns.forEach(function(b){b.addEventListener('click',function(){
+btns.forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+var t=b.getAttribute('data-filter');
+document.querySelectorAll('#grid .card').forEach(function(c){
+c.style.display=(t==='all'||c.getAttribute('data-type')===t)?'':'none';});});});
+document.getElementById('themeBtn').addEventListener('click',function(){
+  var cur=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
+  document.documentElement.setAttribute('data-theme',cur);
+  this.textContent=cur==='light'?'Dark':'Light';
+});
+})();
+</script>
+</body>
+</html>

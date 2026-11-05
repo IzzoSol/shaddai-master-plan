@@ -1,0 +1,68 @@
+{
+  "generator": "shaddai-diagrams",
+  "version": 1,
+  "type": "architecture",
+  "quality": "showcase",
+  "candidate": "portfolio/content-engine/content-engine.json",
+  "output": "portfolio/content-engine/content-engine.html",
+  "screenshot": "portfolio\\content-engine\\content-engine.png",
+  "ok": true,
+  "durationMs": 4534,
+  "checks": [
+    {
+      "gate": "validate",
+      "status": "pass",
+      "errors": 0,
+      "warnings": 1,
+      "detail": null
+    },
+    {
+      "gate": "deliver",
+      "status": "pass",
+      "errors": 0,
+      "warnings": 0,
+      "detail": null
+    },
+    {
+      "gate": "check",
+      "status": "pass",
+      "errors": 0,
+      "warnings": 0,
+      "detail": null
+    },
+    {
+      "gate": "browser-check",
+      "status": "pass",
+      "errors": 0,
+      "warnings": 0,
+      "detail": {
+        "nodes": 10,
+        "links": 10,
+        "regions": 1
+      }
+    },
+    {
+      "gate": "perceptual",
+      "status": "pass",
+      "errors": 0,
+      "warnings": 1,
+      "detail": {
+        "luminance": {
+          "min": 10,
+          "max": 238,
+          "mean": 17,
+          "sd": 15
+        },
+        "text": {
+          "hex": "e8f0ea",
+          "ratio": 16.6,
+          "minContrast": 4.5,
+          "ok": true,
+          "bgLum": 14
+        }
+      }
+    }
+  ],
+  "visualReview": "pixel-measured",
+  "claim": "automated checks passed; perceptual evidence is a pixel measurement, not a human review"
+}

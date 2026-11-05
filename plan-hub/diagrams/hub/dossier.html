@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SHADDAI Economy — dossier + docs + whitepaper</title>
+<style>
+  :root { --bg:#070a0e; --panel:#0b1117; --line:rgba(126,158,142,.20); --line-2:rgba(126,158,142,.36);
+          --txt:#e8f0ea; --dim:#8fa39a; --accent:#00e5a0; --accent-ink:#04120c;
+          --gold:#f5c542; --green:#00ff9c; --blue:#38bdf8; --pink:#f472b6; --cyan:#3fe8ff;
+          --font:'Rajdhani','Inter',system-ui,-apple-system,sans-serif;
+          --mono:'Share Tech Mono',ui-monospace,'Cascadia Mono',monospace; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--txt); font:15px/1.5 var(--font); padding:22px;
+    background-image:radial-gradient(circle at 15% 0%,rgba(0,229,160,.06),transparent 46%),
+                     radial-gradient(circle at 90% 100%,rgba(56,189,248,.05),transparent 45%); }
+  .wrap { max-width:900px; margin:0 auto; }
+  /* kinetic hero — every-frame-is-code: entrance outExpo 0.5s, stagger up */
+  @keyframes rise { from { opacity:0; transform:translateY(26px); } to { opacity:1; transform:none; } }
+  h1 { font-size:30px; letter-spacing:.02em; animation:rise .55s cubic-bezier(.16,1,.3,1) both;
+    background:linear-gradient(92deg,#e8f0ea 30%,var(--cyan) 60%,var(--accent) 85%);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  h1 b { -webkit-text-fill-color:var(--gold); }
+  .sub { animation:rise .55s cubic-bezier(.16,1,.3,1) .08s both; }
+  .btns a.btn { animation:rise .5s cubic-bezier(.16,1,.3,1) both; }
+  .btns a.btn:nth-child(2) { animation-delay:.12s } .btns a.btn:nth-child(3) { animation-delay:.18s }
+  .btns a.btn:nth-child(4) { animation-delay:.24s } .btns a.btn:nth-child(5) { animation-delay:.3s }
+  details { animation:rise .5s cubic-bezier(.16,1,.3,1) both; }
+  /* breathing glow — continuous life: slow sin */
+  @keyframes breathe { 0%,100% { box-shadow:0 0 0 rgba(0,229,160,0); } 50% { box-shadow:0 0 18px rgba(0,229,160,.35); } }
+  a.btn.gold { animation:breathe 3.2s ease-in-out infinite; }
+  .wall { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:8px; margin:10px 0; }
+  .wall figure { border:1px solid var(--line); border-radius:8px; overflow:hidden; background:#0e1513; }
+  .wall img { width:100%; height:150px; object-fit:cover; display:block; transition:transform .45s cubic-bezier(.16,1,.3,1); }
+  .wall figure:hover img { transform:scale(1.06); }
+  .wall figcaption { font-size:10px; color:var(--dim); font-family:'JetBrains Mono',monospace; padding:6px 8px; }
+  .sub { color:var(--dim); font-size:12px; margin:6px 0 16px; font-family:var(--mono); }
+  .badges { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+  .badge { display:inline-flex; align-items:center; gap:6px; padding:4px 11px; border-radius:999px;
+    border:1px solid var(--line-2); background:var(--panel); font:600 10.5px/1 var(--mono);
+    letter-spacing:.1em; text-transform:uppercase; color:var(--dim); }
+  .badge b { font-weight:700; color:var(--txt); }
+  .badge.ok { color:var(--accent); border-color:rgba(0,229,160,.45); }
+  .btns { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+  a.btn { padding:0 13px; min-height:32px; display:inline-flex; align-items:center; font-size:11px;
+    font-weight:600; letter-spacing:.1em; text-transform:uppercase; border:1px solid var(--line-2);
+    color:var(--txt); border-radius:8px; text-decoration:none; background:var(--panel); font-family:var(--font); }
+  a.btn:hover { border-color:var(--accent); color:var(--accent); }
+  a.btn.gold { background:var(--accent); border-color:var(--accent); color:var(--accent-ink); }
+  a.btn.gold:hover { filter:brightness(1.08); color:var(--accent-ink); }
+  details { background:var(--panel); border:1px solid var(--line); border-radius:16px; margin-bottom:10px; overflow:hidden; }
+  details:hover { border-color:var(--line-2); }
+  summary { padding:13px 16px; cursor:pointer; font-weight:700; font-size:15px; }
+  summary span { color:var(--accent); font-family:var(--mono); font-size:11px; margin-right:8px; }
+  .body { padding:0 16px 16px; font-size:14px; line-height:1.6; color:var(--txt); }
+  .body p { margin:8px 0; color:var(--dim); } .body p b { color:var(--txt); }
+  .body li { margin:5px 0 5px 18px; }
+  /* mixed gallery cards — same shell as portfolio/index.html */
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; margin:10px 0; }
+  .card { display:flex; flex-direction:column; border:1px solid var(--line); border-radius:16px;
+    background:var(--bg); overflow:hidden; transition:.18s; }
+  .card:hover { border-color:var(--accent); transform:translateY(-2px); box-shadow:0 12px 40px rgba(0,0,0,.35); }
+  .thumb { aspect-ratio:16/10; overflow:hidden; border-bottom:1px solid var(--line); background:#04070a; }
+  .thumb img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+  .cbody { padding:12px 14px 14px; display:flex; flex-direction:column; gap:7px; }
+  .cbody h3 { font-size:16px; }
+  .cbody p { font-size:12.5px; color:var(--dim); }
+  a.open { align-self:flex-start; text-decoration:none; font-size:11px; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; padding:9px 15px; border-radius:9px; background:var(--accent); color:var(--accent-ink); }
+  .meta { font:600 10.5px/1 var(--mono); letter-spacing:.08em; color:var(--dim); }
+  .meta b { color:var(--txt); }
+  table { width:100%; border-collapse:collapse; margin:10px 0; font-size:12.5px; }
+  th { text-align:left; color:var(--dim); font-family:'JetBrains Mono',monospace; font-size:10px;
+    padding:6px; border-bottom:1px solid var(--line); }
+  td { padding:6px; border-bottom:1px solid #121a18; font-family:'JetBrains Mono',monospace; }
+  td.r, th.r { text-align:right; }
+  code { color:var(--blue); }
+  .warn { border-left:3px solid var(--gold); padding:8px 12px; margin:10px 0; background:#0e1513; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>SHADDAI <b>Economy</b> — dossier</h1>
+  <div class="sub">WHITEPAPER v1.1 · prices master: shaddai-n8n/prices.json · 1 spark = $1.00 peg · status: paper (wallets unfunded, paywall off)</div>
+  <div class="badges">
+    <span class="badge"><b>9</b> sections</span>
+    <span class="badge">peg <b>1 spark = $1</b></span>
+    <span class="badge">flywheel <b>30/20/20/15/10/5</b></span>
+    <span class="badge ok">paper — $0 live</span>
+  </div>
+  <div class="btns">
+    <a class="btn gold" href="shaddai-economy-realm.html">3D REALM</a>
+    <a class="btn" href="revenue-flow-animation.html">SCALE SIMULATOR</a>
+    <a class="btn" href="../revenue/revenue.html">MONEY MAP</a>
+    <a class="btn" href="../revenue2/revenue2.html">MAP 2.0 ADVANCED</a>
+    <a class="btn" href="prices.json">PRICES.JSON</a>
+  </div>
+
+  <details open><summary><span>01</span>Whitepaper — the economy in one page</summary><div class="body">
+    <p>SHADDAI runs two monies. <b>Sparks</b> settle play (tickets, plots, quests) at a <b>$1 peg</b>, divisible to 6 decimals like sats — 0.5 sparks is 50 cents. <b>USDC + $SHADDAI</b> settle real value (jobs, packs, tiers) over the x402 rail.</p>
+    <p>Every unit of revenue splits <b>30 / 20 / 20 / 15 / 10 / 5</b>: liquidity pools, treasury, holder + founder dividends, burns + locks, farms + trees, giveaways. Holding sparks earns a SOL share of the holders slice — dividends, never promised yield. Staking is <b>deferred</b> until revenue is real; founders NFTs are the pre-staking.</p>
+    <p>The peg holds iff <b>sinks ≥ faucets</b>: capped plot yield (72/day, max 3, 24h bank), ticket/plot/hire sinks, market-commission burns, death-penalty sink — plus USDC buy pressure. Token launches backed by treasury + real hall-cut revenue, never promises.</p>
+  </div></details>
+
+  <details><summary><span>02</span>Prices — tiers, tools, offices</summary><div class="body">
+    <table><tr><th>TIER</th><th class="r">$/MO</th><th class="r">FREE/DAY</th><th>FOR</th></tr>
+    <tr><td>Explorer</td><td class="r">$0</td><td class="r">5</td><td>doorway</td></tr>
+    <tr><td>Builder</td><td class="r">$49</td><td class="r">50</td><td>solo founders</td></tr>
+    <tr><td>Mastermind</td><td class="r">$199</td><td class="r">500</td><td>teams + labs</td></tr>
+    <tr><td>Empire</td><td class="r">$999+</td><td class="r">∞</td><td>white-label + SLA</td></tr>
+    <tr><td>Setup Sprint (once)</td><td class="r">$499</td><td class="r">—</td><td>brand-in-a-box</td></tr>
+    <tr><td>Whole Brand (once)</td><td class="r">$1,999</td><td class="r">—</td><td>identity + engine + VTuber</td></tr>
+    <tr><td>Care / Growth / Dominate</td><td class="r">$99–499/mo</td><td class="r">—</td><td>done-for-you maintained</td></tr></table>
+    <table><tr><th>TOOL</th><th class="r">USDC</th><th>OFFICE SERVICE</th><th class="r">USDC</th></tr>
+    <tr><td>price / sentiment</td><td class="r">0.25</td><td>teach / build</td><td class="r">2.00</td></tr>
+    <tr><td>market_scan / rewrite</td><td class="r">0.50–1.00</td><td>class / review / enroll</td><td class="r">0.50–1.00</td></tr>
+    <tr><td>pikadon_review / turtle_brief</td><td class="r">2.00–3.00</td><td>design / audit / logo</td><td class="r">1.00–1.50</td></tr>
+    <tr><td>oracle_chart / workflow_run</td><td class="r">9.00 / 0.50</td><td>scan / signals / research</td><td class="r">0.50–1.00</td></tr></table>
+    <p>Catalog: plans $8 base, books $5–9. Mastery packs $25–79, <b>75% to creator</b>.</p>
+  </div></details>
+
+  <details><summary><span>03</span>Splits — who gets what</summary><div class="body">
+    <table><tr><th>FLOW</th><th>SPLIT</th></tr>
+    <tr><td>Avenue tool calls</td><td>owner 85 / hall 15</td></tr>
+    <tr><td>Battle / race purse</td><td>winner 70 / owner 15 / hall 15 (+5% entry rake proposed)</td></tr>
+    <tr><td>Tickets</td><td>owner 80 / hall 20</td></tr>
+    <tr><td>Bazaar agent-to-agent</td><td>seller 85 / hall 10 / referrer 5</td></tr>
+    <tr><td>Bridge (external agents)</td><td>platform 15 / external owner 50 / coordination 35</td></tr>
+    <tr><td>Planting fee</td><td>LP 50 / replant 40 / farm owner 10</td></tr>
+    <tr><td>Sub-agent work</td><td>$0.10/task attribution (accounting, not revenue)</td></tr></table>
+  </div></details>
+
+  <details><summary><span>04</span>Token + staking status</summary><div class="body">
+    <p><b>$SHADDAI</b> pairs SHADDAI/SOL, fixed supply, LP locked, mint renounced at launch. Utility: fee discounts, priority routing, arena perks, fee-param governance.</p>
+    <p><b>Staking: DEFERRED.</b> Replaced by founders NFTs + holding dividends until hall-cut revenue is real. No lockups, no APR — the staking loop workflow (<code>staking-stake-claim-loop</code>) stays published but gated.</p>
+    <p><b>$ASIMOV</b> (separate idea): launch on stonksx.fun with NVDAx reserve, ASIMOV center in-game, shard-hunt CA reveal, flywheel NVDAx → SHADDAI → SOL → Sparks. NVDAx is geo-restricted (excl. US) — jurisdiction plan required, no workarounds.</p>
+  </div></details>
+
+  <details><summary><span>05</span>Founders, farms, siege</summary><div class="body">
+    <p><b>Founders (capped):</b> Genesis 100 (plot + 25% fees off + dividend + lobby-box) · Pioneer 500 (10% off + airdrops + half-off tickets) · Settler 1000 (title + cosmetic + XP). Mint after first real revenue.</p>
+    <p><b>Farms:</b> plant → 50% LP, 40% replant, 10% farm owner. Owners earn off others' planting + harvest cosmetics; planters earn yield + XP. Farm NFT = half-off colosseum tickets at the gate.</p>
+    <p><b>Castle siege:</b> server ticket 25 sparks, 5 dragons, pool = sales −15% hall + sponsors. Weights: damage 40 / resets 20 / max-hit 20 / final blow 10 / council 10. Payouts: USDC + sparks + siege cosmetics + titles. Anti-cheat rails apply.</p>
+    <p><b>Marketplace:</b> feeds, item swaps, clothing, agent bodies, cosmetics from 0.1 sparks — bazaar fees on all of it.</p>
+  </div></details>
+
+  <details><summary><span>06</span>Compliance + honesty ledger</summary><div class="body">
+    <div class="warn">xStocks/NVDAx unavailable to US persons (also UK/CA/AU). Paper account $10k / 0 trades — no verified edge claimed. Wallets unfunded, paywall off — everything above is paper until gas + first USDC.</div>
+    <p>Rules that never change: quote_id only (never amounts) · idempotent buys · PIKADON veto before payouts · secrets never in logs · losses published with wins.</p>
+  </div></details>
+
+  <details><summary><span>07</span>Changelog (for Claude review)</summary><div class="body">
+    <p>v1.1.0 — fractional sparks (6dp) · founders tiers · flywheel 30/20/20/15/10/5 · farms 50/40/10 · siege spec · staking deferred · ASIMOV plan attached.</p>
+    <p>Open questions: Empire $999 → $2,500? · PIKADON audit $1.50 → $9? · entry packs → $5–9? · +5% battle entry rake? · authorize first paper trades?</p>
+  </div></details>
+
+  <details><summary><span>08</span>Growth streams — MCP · AURA · gamedev · models · social</summary><div class="body">
+    <p><b>MCP use:</b> 23 tools, ask-first, logged + audited. Free 5/day, metered after — calls are acquisition, over-quota is revenue.</p>
+    <p><b>AURA:</b> cache + skills answer first (61% hits), LLM last. Every point of hit-rate is margin on every stream above.</p>
+    <p><b>Game-dev B2B:</b> genre builds + arena kits on fixed bids via <code>nexus-forge-1</code>. <b>Model-making B2B:</b> 3D bodies + wearables $2–25 — identity outsells decoration.</p>
+    <p><b>Social management:</b> the content-machine pipeline (plan → create → produce → distribute → analyze → automate → profit) sold as retainers; the brand wall below is the proof-of-craft. Pay in sparks, USDC, SOL, or subscription — Map 2.0 traces all four rails.</p>
+    <p><b>VTuber studio:</b> bodies + persona + voice + scripts from the <code>ai-influencer</code> engine (characters, hooks, LoRAs, scores) — businesses book avatar shows, clips feed them. <b>Influencer management:</b> AI UGC retainers for real businesses (product demos, ad reads, social calendars). Both settle through creator services; <b>VR/AR parked</b> until headsets + first revenue (same engine drives avatars when unparked).</p>
+    <p><b>Merch + drops:</b> print-on-demand runs for fighters, farms, and siege winners — physical margin on top of digital. <b>Music creation:</b> tracks, jingles, and sync licensing $5–25 (STREAMBUDDY live backend + turtle-music assets). <b>SEO + blog:</b> monthly posts feeding the self-improve rank loop, sold as retainers next to social.</p>
+  </div></details>
+
+  <details><summary><span>09</span>Brand wall — content craft proof</summary><div class="body">
+    <p>House style: neon-noir infographics by v@m. This wall is the social-management portfolio — same machine we sell.</p>
+    <div class="wall">
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Desktop/photo_2026-08-23_16-01-29.jpg"/><figcaption>Content Machine</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Desktop/photo_2026-08-23_16-01-41.jpg"/><figcaption>Gen Z / Y / X</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Desktop/New%20folder/Downloads/D65B4FE3-7E0D-4182-9022-C13095FE0536.jpg"/><figcaption>brand asset 01</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Desktop/New%20folder/Downloads/2AA9B9FA-E72C-4923-9DA9-D70E1EA7039E.jpg"/><figcaption>brand asset 02</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Desktop/New%20folder/Downloads/2E13F8A4-BB18-4437-AC03-E1CC68070EEC.jpg"/><figcaption>brand asset 03</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Desktop/New%20folder/Downloads/8E43B2CF-03AB-4CF1-931C-2B7F131E8D48.jpg"/><figcaption>brand asset 04</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Desktop/New%20folder/Downloads/50CC2077-9493-45B0-A62B-EF457D2401B7.jpg"/><figcaption>brand asset 05</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Desktop/New%20folder/Downloads/948FA44B-6711-48BD-9264-BF357682F08B.jpg"/><figcaption>brand asset 06</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Desktop/New%20folder/Downloads/3925FFEA-7F66-45D5-9311-DC5A0E3D02B5.jpg"/><figcaption>brand asset 07</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Desktop/New%20folder/Downloads/ACF7EEA5-EDEB-4636-B9FF-9BFD707CDE03.jpg"/><figcaption>brand asset 08</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Desktop/New%20folder/Downloads/D9A4152A-D984-472A-A31F-F6EEA9E12F6E.jpg"/><figcaption>brand asset 09</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Pictures/d080c9ba5f6657a08666d7eb172d8e49.jpg"/><figcaption>Diderot knowledge tree</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Pictures/1eef6349518d0f58d93bbc5e1a4d708b.jpg"/><figcaption>Graphic organisers</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Pictures/9e5b9b64a687946a97f4aa1f6883e09f.jpg"/><figcaption>9 thinking behaviours</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Pictures/58de875f7d5bf622a4d22bc0f3cbc023.jpg"/><figcaption>20 paradoxes</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Pictures/3155af4dc7702bae382e55d59f6933ad.jpg"/><figcaption>7 types of logic</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Pictures/a2e7b9a7543525a5493e1d90ea04e169.jpg"/><figcaption>Values map</figcaption></figure>
+      <figure><img loading="lazy" src="file:///C:/Users/Brittany/OneDrive/Pictures/a191c76600d8401b9c2519b2a564ca23.jpg"/><figcaption>Thinking maps</figcaption></figure>
+    </div>
+  <details><summary><span>10</span>Diagrams — the maps (mixed gallery)</summary><div class="body">
+    <p>Same shell as the diagrams portfolio — live previews, click through to the interactive maps.</p>
+    <div class="grid">
+      <article class="card"><div class="thumb"><img loading="lazy" src="../shaddai-design-studio/portfolio/revenue/revenue.png" alt="Money map preview"/></div>
+        <div class="cbody"><h3>Money Streams</h3><p>OG map: payers → storefronts → capture → splits → lands.</p>
+        <div class="meta">nodes <b>33</b> · edges <b>39</b></div>
+        <a class="open" href="../revenue/revenue.html">Open map →</a></div></article>
+      <article class="card"><div class="thumb"><img loading="lazy" src="../shaddai-design-studio/portfolio/revenue2/revenue2.png" alt="Advanced map preview"/></div>
+        <div class="cbody"><h3>Money Streams ADVANCED</h3><p>2.0: pay-with rails, per-node fees, MCP/AURA/B2B/social.</p>
+        <div class="meta">nodes <b>42</b> · edges <b>56</b></div>
+        <a class="open" href="../revenue2/revenue2.html">Open map →</a></div></article>
+    </div>
+  </div></details>
+  <details><summary><span>11</span>Ways of thinking — one data, four graphs</summary><div class="body">
+    <p>Diderot tree · 15 organisers · 9 behaviours · 20 paradoxes · 7 logics · values map · 8 thinking maps — the teaching canon, one data set rendered four ways, plus the master map of everything.</p>
+    <div class="grid">
+      <article class="card"><div class="cbody"><h3>Thinking graphs page</h3><p>Bars · donut · tree · flow toggle + source posters + SHADDAI use per system.</p>
+        <a class="open" href="thinking-graphs.html">Open graphs →</a></div></article>
+      <article class="card"><div class="cbody"><h3>Seven Ways diagram</h3><p>Gated taxonomy: 44 nodes, 48 edges, 7 regions.</p>
+        <a class="open" href="../thinking/thinking.html">Open diagram →</a></div></article>
+      <article class="card"><div class="cbody"><h3>Master Mind Map</h3><p>All diagrams, hub pages and loops: think · earn · build · live.</p>
+        <a class="open" href="../master/master.html">Open master →</a></div></article>
+    </div>
+  </div></details>
+</div>
+</body>
+</html>

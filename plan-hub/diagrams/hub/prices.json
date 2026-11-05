@@ -1,0 +1,101 @@
+{
+  "version": "1.1.0",
+  "note": "MASTER PRICE PLAN — single source of truth. Edit prices here, then mirror into the simulator inputs or serve over http so the simulator loads this file live.",
+  "peg": {
+    "spark_usd": 1.0,
+    "rule": "1 spark = $1.00 target. Sparks settle play; USDC settles real money. Token SPARK must hold $1 via sinks >= faucets + USDC buy pressure."
+  },
+  "units": {
+    "sparks_decimals": 6,
+    "rule": "Sparks are divisible like sats: 0.5 sparks = $0.50, 0.01 = 1 cent. Sub-$1 pricing allowed (cosmetics from 0.1). Dust floor 0.000001, min-tx 0.01 anti-spam.",
+    "display": "0.5 spark shows as 50c or 0.5 USDC at peg"
+  },
+  "tiers": [
+    { "id": "explorer", "name": "Explorer", "monthly": 0, "free_calls_day": 5, "mcp_req_mo": 100, "agents": 1, "note": "free doorway" },
+    { "id": "builder", "name": "Builder", "monthly": 49, "free_calls_day": 50, "mcp_req_mo": 10000, "agents": 3, "note": "solo founders" },
+    { "id": "mastermind", "name": "Mastermind", "monthly": 199, "free_calls_day": 500, "mcp_req_mo": 0, "agents": 7, "note": "teams, full curriculum + labs" },
+    { "id": "empire", "name": "Empire", "monthly": 999, "free_calls_day": 0, "mcp_req_mo": -1, "agents": 7, "note": "enterprise, white-label + SLA" }
+  ],
+  "tools_usdc": {
+    "zerox_price": 0.25,
+    "zerox_sentiment": 0.25,
+    "zerox_market_scan": 0.5,
+    "graph_context": 1.0,
+    "oracle_chart": 9.0,
+    "quill_rewrite": 1.0,
+    "pikadon_review": 2.0,
+    "turtle_brief": 3.0,
+    "workflow_run": 0.5
+  },
+  "offices": {
+    "shaddai-academy-1": { "teach": 2.0, "class": 1.0, "enroll": 0.5 },
+    "nexus-forge-1": { "build": 2.0, "review": 1.0, "plan": 0.5 },
+    "zerox-trading-1": { "scan": 0.5, "signals": 1.0 },
+    "turtle-art-1": { "design": 1.0, "logo": 1.5, "brief": 0.5 },
+    "oracle-research-1": { "research": 1.0, "chart": 0.5 },
+    "quill-voice-1": { "copy": 1.0, "rewrite": 0.5, "thread": 0.5 },
+    "pikadon-gate-1": { "audit": 1.5, "review": 1.0 }
+  },
+  "catalog": { "plan_base_usd": 8, "book_min_usd": 5, "book_max_usd": 9 },
+  "mastery_royalty_pct": 75,
+  "splits": {
+    "avenue": { "owner": 85, "hall": 15 },
+    "purse": { "winner": 70, "owner": 15, "hall": 15 },
+    "tickets": { "owner": 80, "hall": 20 },
+    "bridge": { "platform": 15, "external_owner": 50, "coordination": 35 },
+    "bazaar": { "seller": 85, "hall": 10, "referrer": 5 }
+  },
+  "bazaar": {
+    "note": "Agent-to-agent commerce: any agent lists work, any agent buys. Seller 85 / hall 10 / referrer 5. Idempotent quote_ids, PIKADON-vetted listings.",
+    "avg_deal_usd": 15
+  },
+  "colosseum": {
+    "ticket_tiers_sparks": { "floor": 50, "lower": 25, "promenade": 15, "upper": 10, "lobby_box": 100 },
+    "avg_ticket_sparks": 25,
+    "avg_entry_sparks": 10
+  },
+  "plots": { "cost_sparks": 100, "yield_per_day": 72, "max_per_char": 3, "bank_cap_h": 24 },
+  "faucets_sparks_day": {
+    "daily_bonus": 25, "quest_roll_win": 30, "referral": 100, "plot_yield_each": 72, "signup_grant": 100
+  },
+  "sinks": [ "tickets", "plots-100", "agent-hire-50-100", "market-commission-burn", "death-penalty-10pct", "tool-overquota-USDC" ],
+  "subs": { "per_task_usd": 0.1 },
+  "token": {
+    "symbol": "SPARK",
+    "target": "1 SPARK = $1.00",
+    "path": "1) sinks>=faucets at scale 2) USDC mirror buy pressure via x402 3) capped yield (72/day, max 3) 4) burn: market commission + expiry 5) launch backed by treasury + hall cut revenue",
+    "status": "pre-launch: wallets unfunded, paywall off — token after first real revenue"
+  },
+  "staking": { "status": "DEFERRED — replaced by founders NFTs + holding rewards until revenue is real. No lockups, no promised APR." },
+  "founders": {
+    "note": "Founder NFTs = the pre-staking. Capped, bundled with land, dividend-bearing.",
+    "tiers": [
+      { "id": "genesis", "supply": 100, "perks": ["1 plot", "lifetime 25% fee discount", "treasury dividend share", "colosseum lobby-box access"] },
+      { "id": "pioneer", "supply": 500, "perks": ["fee discount 10%", "airdrop eligibility", "half-off colosseum tickets"] },
+      { "id": "settler", "supply": 1000, "perks": ["founder cosmetic + title", "quest XP boost"] }
+    ]
+  },
+  "flywheel": {
+    "note": "Every unit of revenue R splits exactly 100. Holding sparks earns SOL share of the holders slice — that is the dividend, not staking.",
+    "splits_pct": { "liquidity_pools": 30, "treasury_ops": 20, "holders_founders_dividends": 20, "burns_locks": 15, "farms_trees": 10, "giveaways_plots_reserve": 5 },
+    "loop": "revenue -> 30% LP depth (SHADDAI/SOL) -> SOL accrues -> buy SHADDAI + sparks -> 20% to holders -> holders buy more -> sinks (burns, tickets, plots) defend peg"
+  },
+  "farms": {
+    "planting_fee_split_pct": { "liquidity_pools": 50, "replant_pool": 40, "farm_owner": 10 },
+    "owner_perks": ["10% of all planting on their farm", "harvest cosmetics", "half-off colosseum tickets"],
+    "visitor_benefit": "planters earn yield + quest XP; 50% of fee deepens LP, 50% (40+10) stays in the farm loop"
+  },
+  "marketplace": {
+    "sells": ["feeds", "swaps with items", "clothing", "agent bodies (new chassis via agentBodies grants)", "cosmetics from 0.1 sparks"],
+    "fees": "bazaar seller 85 / hall 10 / referrer 5 on every sale"
+  },
+  "siege": {
+    "note": "Castle siege: server-wide ticket, 5 dragons, one prize pool, paid in mixed rewards.",
+    "ticket_sparks": 25,
+    "dragons": 5,
+    "prize_pool_sources": ["ticket sales (minus 15% hall)", "sponsor top-up", "burn-round redirect (optional)"],
+    "categories": ["most_damage", "most_resilient_most_resets", "strongest_single_attack", "final_blow_party", "chosen_by_oracle_council"],
+    "payouts": ["USDC/sparks split by category weight", "exclusive siege cosmetics", "notoriety titles + leaderboard seats"],
+    "integrity": "commit-reveal damage logs, PIKADON arbiter, replay hashes — colosseum-anticheat-gate applies"
+  }
+}

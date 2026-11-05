@@ -1,0 +1,50 @@
+[
+  {
+    "name": "dossier",
+    "type": "hub",
+    "title": "SHADDAI Economy — dossier",
+    "subtitle": "Whitepaper + prices + splits + token + founders + siege + brand wall + maps. 1 spark = $1 peg.",
+    "quality": "showcase",
+    "theme": "dark",
+    "html": "hub/dossier.html",
+    "png": "hub/dossier.png",
+    "repo": "shaddai/shaddai-n8n",
+    "ref": "2026-10-15"
+  },
+  {
+    "name": "realm",
+    "type": "hub",
+    "title": "SHADDAI Economy Realm",
+    "subtitle": "3D showcase: treasury, pools, founders, farms, siege castle, market. Click any building.",
+    "quality": "showcase",
+    "theme": "dark",
+    "html": "hub/realm.html",
+    "png": "hub/realm.png",
+    "repo": "shaddai/shaddai-n8n",
+    "ref": "2026-10-15"
+  },
+  {
+    "name": "simulator",
+    "type": "hub",
+    "title": "SHADDAI Scale Simulator",
+    "subtitle": "Toggle streams, set customers/day, edit prices, run N days. prices.json is master.",
+    "quality": "showcase",
+    "theme": "dark",
+    "html": "hub/simulator.html",
+    "png": "hub/simulator.png",
+    "repo": "shaddai/shaddai-n8n",
+    "ref": "2026-10-15"
+  },
+  {
+    "name": "thinking-graphs",
+    "type": "hub",
+    "title": "Seven Ways — bars, donut, tree",
+    "subtitle": "One thinking canon, three graphs + source posters + SHADDAI use per system.",
+    "quality": "showcase",
+    "theme": "dark",
+    "html": "hub/thinking-graphs.html",
+    "png": "hub/thinking.png",
+    "repo": "shaddai/shaddai-n8n",
+    "ref": "2026-10-15"
+  }
+]

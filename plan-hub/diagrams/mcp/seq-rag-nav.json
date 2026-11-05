@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "hall_rag_nav request lifecycle",
+    "subtitle": "A host agent asks the brain a question — cache first, then BM25 over the per-agent KBs, then the annotated answer travels back.",
+    "output": "portfolio/mcp/seq-rag-nav.html",
+    "theme": "dark",
+    "quality_profile": "showcase",
+    "source": {
+      "repo": "IzzoSol/Shaddai-Beta",
+      "ref": "master",
+      "note": "shaddai-mcp/mcp-unified.js → lib/eco-brain.js nav() path, incl. the query cache"
+    }
+  },
+  "participants": [
+    { "id": "host", "label": "Host agent", "sublabel": "OpenCode session", "kind": "client" },
+    { "id": "mcp", "label": "mcp-unified.js", "sublabel": "tool registry", "kind": "service" },
+    { "id": "brain", "label": "eco-brain.js", "sublabel": "nav()", "kind": "tool" },
+    { "id": "cache", "label": "Query cache", "sublabel": "rag-query-cache.json", "kind": "store" },
+    { "id": "rag", "label": "Per-agent KBs", "sublabel": "kb_<agent>/docs.json", "kind": "database" }
+  ],
+  "messages": [
+    { "seq": 1, "from": "host", "to": "mcp", "label": "tool call: hall_rag_nav {query, agent}", "kind": "sync" },
+    { "seq": 2, "from": "mcp", "to": "brain", "label": "dispatch to nav()", "kind": "sync" },
+    { "seq": 3, "from": "brain", "to": "cache", "label": "lookup keyed by docs.json mtime", "kind": "sync" },
+    { "seq": 4, "from": "cache", "to": "brain", "label": "hit | miss", "kind": "return" },
+    { "seq": 5, "from": "brain", "to": "brain", "label": "stem · synonyms · BM25 · rerank", "kind": "sync" },
+    { "seq": 6, "from": "brain", "to": "rag", "label": "scan corpus", "kind": "sync" },
+    { "seq": 7, "from": "rag", "to": "brain", "label": "ranked passages + sources", "kind": "return" },
+    { "seq": 8, "from": "brain", "to": "mcp", "label": "annotated answer", "kind": "return" },
+    { "seq": 9, "from": "mcp", "to": "host", "label": "JSON-RPC tool result", "kind": "return" }
+  ],
+  "groups": [
+    { "id": "g_cache", "label": "cache path", "from_seq": 3, "to_seq": 4 },
+    { "id": "g_retr", "label": "retrieval path", "from_seq": 5, "to_seq": 7 }
+  ]
+}

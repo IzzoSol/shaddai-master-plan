@@ -1,0 +1,643 @@
+{
+ "schema_version": 1,
+ "diagram_type": "architecture",
+ "meta": {
+  "title": "SHADDAI Master Mind Map",
+  "subtitle": "Every diagram, hub page and operating loop — how we think, how money moves, how we build, where it lives.",
+  "output": "portfolio/master/master.html",
+  "theme": "dark",
+  "quality_profile": "showcase",
+  "direction": "tb",
+  "source": {
+   "repo": "shaddai/local-backend",
+   "ref": "2026-10-15",
+   "note": "index of the portfolio + core loops: think flows down into earn, earn into build, build into live pages"
+  },
+  "legend": [
+   {
+    "kind": "agent",
+    "label": "Root"
+   },
+   {
+    "kind": "service",
+    "label": "Domain"
+   },
+   {
+    "kind": "tool",
+    "label": "Map / loop"
+   },
+   {
+    "kind": "database",
+    "label": "Hub page"
+   },
+   {
+    "kind": "external",
+    "label": "Guardrail"
+   }
+  ]
+ },
+ "components": [
+  {
+   "id": "os",
+   "label": "SHADDAI OS",
+   "sublabel": "think · earn · build · live",
+   "kind": "agent",
+   "rank": 0,
+   "order": 0
+  },
+  {
+   "id": "h_think",
+   "label": "HOW WE THINK",
+   "sublabel": "canon + standards + index",
+   "kind": "service",
+   "rank": 1,
+   "order": 0
+  },
+  {
+   "id": "h_money",
+   "label": "HOW MONEY MOVES",
+   "sublabel": "maps + splits + peg",
+   "kind": "service",
+   "rank": 1,
+   "order": 1
+  },
+  {
+   "id": "h_build",
+   "label": "HOW WE BUILD",
+   "sublabel": "mcp + agents + forge",
+   "kind": "service",
+   "rank": 1,
+   "order": 2
+  },
+  {
+   "id": "h_live",
+   "label": "WHERE IT LIVES",
+   "sublabel": "hub pages you open",
+   "kind": "service",
+   "rank": 1,
+   "order": 3
+  },
+  {
+   "id": "thinking",
+   "label": "Seven Ways",
+   "sublabel": "44n · 7 thinking systems",
+   "href": "../thinking/thinking.html",
+   "kind": "tool",
+   "rank": 2,
+   "order": 0
+  },
+  {
+   "id": "graphs",
+   "label": "bars·donut·tree·flow",
+   "sublabel": "one data, four graphs",
+   "href": "../hub/thinking-graphs.html",
+   "kind": "tool",
+   "rank": 2,
+   "order": 1
+  },
+  {
+   "id": "ragloop",
+   "label": "RAG grow loop",
+   "sublabel": "scrape→vet→chunk→lesson",
+   "kind": "tool",
+   "rank": 2,
+   "order": 2
+  },
+  {
+   "id": "revenue",
+   "label": "Money Map",
+   "sublabel": "33n · payers→lands",
+   "href": "../revenue/revenue.html",
+   "kind": "tool",
+   "rank": 3,
+   "order": 0
+  },
+  {
+   "id": "revenue2",
+   "label": "Map 2.0",
+   "sublabel": "42n · rails + growth",
+   "href": "../revenue2/revenue2.html",
+   "kind": "tool",
+   "rank": 3,
+   "order": 1
+  },
+  {
+   "id": "flywheel",
+   "label": "Flywheel",
+   "sublabel": "30/20/20/15/10/5",
+   "kind": "tool",
+   "rank": 3,
+   "order": 2
+  },
+  {
+   "id": "peg",
+   "label": "Peg $1",
+   "sublabel": "sinks ≥ faucets · 6dp",
+   "kind": "tool",
+   "rank": 3,
+   "order": 3
+  },
+  {
+   "id": "escrow",
+   "label": "Escrow",
+   "sublabel": "quote→pay→receipt",
+   "kind": "tool",
+   "rank": 4,
+   "order": 0
+  },
+  {
+   "id": "mcp",
+   "label": "MCP Server",
+   "sublabel": "one endpoint · brain+chain",
+   "href": "../mcp/mcp.html",
+   "kind": "tool",
+   "rank": 5,
+   "order": 3
+  },
+  {
+   "id": "aura",
+   "label": "AURA loop",
+   "sublabel": "ask→answer→remember",
+   "href": "../aura/aura.html",
+   "kind": "tool",
+   "rank": 6,
+   "order": 0
+  },
+  {
+   "id": "forge",
+   "label": "Forge",
+   "sublabel": "spawn→delegate→complete",
+   "kind": "tool",
+   "rank": 6,
+   "order": 1
+  },
+  {
+   "id": "vetting",
+   "label": "PIKADON veto",
+   "sublabel": "gates every payout",
+   "kind": "external",
+   "rank": 6,
+   "order": 2
+  },
+  {
+   "id": "gamedev",
+   "label": "gamedev kit",
+   "sublabel": "genres + skill packs",
+   "href": "../gamedev/gamedev.html",
+   "kind": "tool",
+   "rank": 6,
+   "order": 3
+  },
+  {
+   "id": "content",
+   "label": "Content Engine",
+   "sublabel": "video→clips pipeline",
+   "href": "../content-engine/content-engine.html",
+   "kind": "tool",
+   "rank": 7,
+   "order": 0
+  },
+  {
+   "id": "platform",
+   "label": "Platform",
+   "sublabel": "user·agent·bot → brain",
+   "href": "../shaddai/shaddai.html",
+   "kind": "tool",
+   "rank": 7,
+   "order": 1
+  },
+  {
+   "id": "seq",
+   "label": "rag_nav lifecycle",
+   "sublabel": "ask→answer trace",
+   "href": "../mcp/seq-rag-nav.html",
+   "kind": "tool",
+   "rank": 7,
+   "order": 2
+  },
+  {
+   "id": "dossier",
+   "label": "Dossier",
+   "sublabel": "whitepaper + prices + wall",
+   "href": "../hub/dossier.html",
+   "kind": "database",
+   "rank": 8,
+   "order": 0
+  },
+  {
+   "id": "realm",
+   "label": "3D Realm",
+   "sublabel": "clickable economy",
+   "href": "../hub/realm.html",
+   "kind": "database",
+   "rank": 8,
+   "order": 1
+  },
+  {
+   "id": "simulator",
+   "label": "Simulator",
+   "sublabel": "customers × days × prices",
+   "href": "../hub/simulator.html",
+   "kind": "database",
+   "rank": 8,
+   "order": 2
+  },
+  {
+   "id": "brain",
+   "label": "RAG brain",
+   "sublabel": "7 corpora · 259 sources",
+   "kind": "tool",
+   "rank": 2,
+   "order": 3
+  },
+  {
+   "id": "tiers",
+   "label": "Tiers MRR",
+   "sublabel": "$49 / $199 / $999 past free",
+   "kind": "tool",
+   "rank": 4,
+   "order": 1
+  },
+  {
+   "id": "bazaar",
+   "label": "Bazaar A2A",
+   "sublabel": "seller 85 / hall 10 / ref 5",
+   "kind": "tool",
+   "rank": 4,
+   "order": 2
+  },
+  {
+   "id": "arena",
+   "label": "Arena rake",
+   "sublabel": "entries + tickets + 2x bets",
+   "kind": "tool",
+   "rank": 5,
+   "order": 1
+  },
+  {
+   "id": "plots",
+   "label": "Plot yield",
+   "sublabel": "100 in · 72/day · max 3",
+   "kind": "tool",
+   "rank": 5,
+   "order": 2
+  },
+  {
+   "id": "setup_once",
+   "label": "Setup, one-time",
+   "sublabel": "$499 · brand-in-a-box",
+   "kind": "tool",
+   "rank": 9,
+   "order": 0
+  },
+  {
+   "id": "maintained",
+   "label": "Maintained plans",
+   "sublabel": "$99–499/mo · done-for-you",
+   "kind": "tool",
+   "rank": 9,
+   "order": 1
+  },
+  {
+   "id": "brand_full",
+   "label": "Whole brand",
+   "sublabel": "$1,999 · identity+content+clips",
+   "kind": "tool",
+   "rank": 9,
+   "order": 2
+  }
+ ],
+ "relationships": [
+  {
+   "from": "os",
+   "to": "h_think",
+   "label": "think",
+   "kind": "sync"
+  },
+  {
+   "from": "os",
+   "to": "h_money",
+   "label": "earn",
+   "kind": "sync"
+  },
+  {
+   "from": "os",
+   "to": "h_build",
+   "label": "build",
+   "kind": "sync"
+  },
+  {
+   "from": "os",
+   "to": "h_live",
+   "label": "live",
+   "kind": "sync"
+  },
+  {
+   "from": "h_think",
+   "to": "thinking",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_think",
+   "to": "graphs",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_think",
+   "to": "ragloop",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_money",
+   "to": "revenue",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_money",
+   "to": "revenue2",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_money",
+   "to": "flywheel",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_money",
+   "to": "peg",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_money",
+   "to": "escrow",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_build",
+   "to": "mcp",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_build",
+   "to": "aura",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_build",
+   "to": "forge",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_build",
+   "to": "vetting",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_build",
+   "to": "gamedev",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_build",
+   "to": "content",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_build",
+   "to": "platform",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_build",
+   "to": "seq",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_live",
+   "to": "dossier",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_live",
+   "to": "realm",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_live",
+   "to": "simulator",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "thinking",
+   "to": "graphs",
+   "label": "one data",
+   "kind": "async"
+  },
+  {
+   "from": "graphs",
+   "to": "dossier",
+   "label": "embedded",
+   "kind": "async"
+  },
+  {
+   "from": "dossier",
+   "to": "realm",
+   "label": "opens",
+   "kind": "async"
+  },
+  {
+   "from": "revenue2",
+   "to": "simulator",
+   "label": "simulate",
+   "kind": "async"
+  },
+  {
+   "from": "forge",
+   "to": "escrow",
+   "label": "pays",
+   "kind": "async"
+  },
+  {
+   "from": "vetting",
+   "to": "escrow",
+   "label": "gates",
+   "kind": "auth"
+  },
+  {
+   "from": "h_money",
+   "to": "tiers",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_money",
+   "to": "bazaar",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_money",
+   "to": "arena",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_money",
+   "to": "plots",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_think",
+   "to": "brain",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "ragloop",
+   "to": "brain",
+   "label": "stores",
+   "kind": "async"
+  },
+  {
+   "from": "brain",
+   "to": "thinking",
+   "label": "grounds",
+   "kind": "async"
+  },
+  {
+   "from": "tiers",
+   "to": "simulator",
+   "label": "MRR in",
+   "kind": "async"
+  },
+  {
+   "from": "bazaar",
+   "to": "escrow",
+   "label": "settles",
+   "kind": "async"
+  },
+  {
+   "from": "h_money",
+   "to": "setup_once",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_money",
+   "to": "maintained",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "h_money",
+   "to": "brand_full",
+   "label": "has",
+   "kind": "data"
+  },
+  {
+   "from": "setup_once",
+   "to": "escrow",
+   "label": "settles",
+   "kind": "async"
+  },
+  {
+   "from": "maintained",
+   "to": "simulator",
+   "label": "MRR in",
+   "kind": "async"
+  },
+  {
+   "from": "brand_full",
+   "to": "escrow",
+   "label": "settles",
+   "kind": "async"
+  },
+  {
+   "from": "ragloop",
+   "to": "thinking",
+   "label": "indexes",
+   "kind": "async"
+  }
+ ],
+ "boundaries": [
+  {
+   "id": "g_think",
+   "label": "think",
+   "kind": "service",
+   "contains": [
+    "h_think",
+    "thinking",
+    "graphs",
+    "ragloop",
+    "brain"
+   ]
+  },
+  {
+   "id": "g_money",
+   "label": "money",
+   "kind": "service",
+   "contains": [
+    "h_money",
+    "revenue",
+    "revenue2",
+    "flywheel",
+    "peg",
+    "escrow",
+    "tiers",
+    "bazaar",
+    "arena",
+    "plots",
+    "setup_once",
+    "maintained",
+    "brand_full"
+   ]
+  },
+  {
+   "id": "g_build",
+   "label": "build",
+   "kind": "service",
+   "contains": [
+    "h_build",
+    "mcp",
+    "aura",
+    "forge",
+    "vetting",
+    "gamedev",
+    "content",
+    "platform",
+    "seq"
+   ]
+  },
+  {
+   "id": "g_live",
+   "label": "live pages",
+   "kind": "service",
+   "contains": [
+    "h_live",
+    "dossier",
+    "realm",
+    "simulator"
+   ]
+  }
+ ]
+}

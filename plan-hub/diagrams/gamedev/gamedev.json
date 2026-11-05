@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "gamedev-tools kit",
+    "subtitle": "A flat library + genre templates + skill packs, connected by a tiny MCP bridge — one kit, every path into it stops at the same SHADDAI design system.",
+    "output": "portfolio/gamedev/gamedev.html",
+    "theme": "dark",
+    "quality_profile": "showcase",
+    "direction": "lr",
+    "source": {
+      "repo": "IzzoSol/gamedev-tools",
+      "ref": "main",
+      "note": "FLAT-LIBRARY (80) · GENRE-TEMPLATES (81) · SHADDAI-MCP-BRIDGE (2) · SKILLS-HUB (9)"
+    },
+    "legend": [
+      { "kind": "client", "label": "Creators / agents" },
+      { "kind": "service", "label": "Bridge" },
+      { "kind": "tool", "label": "Kit content" },
+      { "kind": "database", "label": "Docs & navigation" },
+      { "kind": "external", "label": "Design system" }
+    ]
+  },
+  "components": [
+    { "id": "creator", "label": "Game dev creator", "sublabel": "human in the browser", "kind": "client", "rank": 0, "order": 0 },
+    { "id": "mcp_host", "label": "MCP host agent", "sublabel": "same kit, driven from chat", "kind": "client", "rank": 0, "order": 1 },
+    { "id": "bridge", "label": "SHADDAI-MCP-BRIDGE", "sublabel": "2 files: tool server exposing the kit", "kind": "service", "rank": 1, "order": 0 },
+    { "id": "flat", "label": "FLAT-LIBRARY", "sublabel": "80 shared HTML · CSS · JS pieces", "kind": "tool", "rank": 2, "order": 0 },
+    { "id": "genre", "label": "GENRE-TEMPLATES", "sublabel": "81 genre starter sets", "kind": "tool", "rank": 2, "order": 1 },
+    { "id": "skills", "label": "SKILLS-HUB", "sublabel": "9 skill packs for agents", "kind": "tool", "rank": 2, "order": 2 },
+    { "id": "design", "label": "sh-ui.css design system", "sublabel": "SHADDAI v101.3 · --shui-accent", "kind": "external", "rank": 3, "order": 0 },
+    { "id": "docs", "label": "Kit docs & navigation", "sublabel": "README-MASTER · CROSS-LINKS · SESSION-STATUS", "kind": "database", "rank": 3, "order": 1 }
+  ],
+  "relationships": [
+    { "from": "creator", "to": "docs", "label": "start here", "kind": "optional" },
+    { "from": "creator", "to": "flat", "label": "browse & copy", "kind": "sync" },
+    { "from": "mcp_host", "to": "bridge", "label": "JSON-RPC", "kind": "sync" },
+    { "from": "bridge", "to": "flat", "label": "expose libs", "kind": "async" },
+    { "from": "bridge", "to": "genre", "label": "expose templates", "kind": "async" },
+    { "from": "bridge", "to": "skills", "label": "expose skill packs", "kind": "async" },
+    { "from": "flat", "to": "design", "label": "theme", "kind": "data" },
+    { "from": "genre", "to": "design", "label": "theme", "kind": "data" },
+    { "from": "skills", "to": "flat", "label": "calls into libs", "kind": "sync" },
+    { "from": "skills", "to": "genre", "label": "applies templates", "kind": "sync" },
+    { "from": "docs", "to": "flat", "label": "points to", "kind": "optional" },
+    { "from": "docs", "to": "genre", "label": "points to", "kind": "optional" }
+  ],
+  "boundaries": [
+    { "id": "b_bridge", "label": "SHADDAI-MCP-BRIDGE", "kind": "service", "contains": ["bridge"] },
+    { "id": "b_flat", "label": "FLAT-LIBRARY", "kind": "tool", "contains": ["flat"] },
+    { "id": "b_genre", "label": "GENRE-TEMPLATES", "kind": "tool", "contains": ["genre"] },
+    { "id": "b_skills", "label": "SKILLS-HUB", "kind": "tool", "contains": ["skills"] },
+    { "id": "b_docs", "label": "Documentation layer", "kind": "database", "contains": ["docs"] }
+  ]
+}

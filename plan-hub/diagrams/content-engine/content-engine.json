@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "SHADDAI Content Engine (proposed)",
+    "subtitle": "From raw video to publishable clips: ingest, transcribe, match the right moment, then edit and ship — built on the RAG brain and the video-perception skill.",
+    "output": "portfolio/content-engine/content-engine.html",
+    "theme": "dark",
+    "quality_profile": "showcase",
+    "direction": "lr",
+    "source": {
+      "repo": "IzzoSol/shaddai-design-studio",
+      "ref": "main",
+      "note": "PROPOSED DESIGN — not yet built. Diagrams the planned pipeline from VIDEO.md + video-perception skill + RAG KBs."
+    },
+    "legend": [
+      { "kind": "external", "label": "Sources / outlets" },
+      { "kind": "service", "label": "Pipeline" },
+      { "kind": "agent", "label": "Brain" },
+      { "kind": "database", "label": "Knowledge" },
+      { "kind": "frontend", "label": "Gallery" }
+    ]
+  },
+  "components": [
+    { "id": "src", "label": "Source media", "sublabel": "YT · TikTok · X · audio", "kind": "external", "rank": 0, "order": 0 },
+    { "id": "ingest", "label": "Ingest router", "sublabel": "per-source normalize + metadata", "kind": "service", "rank": 1, "order": 0 },
+    { "id": "transc", "label": "Transcriber + chapters", "sublabel": "speech → text → rewrite", "kind": "service", "rank": 2, "order": 0 },
+    { "id": "brain", "label": "RAG brain", "sublabel": "eco-brain nav · 7-agent KBs", "kind": "agent", "rank": 2, "order": 1 },
+    { "id": "kb", "label": "Editing knowledge", "sublabel": "kb_<agent>/docs.json + VIDEO.md", "kind": "database", "rank": 3, "order": 0 },
+    { "id": "vid", "label": "video-perception skill", "sublabel": "watches footage, names the moment", "kind": "agent", "rank": 3, "order": 1 },
+    { "id": "mixer", "label": "Edit · grade · captions", "sublabel": "clip plan → composed timeline", "kind": "service", "rank": 4, "order": 0 },
+    { "id": "render", "label": "Render / export", "sublabel": "headless farm, quality gates", "kind": "service", "rank": 5, "order": 0 },
+    { "id": "gallery", "label": "Studio gallery", "sublabel": "portfolio/index.html", "kind": "frontend", "rank": 5, "order": 1 },
+    { "id": "outlets", "label": "Publish targets", "sublabel": "YouTube · X · IG", "kind": "external", "rank": 6, "order": 0 }
+  ],
+  "relationships": [
+    { "from": "src", "to": "ingest", "label": "sync", "kind": "sync" },
+    { "from": "ingest", "to": "transc", "label": "normalized asset", "kind": "sync" },
+    { "from": "transc", "to": "kb", "label": "write knowledge", "kind": "data" },
+    { "from": "brain", "to": "kb", "label": "query", "kind": "sync" },
+    { "from": "brain", "to": "vid", "label": "matches moment", "kind": "sync" },
+    { "from": "vid", "to": "mixer", "label": "clip plan", "kind": "sync" },
+    { "from": "mixer", "to": "render", "label": "compose job", "kind": "sync" },
+    { "from": "render", "to": "gallery", "label": "export", "kind": "async" },
+    { "from": "render", "to": "outlets", "label": "publish", "kind": "async" },
+    { "from": "gallery", "to": "outlets", "label": "push", "kind": "optional" }
+  ],
+  "boundaries": [
+    { "id": "b_pipeline", "label": "SHADDAI Content Engine (proposed)", "kind": "service", "contains": ["ingest", "transc", "brain", "kb", "vid", "mixer", "render", "gallery"] }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "SHADDAI MCP Server",
+    "subtitle": "One unified MCP endpoint — how a host agent's tool call reaches the brain, the backend, and the chain.",
+    "output": "portfolio/mcp/mcp.html",
+    "theme": "dark",
+    "quality_profile": "showcase",
+    "direction": "lr",
+    "source": {
+      "repo": "IzzoSol/Shaddai-Beta",
+      "ref": "master",
+      "note": "shaddai-mcp/mcp-unified.js + lib/eco-brain.js — the live system behind shaddai_hall_rag_nav"
+    },
+    "legend": [
+      { "kind": "client", "label": "Host agent" },
+      { "kind": "service", "label": "MCP layer" },
+      { "kind": "tool", "label": "Retrieval" },
+      { "kind": "database", "label": "Knowledge store" },
+      { "kind": "agent", "label": "Specialists" },
+      { "kind": "external", "label": "External" }
+    ]
+  },
+  "components": [
+    { "id": "host", "label": "Host agent", "sublabel": "OpenCode · Claude Code · Cursor", "kind": "client", "rank": 0, "order": 0 },
+    { "id": "mcp", "label": "mcp-unified.js", "sublabel": "tool registry + dispatch", "kind": "service", "rank": 1, "order": 0 },
+    { "id": "eco", "label": "eco-brain.js", "sublabel": "stem · synonyms · BM25 · rerank", "kind": "tool", "rank": 2, "order": 0 },
+    { "id": "backend", "label": "SHADDAI API", "sublabel": "auth · billing · agents", "kind": "service", "rank": 2, "order": 1 },
+    { "id": "cache", "label": "Query cache", "sublabel": "mtime-invalidated", "kind": "store", "rank": 3, "order": 0 },
+    { "id": "docs", "label": "RAG docs", "sublabel": "kb_<agent>/docs.json", "kind": "database", "rank": 3, "order": 1 },
+    { "id": "kb", "label": "Knowledge index", "sublabel": "knowledge/<agent>-kb.js", "kind": "database", "rank": 3, "order": 2 },
+    { "id": "agents", "label": "7 agents", "sublabel": "SHADDAI · ORACLE · ZEROX · NEXUS · TURTLE · QUILL · PIKADON", "kind": "agent", "rank": 3, "order": 3 },
+    { "id": "x402", "label": "x402 Paybox", "sublabel": "Solana USDC rail", "kind": "external", "rank": 4, "order": 0 },
+    { "id": "tg", "label": "Telegram", "sublabel": "digests · receipts", "kind": "external", "rank": 4, "order": 1 }
+  ],
+  "relationships": [
+    { "from": "host", "to": "mcp", "label": "JSON-RPC", "kind": "sync" },
+    { "from": "mcp", "to": "eco", "label": "hall_rag_nav", "kind": "sync" },
+    { "from": "mcp", "to": "backend", "label": "HTTP :3000", "kind": "sync" },
+    { "from": "eco", "to": "cache", "label": "hit", "kind": "data" },
+    { "from": "eco", "to": "docs", "label": "_buildUnits", "kind": "data" },
+    { "from": "backend", "to": "kb", "label": "grounding", "kind": "data" },
+    { "from": "backend", "to": "agents", "label": "dispatch", "kind": "async" },
+    { "from": "mcp", "to": "x402", "label": "402 quote", "kind": "auth" },
+    { "from": "backend", "to": "tg", "label": "post", "kind": "async" },
+    { "from": "cache", "to": "docs", "label": "invalidate", "kind": "optional" }
+  ],
+  "boundaries": [
+    { "id": "b_mcp", "label": "shaddai-mcp", "kind": "service", "contains": ["mcp", "eco", "cache"] },
+    { "id": "b_backend", "label": "SHADDAI backend", "kind": "backend", "contains": ["backend", "docs", "kb", "agents"] }
+  ]
+}

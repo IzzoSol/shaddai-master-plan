@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SHADDAI Master Mind Map — Every diagram, hub page and operating loop — how we think, how money moves, how we build, where it lives.</title>
+<meta name="generator" content="shaddai-diagrams">
+<meta name="description" content="Every diagram, hub page and operating loop — how we think, how money moves, how we build, where it lives.">
+<style>
+:root{
+  --bg:#070a0e; --panel:#0b1117; --line:rgba(126,158,142,.20); --line-2:rgba(126,158,142,.36);
+  --ink:#e8f0ea; --muted:#8fa39a; --accent:#00e5a0; --accent-ink:#04120c;
+  --node:#0f1720; --node-line:rgba(126,158,142,.34); --edge:rgba(190,215,205,.72);
+  --region:rgba(255,255,255,.028);
+  --k-client:#7dd3fc; --k-frontend:#38bdf8; --k-backend:#a78bfa; --k-service:#00e5a0;
+  --k-agent:#fbbf24; --k-database:#f472b6; --k-store:#fb7185; --k-queue:#c084fc;
+  --k-cloud:#94a3b8; --k-security:#f87171; --k-messagebus:#22d3ee; --k-external:#64748b;
+  --k-tool:#facc15; --k-other:#94a3b8; --k-start:#00e5a0; --k-task:#00e5a0;
+  --k-decision:#fbbf24; --k-gate:#f87171; --k-retry:#facc15; --k-end:#00e5a0;
+  --font:'Rajdhani','Inter',system-ui,-apple-system,sans-serif;
+  --mono:'Share Tech Mono',ui-monospace,'Cascadia Mono',monospace;
+}
+html[data-theme=light]{
+  --bg:#f4f7f6; --panel:#ffffff; --line:rgba(20,50,40,.16); --line-2:rgba(20,50,40,.34);
+  --ink:#0d1a15; --muted:#5b6f66; --node:#ffffff; --node-line:rgba(20,50,40,.28);
+  --edge:rgba(20,50,40,.70); --region:rgba(10,40,30,.035);
+  --k-client:#0369a1; --k-frontend:#0369a1; --k-backend:#6d28d9; --k-service:#047857;
+  --k-agent:#a16207; --k-database:#be185d; --k-store:#be123c; --k-queue:#7e22ce;
+  --k-cloud:#475569; --k-security:#b91c1c; --k-messagebus:#0e7490; --k-external:#64748b;
+  --k-tool:#a16207; --k-other:#475569; --k-start:#047857; --k-task:#047857;
+  --k-decision:#a16207; --k-gate:#b91c1c; --k-retry:#a16207; --k-end:#047857;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--font);
+  background-image:radial-gradient(circle at 15% 0%,rgba(0,229,160,.06),transparent 46%),
+                   radial-gradient(circle at 90% 100%,rgba(56,189,248,.05),transparent 45%);}
+.wrap{max-width:1680px;margin:0 auto;padding:26px 30px 60px}
+header{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;
+  padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:8px}
+h1{margin:0;font-size:27px;letter-spacing:.02em;font-weight:700}
+h1 em{font-style:normal;color:var(--accent)}
+.sub{margin:5px 0 0;color:var(--muted);font-size:14px;max-width:74ch}
+.badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;
+  border:1px solid var(--line-2);background:var(--panel);font:600 10.5px/1 var(--mono);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.badge.ok{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+.badge b{font-weight:700;color:var(--ink)}
+.src{font:11px/1 var(--mono);color:var(--muted);margin-top:10px;word-break:break-all}
+.src a{color:var(--accent);text-decoration:none}
+.src a:hover{text-decoration:underline}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:16px 0 12px}
+button{font:600 11px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+  min-height:32px;padding:0 13px;border-radius:8px;border:1px solid var(--line-2);
+  background:var(--panel);color:var(--ink);transition:.15s}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 14px;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:7px;font:600 11px/1 var(--mono);
+  letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.legend i{width:11px;height:11px;border-radius:3px;background:var(--c);box-shadow:0 0 0 1px var(--node-line)}
+.stage{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:16px;
+  padding:18px;overflow:auto;background-image:linear-gradient(var(--line) 1px,transparent 1px),
+  linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:44px 44px;
+  background-position:-1px -1px}
+.stage::before{content:"";position:absolute;inset:0;background:var(--panel);opacity:.86;pointer-events:none}
+.stage>*{position:relative}
+.dg-svg{display:block;margin:0 auto;max-width:none;height:auto;overflow:visible}
+footer{margin-top:16px;font:11px/1.6 var(--mono);color:var(--muted);display:flex;gap:18px;flex-wrap:wrap}
+hint{display:block;color:var(--muted);font-size:11.5px}
+
+/* --- nodes --- */
+.nd-inner>.box{fill:var(--node);stroke:var(--node-line);stroke-width:1.4}
+.node{cursor:pointer;transition:opacity .16s}
+.node:hover .nd-inner>.box{stroke:var(--accent);stroke-width:1.9}
+.nd-bar{fill:var(--k-other);stroke:none}
+.node[data-kind=client] .nd-bar,.node[data-kind=frontend] .nd-bar{fill:var(--k-frontend)}
+.node[data-kind=backend] .nd-bar,.node[data-kind=service] .nd-bar{fill:var(--k-service)}
+.node[data-kind=agent] .nd-bar{fill:var(--k-agent)}
+.node[data-kind=database] .nd-bar,.node[data-kind=store] .nd-bar{fill:var(--k-database)}
+.node[data-kind=queue] .nd-bar,.node[data-kind=messagebus] .nd-bar{fill:var(--k-messagebus)}
+.node[data-kind=cloud] .nd-bar,.node[data-kind=external] .nd-bar{fill:var(--k-cloud)}
+.node[data-kind=security] .nd-bar,.node[data-kind=gate] .nd-bar{fill:var(--k-security)}
+.node[data-kind=tool] .nd-bar,.node[data-kind=retry] .nd-bar{fill:var(--k-tool)}
+.node[data-kind=start] .nd-bar,.node[data-kind=end] .nd-bar,.node[data-kind=task] .nd-bar{fill:var(--k-start)}
+.node[data-kind=decision] .nd-bar{fill:var(--k-decision)}
+.node[data-kind=client] .nd-inner>.box,.node[data-kind=client] .nd-inner>.box{stroke:var(--k-client)}
+.node[data-kind=frontend] .nd-inner>.box,.node[data-kind=frontend] .nd-inner>.box{stroke:var(--k-frontend)}
+.node[data-kind=backend] .nd-inner>.box,.node[data-kind=backend] .nd-inner>.box{stroke:var(--k-backend)}
+.node[data-kind=agent] .nd-inner>.box,.node[data-kind=agent] .nd-inner>.box{stroke:var(--k-agent)}
+.node[data-kind=database] .nd-inner>.box,.node[data-kind=database] .nd-inner>.box{stroke:var(--k-database)}
+.node[data-kind=store] .nd-inner>.box,.node[data-kind=store] .nd-inner>.box{stroke:var(--k-store)}
+.node[data-kind=queue] .nd-inner>.box,.node[data-kind=queue] .nd-inner>.box{stroke:var(--k-queue)}
+.node[data-kind=messagebus] .nd-inner>.box,.node[data-kind=messagebus] .nd-inner>.box{stroke:var(--k-messagebus)}
+.node[data-kind=security] .nd-inner>.box,.node[data-kind=security] .nd-inner>.box{stroke:var(--k-security)}
+.node[data-kind=cloud] .nd-inner>.box,.node[data-kind=cloud] .nd-inner>.box{stroke:var(--k-cloud)}
+.node[data-kind=external] .nd-inner>.box,.node[data-kind=external] .nd-inner>.box{stroke:var(--k-external)}
+.node[data-kind=tool] .nd-inner>.box,.node[data-kind=tool] .nd-inner>.box{stroke:var(--k-tool)}
+.node[data-kind=start] .nd-inner>.box,.node[data-kind=end] .nd-inner>.box{stroke:var(--k-start);stroke-width:1.8}
+.node[data-kind=decision] .nd-inner>.box{stroke:var(--k-decision);stroke-width:1.8}
+.node[data-kind=gate] .nd-inner>.box{stroke:var(--k-gate);stroke-width:1.8}
+.node[data-kind=retry] .nd-inner>.box{stroke:var(--k-retry);stroke-dasharray:5 3}
+.nd-label{fill:var(--ink);font:600 13px/1 var(--font);letter-spacing:.005em;dominant-baseline:middle}
+.nd-sub{fill:var(--muted);font:400 11px/1 var(--font);dominant-baseline:middle}
+.nd-chip{fill:var(--muted);font:600 9.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  text-anchor:end;opacity:.7;dominant-baseline:middle}
+.node.sel .nd-inner>.box,.node.sel .nd-inner>.box{stroke:var(--accent);stroke-width:2.4}
+.node.sel .nd-inner{filter:drop-shadow(0 0 12px color-mix(in srgb,var(--accent) 55%,transparent))}
+
+/* --- regions, links --- */
+.region-box{fill:var(--region);stroke:var(--line-2);stroke-width:1.3;stroke-dasharray:7 6}
+.region-text{fill:var(--muted);font:600 10.5px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase}
+.region-label rect{fill:var(--panel);stroke:var(--line-2);stroke-width:1}
+.lk-path{stroke:var(--edge);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.lk-halo{stroke:var(--panel);stroke-width:5.4;opacity:.9}
+.link[data-kind=error] .lk-path{stroke:#f87171}
+.link[data-kind=auth] .lk-path{stroke:#fbbf24}
+.link[data-kind=data] .lk-path,.link[data-kind=async] .lk-path{stroke:#38bdf8}
+.link[data-kind=no] .lk-path{stroke:#fb7185}
+.link[data-kind=yes] .lk-path{stroke:#00e5a0}
+.link[data-kind=return] .lk-path{stroke:var(--muted)}
+.lk-label rect{fill:var(--panel);stroke:var(--line);stroke-width:1;rx:9.5}
+.lk-text{fill:var(--ink);font:600 11px/1 var(--font);text-anchor:middle;dominant-baseline:middle}
+.lk-note{fill:var(--muted);font:400 10.5px/1 var(--font);text-anchor:middle}
+.lifeline{stroke:var(--line-2);stroke-width:1.3;stroke-dasharray:5 6}
+.arrow-head{fill:var(--edge)}
+.link[data-kind=error] .arrow-head{fill:#f87171}
+.link[data-kind=auth] .arrow-head{fill:#fbbf24}
+.link[data-kind=data] .arrow-head,.link[data-kind=async] .arrow-head{fill:#38bdf8}
+.link[data-kind=no] .arrow-head{fill:#fb7185}
+.link[data-kind=yes] .arrow-head{fill:#00e5a0}
+
+/* --- reach trace --- */
+.stage.trace .node:not(.keep){opacity:.14}
+.stage.trace .link:not(.keep){opacity:.1}
+.stage.trace .region{opacity:.25}
+.hint{position:sticky;bottom:0;margin-top:12px;font:11px/1.6 var(--mono);color:var(--muted)}
+@media print{body{background:#fff}.bar{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>SHADDAI Master Mind Map</h1>
+      <p class="sub">Every diagram, hub page and operating loop — how we think, how money moves, how we build, where it lives.</p>
+      <div class="src">source · <b>shaddai/local-backend</b> @ <a href="https://github.com/shaddai/local-backend/tree/2026-10-15" target="_blank" rel="noopener">2026-10-15</a> — index of the portfolio + core loops: think flows down into earn, earn into build, build into live pages</div>
+    </div>
+    <div class="badges">
+      <span class="badge">architecture</span>
+      <span class="badge">quality <b>showcase</b></span>
+      <span class="badge">32 nodes</span>
+      <span class="badge">45 edges</span>
+      <span class="badge ok">✓ finalized 2026-10-15 23:40 UTC</span>
+    </div>
+  </header>
+
+  <div class="bar">
+    <button id="themeBtn">Light</button>
+    <button id="fitBtn">Fit width</button>
+    <button id="dlBtn">Download SVG</button>
+    <button data-trace>Reset trace</button>
+    <span class="hint">click any node to trace its immediate reach · Esc resets</span>
+  </div>
+
+  <ul class="legend"><li><i style="--c:var(--k-agent)"></i>Root</li><li><i style="--c:var(--k-service)"></i>Domain</li><li><i style="--c:var(--k-tool)"></i>Map / loop</li><li><i style="--c:var(--k-database)"></i>Hub page</li><li><i style="--c:var(--k-external)"></i>Guardrail</li></ul>
+
+  <div class="stage" id="stage"><svg class="dg-svg" viewBox="0 0 2125 1304" width="2125" height="1304"
+  xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SHADDAI Master Mind Map"
+  data-type="architecture" data-direction="tb"><defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" class="arrow-head"/>
+      </marker>
+    </defs><g transform="translate(798 56)"><g class="region" data-region="g_money">
+    <rect x="58" y="128" width="1062" height="1004" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="72" y="118" width="59" height="21" rx="10.5"/>
+    <text x="83" y="132.5" class="region-text">money</text></g>
+  </g><g class="region" data-region="g_live">
+    <rect x="167" y="128" width="965" height="896" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="181" y="118" width="96" height="21" rx="10.5"/>
+    <text x="192" y="132.5" class="region-text">live pages</text></g>
+  </g><g class="region" data-region="g_build">
+    <rect x="52" y="128" width="1074" height="788" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="66" y="118" width="59" height="21" rx="10.5"/>
+    <text x="77" y="132.5" class="region-text">build</text></g>
+  </g><g class="region" data-region="g_think">
+    <rect x="26" y="128" width="1125" height="248" rx="16" class="region-box"/>
+    <g class="region-label"><rect x="40" y="118" width="59" height="21" rx="10.5"/>
+    <text x="51" y="132.5" class="region-text">think</text></g>
+  </g><g class="link" data-from="os" data-to="h_think">
+    <path d="M 589 130 C 589 176, 178 118, 178 164" class="lk-halo" fill="none"/>
+    <path d="M 589 130 C 589 176, 178 118, 178 164" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="362.125" y="137" width="43.75" height="19" rx="9.5"/>
+       <text x="384" y="150.5" class="lk-text">think</text></g></g><g class="link" data-from="os" data-to="h_money">
+    <path d="M 589 130 C 589 176, 465 118, 465 164" class="lk-halo" fill="none"/>
+    <path d="M 589 130 C 589 176, 465 118, 465 164" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="508.3" y="137" width="37.4" height="19" rx="9.5"/>
+       <text x="527" y="150.5" class="lk-text">earn</text></g></g><g class="link" data-from="os" data-to="h_build">
+    <path d="M 589 130 C 589 176, 739 118, 739 164" class="lk-halo" fill="none"/>
+    <path d="M 589 130 C 589 176, 739 118, 739 164" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="642.125" y="137" width="43.75" height="19" rx="9.5"/>
+       <text x="664" y="150.5" class="lk-text">build</text></g></g><g class="link" data-from="os" data-to="h_live">
+    <path d="M 589 130 C 589 176, 1013 118, 1013 164" class="lk-halo" fill="none"/>
+    <path d="M 589 130 C 589 176, 1013 118, 1013 164" class="lk-path" data-kind="sync" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="782.3" y="137" width="37.4" height="19" rx="9.5"/>
+       <text x="801" y="150.5" class="lk-text">live</text></g></g><g class="link" data-from="h_think" data-to="thinking">
+    <path d="M 178 238 C 178 284, 1022 226, 1022 272" class="lk-halo" fill="none"/>
+    <path d="M 178 238 C 178 284, 1022 226, 1022 272" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="584.475" y="245" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="600" y="258.5" class="lk-text">has</text></g></g><g class="link" data-from="h_think" data-to="graphs">
+    <path d="M 178 238 C 178 284, 153.5 226, 153.5 272" class="lk-halo" fill="none"/>
+    <path d="M 178 238 C 178 284, 153.5 226, 153.5 272" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="150.475" y="245" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="166" y="258.5" class="lk-text">has</text></g></g><g class="link" data-from="h_think" data-to="ragloop">
+    <path d="M 178 238 C 178 284, 443 226, 443 272" class="lk-halo" fill="none"/>
+    <path d="M 178 238 C 178 284, 443 226, 443 272" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="295.475" y="245" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="311" y="258.5" class="lk-text">has</text></g></g><g class="link" data-from="h_money" data-to="revenue">
+    <path d="M 376 201 L -76 201 Q -92 201 -92 217 L -92 401 Q -92 417 -76 417 L 88 417" class="lk-halo" fill="none"/>
+    <path d="M 376 201 L -76 201 Q -92 201 -92 217 L -92 401 Q -92 417 -76 417 L 88 417" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-117.525" y="299" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-102" y="312.5" class="lk-text">has</text></g></g><g class="link" data-from="h_money" data-to="revenue2">
+    <path d="M 376 201 L -102 201 Q -118 201 -118 217 L -118 401 Q -118 417 -102 417 L 362 417" class="lk-halo" fill="none"/>
+    <path d="M 376 201 L -102 201 Q -118 201 -118 217 L -118 401 Q -118 417 -102 417 L 362 417" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-143.525" y="299" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-128" y="312.5" class="lk-text">has</text></g></g><g class="link" data-from="h_money" data-to="flywheel">
+    <path d="M 376 201 L -128 201 Q -144 201 -144 217 L -144 401 Q -144 417 -128 417 L 636 417" class="lk-halo" fill="none"/>
+    <path d="M 376 201 L -128 201 Q -144 201 -144 217 L -144 401 Q -144 417 -128 417 L 636 417" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-169.525" y="299" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-154" y="312.5" class="lk-text">has</text></g></g><g class="link" data-from="h_money" data-to="peg">
+    <path d="M 376 201 L -154 201 Q -170 201 -170 217 L -170 401 Q -170 417 -154 417 L 910 417" class="lk-halo" fill="none"/>
+    <path d="M 376 201 L -154 201 Q -170 201 -170 217 L -170 401 Q -170 417 -154 417 L 910 417" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-195.525" y="299" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-180" y="312.5" class="lk-text">has</text></g></g><g class="link" data-from="h_money" data-to="escrow">
+    <path d="M 376 201 L -180 201 Q -196 201 -196 217 L -196 509 Q -196 525 -180 525 L 812 525" class="lk-halo" fill="none"/>
+    <path d="M 376 201 L -180 201 Q -196 201 -196 217 L -196 509 Q -196 525 -180 525 L 812 525" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-221.525" y="353" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-206" y="366.5" class="lk-text">has</text></g></g><g class="link" data-from="h_build" data-to="mcp">
+    <path d="M 650 201 L -206 201 Q -222 201 -222 217 L -222 617 Q -222 633 -206 633 L 784 633" class="lk-halo" fill="none"/>
+    <path d="M 650 201 L -206 201 Q -222 201 -222 217 L -222 617 Q -222 633 -206 633 L 784 633" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-247.525" y="407" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-232" y="420.5" class="lk-text">has</text></g></g><g class="link" data-from="h_build" data-to="aura">
+    <path d="M 650 201 L -232 201 Q -248 201 -248 217 L -248 725 Q -248 741 -232 741 L 82 741" class="lk-halo" fill="none"/>
+    <path d="M 650 201 L -232 201 Q -248 201 -248 217 L -248 725 Q -248 741 -232 741 L 82 741" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-273.525" y="461" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-258" y="474.5" class="lk-text">has</text></g></g><g class="link" data-from="h_build" data-to="forge">
+    <path d="M 650 201 L -258 201 Q -274 201 -274 217 L -274 725 Q -274 741 -258 741 L 356 741" class="lk-halo" fill="none"/>
+    <path d="M 650 201 L -258 201 Q -274 201 -274 217 L -274 725 Q -274 741 -258 741 L 356 741" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-299.525" y="461" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-284" y="474.5" class="lk-text">has</text></g></g><g class="link" data-from="h_build" data-to="vetting">
+    <path d="M 650 201 L -284 201 Q -300 201 -300 217 L -300 725 Q -300 741 -284 741 L 644 741" class="lk-halo" fill="none"/>
+    <path d="M 650 201 L -284 201 Q -300 201 -300 217 L -300 725 Q -300 741 -284 741 L 644 741" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-325.525" y="461" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-310" y="474.5" class="lk-text">has</text></g></g><g class="link" data-from="h_build" data-to="gamedev">
+    <path d="M 650 201 L -310 201 Q -326 201 -326 217 L -326 725 Q -326 741 -310 741 L 918 741" class="lk-halo" fill="none"/>
+    <path d="M 650 201 L -310 201 Q -326 201 -326 217 L -326 725 Q -326 741 -310 741 L 918 741" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-351.525" y="461" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-336" y="474.5" class="lk-text">has</text></g></g><g class="link" data-from="h_build" data-to="content">
+    <path d="M 650 201 L -336 201 Q -352 201 -352 217 L -352 833 Q -352 849 -336 849 L 222 849" class="lk-halo" fill="none"/>
+    <path d="M 650 201 L -336 201 Q -352 201 -352 217 L -352 833 Q -352 849 -336 849 L 222 849" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-377.525" y="515" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-362" y="528.5" class="lk-text">has</text></g></g><g class="link" data-from="h_build" data-to="platform">
+    <path d="M 650 201 L -362 201 Q -378 201 -378 217 L -378 833 Q -378 849 -362 849 L 496 849" class="lk-halo" fill="none"/>
+    <path d="M 650 201 L -362 201 Q -378 201 -378 217 L -378 833 Q -378 849 -362 849 L 496 849" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-403.525" y="515" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-388" y="528.5" class="lk-text">has</text></g></g><g class="link" data-from="h_build" data-to="seq">
+    <path d="M 650 201 L -388 201 Q -404 201 -404 217 L -404 833 Q -404 849 -388 849 L 778 849" class="lk-halo" fill="none"/>
+    <path d="M 650 201 L -388 201 Q -404 201 -404 217 L -404 833 Q -404 849 -388 849 L 778 849" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-429.525" y="515" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-414" y="528.5" class="lk-text">has</text></g></g><g class="link" data-from="h_live" data-to="dossier">
+    <path d="M 924 201 L -414 201 Q -430 201 -430 217 L -430 941 Q -430 957 -414 957 L 497 957" class="lk-halo" fill="none"/>
+    <path d="M 924 201 L -414 201 Q -430 201 -430 217 L -430 941 Q -430 957 -414 957 L 497 957" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-455.525" y="569" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-440" y="582.5" class="lk-text">has</text></g></g><g class="link" data-from="h_live" data-to="realm">
+    <path d="M 924 201 L -440 201 Q -456 201 -456 217 L -456 941 Q -456 957 -440 957 L 803 957" class="lk-halo" fill="none"/>
+    <path d="M 924 201 L -440 201 Q -456 201 -456 217 L -456 941 Q -456 957 -440 957 L 803 957" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-481.525" y="569" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-466" y="582.5" class="lk-text">has</text></g></g><g class="link" data-from="h_live" data-to="simulator">
+    <path d="M 924 201 L -466 201 Q -482 201 -482 217 L -482 941 Q -482 957 -466 957 L 197 957" class="lk-halo" fill="none"/>
+    <path d="M 924 201 L -466 201 Q -482 201 -482 217 L -482 941 Q -482 957 -466 957 L 197 957" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-507.525" y="569" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-492" y="582.5" class="lk-text">has</text></g></g><g class="link" data-from="thinking" data-to="graphs">
+    <path d="M 1022 272 L 1022 -40 Q 1022 -56 1006 -56 L -46 -56 Q -62 -56 -62 -40 L -62 1206 Q -62 1222 -46 1222 L 137.5 1222 Q 153.5 1222 153.5 1206 L 153.5 346" class="lk-halo" fill="none"/>
+    <path d="M 1022 272 L 1022 -40 Q 1022 -56 1006 -56 L -46 -56 Q -62 -56 -62 -40 L -62 1206 Q -62 1222 -46 1222 L 137.5 1222 Q 153.5 1222 153.5 1206 L 153.5 346" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-81.4" y="601" width="62.8" height="19" rx="9.5"/>
+       <text x="-50" y="614.5" class="lk-text">one data</text></g></g><g class="link" data-from="graphs" data-to="dossier">
+    <path d="M 56 309 L -492 309 Q -508 309 -508 325 L -508 941 Q -508 957 -492 957 L 497 957" class="lk-halo" fill="none"/>
+    <path d="M 56 309 L -492 309 Q -508 309 -508 325 L -508 941 Q -508 957 -492 957 L 497 957" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-549.4" y="623" width="62.8" height="19" rx="9.5"/>
+       <text x="-518" y="636.5" class="lk-text">embedded</text></g></g><g class="link" data-from="dossier" data-to="realm">
+    <path d="M 602 920 L 602 -56 Q 602 -72 586 -72 L -62 -72 Q -78 -72 -78 -56 L -78 1232 Q -78 1248 -62 1248 L 876 1248 Q 892 1248 892 1232 L 892 994" class="lk-halo" fill="none"/>
+    <path d="M 602 920 L 602 -56 Q 602 -72 586 -72 L -62 -72 Q -78 -72 -78 -56 L -78 1232 Q -78 1248 -62 1248 L 876 1248 Q 892 1248 892 1232 L 892 994" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-87.875" y="614" width="43.75" height="19" rx="9.5"/>
+       <text x="-66" y="627.5" class="lk-text">opens</text></g></g><g class="link" data-from="revenue2" data-to="simulator">
+    <path d="M 362 417 L -518 417 Q -534 417 -534 433 L -534 941 Q -534 957 -518 957 L 197 957" class="lk-halo" fill="none"/>
+    <path d="M 362 417 L -518 417 Q -534 417 -534 433 L -534 941 Q -534 957 -518 957 L 197 957" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-575.4" y="677" width="62.8" height="19" rx="9.5"/>
+       <text x="-544" y="690.5" class="lk-text">simulate</text></g></g><g class="link" data-from="forge" data-to="escrow">
+    <path d="M 452 704 L 452 -72 Q 452 -88 436 -88 L -78 -88 Q -94 -88 -94 -72 L -94 1258 Q -94 1274 -78 1274 L 885 1274 Q 901 1274 901 1258 L 901 562" class="lk-halo" fill="none"/>
+    <path d="M 452 704 L 452 -72 Q 452 -88 436 -88 L -78 -88 Q -94 -88 -94 -72 L -94 1258 Q -94 1274 -78 1274 L 885 1274 Q 901 1274 901 1258 L 901 562" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-100.7" y="627" width="37.4" height="19" rx="9.5"/>
+       <text x="-82" y="640.5" class="lk-text">pays</text></g></g><g class="link" data-from="vetting" data-to="escrow">
+    <path d="M 733 704 L 733 -88 Q 733 -104 717 -104 L -94 -104 Q -110 -104 -110 -88 L -110 1284 Q -110 1300 -94 1300 L 885 1300 Q 901 1300 901 1284 L 901 562" class="lk-halo" fill="none"/>
+    <path d="M 733 704 L 733 -88 Q 733 -104 717 -104 L -94 -104 Q -110 -104 -110 -88 L -110 1284 Q -110 1300 -94 1300 L 885 1300 Q 901 1300 901 1284 L 901 562" class="lk-path" data-kind="auth" fill="none" stroke-dasharray="2 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-119.875" y="640" width="43.75" height="19" rx="9.5"/>
+       <text x="-98" y="653.5" class="lk-text">gates</text></g></g><g class="link" data-from="h_money" data-to="tiers">
+    <path d="M 376 201 L -544 201 Q -560 201 -560 217 L -560 509 Q -560 525 -544 525 L 188 525" class="lk-halo" fill="none"/>
+    <path d="M 376 201 L -544 201 Q -560 201 -560 217 L -560 509 Q -560 525 -544 525 L 188 525" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-585.525" y="353" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-570" y="366.5" class="lk-text">has</text></g></g><g class="link" data-from="h_money" data-to="bazaar">
+    <path d="M 376 201 L -570 201 Q -586 201 -586 217 L -586 509 Q -586 525 -570 525 L 500 525" class="lk-halo" fill="none"/>
+    <path d="M 376 201 L -570 201 Q -586 201 -586 217 L -586 509 Q -586 525 -570 525 L 500 525" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-611.525" y="353" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-596" y="366.5" class="lk-text">has</text></g></g><g class="link" data-from="h_money" data-to="arena">
+    <path d="M 376 201 L -596 201 Q -612 201 -612 217 L -612 617 Q -612 633 -596 633 L 184 633" class="lk-halo" fill="none"/>
+    <path d="M 376 201 L -596 201 Q -612 201 -612 217 L -612 617 Q -612 633 -596 633 L 184 633" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-637.525" y="407" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-622" y="420.5" class="lk-text">has</text></g></g><g class="link" data-from="h_money" data-to="plots">
+    <path d="M 376 201 L -622 201 Q -638 201 -638 217 L -638 617 Q -638 633 -622 633 L 496 633" class="lk-halo" fill="none"/>
+    <path d="M 376 201 L -622 201 Q -638 201 -638 217 L -638 617 Q -638 633 -622 633 L 496 633" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-663.525" y="407" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-648" y="420.5" class="lk-text">has</text></g></g><g class="link" data-from="h_think" data-to="brain">
+    <path d="M 178 238 C 178 284, 731 226, 731 272" class="lk-halo" fill="none"/>
+    <path d="M 178 238 C 178 284, 731 226, 731 272" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="439.475" y="245" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="455" y="258.5" class="lk-text">has</text></g></g><g class="link" data-from="ragloop" data-to="brain">
+    <path d="M 443 272 L 443 -104 Q 443 -120 427 -120 L -110 -120 Q -126 -120 -126 -104 L -126 1310 Q -126 1326 -110 1326 L 715 1326 Q 731 1326 731 1310 L 731 346" class="lk-halo" fill="none"/>
+    <path d="M 443 272 L 443 -104 Q 443 -120 427 -120 L -110 -120 Q -126 -120 -126 -104 L -126 1310 Q -126 1326 -110 1326 L 715 1326 Q 731 1326 731 1310 L 731 346" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-139.05" y="653" width="50.099999999999994" height="19" rx="9.5"/>
+       <text x="-114" y="666.5" class="lk-text">stores</text></g></g><g class="link" data-from="brain" data-to="thinking">
+    <path d="M 731 272 L 731 -120 Q 731 -136 715 -136 L -126 -136 Q -142 -136 -142 -120 L -142 1336 Q -142 1352 -126 1352 L 1006 1352 Q 1022 1352 1022 1336 L 1022 346" class="lk-halo" fill="none"/>
+    <path d="M 731 272 L 731 -120 Q 731 -136 715 -136 L -126 -136 Q -142 -136 -142 -120 L -142 1336 Q -142 1352 -126 1352 L 1006 1352 Q 1022 1352 1022 1336 L 1022 346" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-158.225" y="666" width="56.449999999999996" height="19" rx="9.5"/>
+       <text x="-130" y="679.5" class="lk-text">grounds</text></g></g><g class="link" data-from="tiers" data-to="simulator">
+    <path d="M 188 525 L -648 525 Q -664 525 -664 541 L -664 941 Q -664 957 -648 957 L 197 957" class="lk-halo" fill="none"/>
+    <path d="M 188 525 L -648 525 Q -664 525 -664 541 L -664 941 Q -664 957 -648 957 L 197 957" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-699.05" y="731" width="50.099999999999994" height="19" rx="9.5"/>
+       <text x="-674" y="744.5" class="lk-text">MRR in</text></g></g><g class="link" data-from="bazaar" data-to="escrow">
+    <path d="M 608 488 L 608 -136 Q 608 -152 592 -152 L -142 -152 Q -158 -152 -158 -136 L -158 1362 Q -158 1378 -142 1378 L 885 1378 Q 901 1378 901 1362 L 901 562" class="lk-halo" fill="none"/>
+    <path d="M 608 488 L 608 -136 Q 608 -152 592 -152 L -142 -152 Q -158 -152 -158 -136 L -158 1362 Q -158 1378 -142 1378 L 885 1378 Q 901 1378 901 1362 L 901 562" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-174.225" y="679" width="56.449999999999996" height="19" rx="9.5"/>
+       <text x="-146" y="692.5" class="lk-text">settles</text></g></g><g class="link" data-from="h_money" data-to="setup_once">
+    <path d="M 376 201 L -674 201 Q -690 201 -690 217 L -690 1049 Q -690 1065 -674 1065 L 181 1065" class="lk-halo" fill="none"/>
+    <path d="M 376 201 L -674 201 Q -690 201 -690 217 L -690 1049 Q -690 1065 -674 1065 L 181 1065" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-715.525" y="623" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-700" y="636.5" class="lk-text">has</text></g></g><g class="link" data-from="h_money" data-to="maintained">
+    <path d="M 376 201 L -700 201 Q -716 201 -716 217 L -716 1049 Q -716 1065 -700 1065 L 457 1065" class="lk-halo" fill="none"/>
+    <path d="M 376 201 L -700 201 Q -716 201 -716 217 L -716 1049 Q -716 1065 -700 1065 L 457 1065" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-741.525" y="623" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-726" y="636.5" class="lk-text">has</text></g></g><g class="link" data-from="h_money" data-to="brand_full">
+    <path d="M 376 201 L -726 201 Q -742 201 -742 217 L -742 1049 Q -742 1065 -726 1065 L 757 1065" class="lk-halo" fill="none"/>
+    <path d="M 376 201 L -726 201 Q -742 201 -742 217 L -742 1049 Q -742 1065 -726 1065 L 757 1065" class="lk-path" data-kind="data" fill="none" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-767.525" y="623" width="31.049999999999997" height="19" rx="9.5"/>
+       <text x="-752" y="636.5" class="lk-text">has</text></g></g><g class="link" data-from="setup_once" data-to="escrow">
+    <path d="M 271 1028 L 271 -152 Q 271 -168 255 -168 L -158 -168 Q -174 -168 -174 -152 L -174 1388 Q -174 1404 -158 1404 L 885 1404 Q 901 1404 901 1388 L 901 562" class="lk-halo" fill="none"/>
+    <path d="M 271 1028 L 271 -152 Q 271 -168 255 -168 L -158 -168 Q -174 -168 -174 -152 L -174 1388 Q -174 1404 -158 1404 L 885 1404 Q 901 1404 901 1388 L 901 562" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-190.225" y="692" width="56.449999999999996" height="19" rx="9.5"/>
+       <text x="-162" y="705.5" class="lk-text">settles</text></g></g><g class="link" data-from="maintained" data-to="simulator">
+    <path d="M 559 1028 L 559 -168 Q 559 -184 543 -184 L -174 -184 Q -190 -184 -190 -168 L -190 1414 Q -190 1430 -174 1430 L 283 1430 Q 299 1430 299 1414 L 299 994" class="lk-halo" fill="none"/>
+    <path d="M 559 1028 L 559 -168 Q 559 -184 543 -184 L -174 -184 Q -190 -184 -190 -168 L -190 1414 Q -190 1430 -174 1430 L 283 1430 Q 299 1430 299 1414 L 299 994" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-203.05" y="705" width="50.099999999999994" height="19" rx="9.5"/>
+       <text x="-178" y="718.5" class="lk-text">MRR in</text></g></g><g class="link" data-from="brand_full" data-to="escrow">
+    <path d="M 877 1028 L 877 -184 Q 877 -200 861 -200 L -190 -200 Q -206 -200 -206 -184 L -206 1440 Q -206 1456 -190 1456 L 885 1456 Q 901 1456 901 1440 L 901 562" class="lk-halo" fill="none"/>
+    <path d="M 877 1028 L 877 -184 Q 877 -200 861 -200 L -190 -200 Q -206 -200 -206 -184 L -206 1440 Q -206 1456 -190 1456 L 885 1456 Q 901 1456 901 1440 L 901 562" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-222.225" y="718" width="56.449999999999996" height="19" rx="9.5"/>
+       <text x="-194" y="731.5" class="lk-text">settles</text></g></g><g class="link" data-from="ragloop" data-to="thinking">
+    <path d="M 443 272 L 443 -200 Q 443 -216 427 -216 L -206 -216 Q -222 -216 -222 -200 L -222 1466 Q -222 1482 -206 1482 L 1006 1482 Q 1022 1482 1022 1466 L 1022 346" class="lk-halo" fill="none"/>
+    <path d="M 443 272 L 443 -200 Q 443 -216 427 -216 L -206 -216 Q -222 -216 -222 -200 L -222 1466 Q -222 1482 -206 1482 L 1006 1482 Q 1022 1482 1022 1466 L 1022 346" class="lk-path" data-kind="async" fill="none" stroke-dasharray="7 4" marker-end="url(#arrow)"/><g class="lk-label"><rect x="-238.225" y="731" width="56.449999999999996" height="19" rx="9.5"/>
+       <text x="-210" y="744.5" class="lk-text">indexes</text></g></g><g class="node" id="n-os" data-node="os" data-kind="agent"><clipPath id="clip-architecture-os"><rect class="box" x="481" y="56" width="216" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="os"><title>SHADDAI OS — think · earn · build · live</title><g class="nd-inner"><rect class="box" x="481" y="56" width="216" height="74" rx="10"/><rect x="482" y="65" width="3" height="56" rx="1.5" class="nd-bar"/><text x="684" y="74" class="nd-chip">agent</text><g class="nd-text" clip-path="url(#clip-architecture-os)"><text x="503" y="87.5" class="nd-label">SHADDAI OS</text><text x="503" y="108.5" class="nd-sub">think · earn · build · live</text></g></g></g></g><g class="node" id="n-h_think" data-node="h_think" data-kind="service"><clipPath id="clip-architecture-h_think"><rect class="box" x="76" y="164" width="204" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="h_think"><title>HOW WE THINK — canon + standards + index</title><g class="nd-inner"><rect class="box" x="76" y="164" width="204" height="74" rx="10"/><rect x="77" y="173" width="3" height="56" rx="1.5" class="nd-bar"/><text x="267" y="182" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-h_think)"><text x="98" y="195.5" class="nd-label">HOW WE THINK</text><text x="98" y="216.5" class="nd-sub">canon + standards + index</text></g></g></g></g><g class="node" id="n-h_money" data-node="h_money" data-kind="service"><clipPath id="clip-architecture-h_money"><rect class="box" x="376" y="164" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="h_money"><title>HOW MONEY MOVES — maps + splits + peg</title><g class="nd-inner"><rect class="box" x="376" y="164" width="178" height="74" rx="10"/><rect x="377" y="173" width="3" height="56" rx="1.5" class="nd-bar"/><text x="541" y="182" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-h_money)"><text x="398" y="195.5" class="nd-label">HOW MONEY MOVES</text><text x="398" y="216.5" class="nd-sub">maps + splits + peg</text></g></g></g></g><g class="node" id="n-h_build" data-node="h_build" data-kind="service"><clipPath id="clip-architecture-h_build"><rect class="box" x="650" y="164" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="h_build"><title>HOW WE BUILD — mcp + agents + forge</title><g class="nd-inner"><rect class="box" x="650" y="164" width="178" height="74" rx="10"/><rect x="651" y="173" width="3" height="56" rx="1.5" class="nd-bar"/><text x="815" y="182" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-h_build)"><text x="672" y="195.5" class="nd-label">HOW WE BUILD</text><text x="672" y="216.5" class="nd-sub">mcp + agents + forge</text></g></g></g></g><g class="node" id="n-h_live" data-node="h_live" data-kind="service"><clipPath id="clip-architecture-h_live"><rect class="box" x="924" y="164" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="h_live"><title>WHERE IT LIVES — hub pages you open</title><g class="nd-inner"><rect class="box" x="924" y="164" width="178" height="74" rx="10"/><rect x="925" y="173" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1089" y="182" class="nd-chip">service</text><g class="nd-text" clip-path="url(#clip-architecture-h_live)"><text x="946" y="195.5" class="nd-label">WHERE IT LIVES</text><text x="946" y="216.5" class="nd-sub">hub pages you open</text></g></g></g></g><g class="node" id="n-graphs" data-node="graphs" data-kind="tool"><clipPath id="clip-architecture-graphs"><rect class="box" x="56" y="272" width="195" height="74" rx="10"/></clipPath><a href="../hub/thinking-graphs.html" class="nd-link" target="_blank" rel="noopener"><title>bars·donut·tree·flow</title><g class="nd-inner"><rect class="box" x="56" y="272" width="195" height="74" rx="10"/><rect x="57" y="281" width="3" height="56" rx="1.5" class="nd-bar"/><text x="238" y="290" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-graphs)"><text x="78" y="303.5" class="nd-label">bars·donut·tree·flow</text><text x="78" y="324.5" class="nd-sub">one data, four graphs</text></g></g></a></g><g class="node" id="n-ragloop" data-node="ragloop" data-kind="tool"><clipPath id="clip-architecture-ragloop"><rect class="box" x="347" y="272" width="192" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="ragloop"><title>RAG grow loop — scrape→vet→chunk→lesson</title><g class="nd-inner"><rect class="box" x="347" y="272" width="192" height="74" rx="10"/><rect x="348" y="281" width="3" height="56" rx="1.5" class="nd-bar"/><text x="526" y="290" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-ragloop)"><text x="369" y="303.5" class="nd-label">RAG grow loop</text><text x="369" y="324.5" class="nd-sub">scrape→vet→chunk→lesson</text></g></g></g></g><g class="node" id="n-brain" data-node="brain" data-kind="tool"><clipPath id="clip-architecture-brain"><rect class="box" x="635" y="272" width="192" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="brain"><title>RAG brain — 7 corpora · 259 sources</title><g class="nd-inner"><rect class="box" x="635" y="272" width="192" height="74" rx="10"/><rect x="636" y="281" width="3" height="56" rx="1.5" class="nd-bar"/><text x="814" y="290" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-brain)"><text x="657" y="303.5" class="nd-label">RAG brain</text><text x="657" y="324.5" class="nd-sub">7 corpora · 259 sources</text></g></g></g></g><g class="node" id="n-thinking" data-node="thinking" data-kind="tool"><clipPath id="clip-architecture-thinking"><rect class="box" x="923" y="272" width="198" height="74" rx="10"/></clipPath><a href="../thinking/thinking.html" class="nd-link" target="_blank" rel="noopener"><title>Seven Ways</title><g class="nd-inner"><rect class="box" x="923" y="272" width="198" height="74" rx="10"/><rect x="924" y="281" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1108" y="290" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-thinking)"><text x="945" y="303.5" class="nd-label">Seven Ways</text><text x="945" y="324.5" class="nd-sub">44n · 7 thinking systems</text></g></g></a></g><g class="node" id="n-revenue" data-node="revenue" data-kind="tool"><clipPath id="clip-architecture-revenue"><rect class="box" x="88" y="380" width="178" height="74" rx="10"/></clipPath><a href="../revenue/revenue.html" class="nd-link" target="_blank" rel="noopener"><title>Money Map</title><g class="nd-inner"><rect class="box" x="88" y="380" width="178" height="74" rx="10"/><rect x="89" y="389" width="3" height="56" rx="1.5" class="nd-bar"/><text x="253" y="398" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-revenue)"><text x="110" y="411.5" class="nd-label">Money Map</text><text x="110" y="432.5" class="nd-sub">33n · payers→lands</text></g></g></a></g><g class="node" id="n-revenue2" data-node="revenue2" data-kind="tool"><clipPath id="clip-architecture-revenue2"><rect class="box" x="362" y="380" width="178" height="74" rx="10"/></clipPath><a href="../revenue2/revenue2.html" class="nd-link" target="_blank" rel="noopener"><title>Map 2.0</title><g class="nd-inner"><rect class="box" x="362" y="380" width="178" height="74" rx="10"/><rect x="363" y="389" width="3" height="56" rx="1.5" class="nd-bar"/><text x="527" y="398" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-revenue2)"><text x="384" y="411.5" class="nd-label">Map 2.0</text><text x="384" y="432.5" class="nd-sub">42n · rails + growth</text></g></g></a></g><g class="node" id="n-flywheel" data-node="flywheel" data-kind="tool"><clipPath id="clip-architecture-flywheel"><rect class="box" x="636" y="380" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="flywheel"><title>Flywheel — 30/20/20/15/10/5</title><g class="nd-inner"><rect class="box" x="636" y="380" width="178" height="74" rx="10"/><rect x="637" y="389" width="3" height="56" rx="1.5" class="nd-bar"/><text x="801" y="398" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-flywheel)"><text x="658" y="411.5" class="nd-label">Flywheel</text><text x="658" y="432.5" class="nd-sub">30/20/20/15/10/5</text></g></g></g></g><g class="node" id="n-peg" data-node="peg" data-kind="tool"><clipPath id="clip-architecture-peg"><rect class="box" x="910" y="380" width="180" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="peg"><title>Peg $1 — sinks ≥ faucets · 6dp</title><g class="nd-inner"><rect class="box" x="910" y="380" width="180" height="74" rx="10"/><rect x="911" y="389" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1077" y="398" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-peg)"><text x="932" y="411.5" class="nd-label">Peg $1</text><text x="932" y="432.5" class="nd-sub">sinks ≥ faucets · 6dp</text></g></g></g></g><g class="node" id="n-tiers" data-node="tiers" data-kind="tool"><clipPath id="clip-architecture-tiers"><rect class="box" x="188" y="488" width="216" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="tiers"><title>Tiers MRR — $49 / $199 / $999 past free</title><g class="nd-inner"><rect class="box" x="188" y="488" width="216" height="74" rx="10"/><rect x="189" y="497" width="3" height="56" rx="1.5" class="nd-bar"/><text x="391" y="506" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-tiers)"><text x="210" y="519.5" class="nd-label">Tiers MRR</text><text x="210" y="540.5" class="nd-sub">$49 / $199 / $999 past free</text></g></g></g></g><g class="node" id="n-bazaar" data-node="bazaar" data-kind="tool"><clipPath id="clip-architecture-bazaar"><rect class="box" x="500" y="488" width="216" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="bazaar"><title>Bazaar A2A — seller 85 / hall 10 / ref 5</title><g class="nd-inner"><rect class="box" x="500" y="488" width="216" height="74" rx="10"/><rect x="501" y="497" width="3" height="56" rx="1.5" class="nd-bar"/><text x="703" y="506" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-bazaar)"><text x="522" y="519.5" class="nd-label">Bazaar A2A</text><text x="522" y="540.5" class="nd-sub">seller 85 / hall 10 / ref 5</text></g></g></g></g><g class="node" id="n-escrow" data-node="escrow" data-kind="tool"><clipPath id="clip-architecture-escrow"><rect class="box" x="812" y="488" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="escrow"><title>Escrow — quote→pay→receipt</title><g class="nd-inner"><rect class="box" x="812" y="488" width="178" height="74" rx="10"/><rect x="813" y="497" width="3" height="56" rx="1.5" class="nd-bar"/><text x="977" y="506" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-escrow)"><text x="834" y="519.5" class="nd-label">Escrow</text><text x="834" y="540.5" class="nd-sub">quote→pay→receipt</text></g></g></g></g><g class="node" id="n-arena" data-node="arena" data-kind="tool"><clipPath id="clip-architecture-arena"><rect class="box" x="184" y="596" width="216" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="arena"><title>Arena rake — entries + tickets + 2x bets</title><g class="nd-inner"><rect class="box" x="184" y="596" width="216" height="74" rx="10"/><rect x="185" y="605" width="3" height="56" rx="1.5" class="nd-bar"/><text x="387" y="614" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-arena)"><text x="206" y="627.5" class="nd-label">Arena rake</text><text x="206" y="648.5" class="nd-sub">entries + tickets + 2x bets</text></g></g></g></g><g class="node" id="n-plots" data-node="plots" data-kind="tool"><clipPath id="clip-architecture-plots"><rect class="box" x="496" y="596" width="192" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="plots"><title>Plot yield — 100 in · 72/day · max 3</title><g class="nd-inner"><rect class="box" x="496" y="596" width="192" height="74" rx="10"/><rect x="497" y="605" width="3" height="56" rx="1.5" class="nd-bar"/><text x="675" y="614" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-plots)"><text x="518" y="627.5" class="nd-label">Plot yield</text><text x="518" y="648.5" class="nd-sub">100 in · 72/day · max 3</text></g></g></g></g><g class="node" id="n-mcp" data-node="mcp" data-kind="tool"><clipPath id="clip-architecture-mcp"><rect class="box" x="784" y="596" width="210" height="74" rx="10"/></clipPath><a href="../mcp/mcp.html" class="nd-link" target="_blank" rel="noopener"><title>MCP Server</title><g class="nd-inner"><rect class="box" x="784" y="596" width="210" height="74" rx="10"/><rect x="785" y="605" width="3" height="56" rx="1.5" class="nd-bar"/><text x="981" y="614" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-mcp)"><text x="806" y="627.5" class="nd-label">MCP Server</text><text x="806" y="648.5" class="nd-sub">one endpoint · brain+chain</text></g></g></a></g><g class="node" id="n-aura" data-node="aura" data-kind="tool"><clipPath id="clip-architecture-aura"><rect class="box" x="82" y="704" width="178" height="74" rx="10"/></clipPath><a href="../aura/aura.html" class="nd-link" target="_blank" rel="noopener"><title>AURA loop</title><g class="nd-inner"><rect class="box" x="82" y="704" width="178" height="74" rx="10"/><rect x="83" y="713" width="3" height="56" rx="1.5" class="nd-bar"/><text x="247" y="722" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-aura)"><text x="104" y="735.5" class="nd-label">AURA loop</text><text x="104" y="756.5" class="nd-sub">ask→answer→remember</text></g></g></a></g><g class="node" id="n-forge" data-node="forge" data-kind="tool"><clipPath id="clip-architecture-forge"><rect class="box" x="356" y="704" width="192" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="forge"><title>Forge — spawn→delegate→complete</title><g class="nd-inner"><rect class="box" x="356" y="704" width="192" height="74" rx="10"/><rect x="357" y="713" width="3" height="56" rx="1.5" class="nd-bar"/><text x="535" y="722" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-forge)"><text x="378" y="735.5" class="nd-label">Forge</text><text x="378" y="756.5" class="nd-sub">spawn→delegate→complete</text></g></g></g></g><g class="node" id="n-vetting" data-node="vetting" data-kind="external"><clipPath id="clip-architecture-vetting"><rect class="box" x="644" y="704" width="178" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="vetting"><title>PIKADON veto — gates every payout</title><g class="nd-inner"><rect class="box" x="644" y="704" width="178" height="74" rx="10"/><rect x="645" y="713" width="3" height="56" rx="1.5" class="nd-bar"/><text x="809" y="722" class="nd-chip">external</text><g class="nd-text" clip-path="url(#clip-architecture-vetting)"><text x="666" y="735.5" class="nd-label">PIKADON veto</text><text x="666" y="756.5" class="nd-sub">gates every payout</text></g></g></g></g><g class="node" id="n-gamedev" data-node="gamedev" data-kind="tool"><clipPath id="clip-architecture-gamedev"><rect class="box" x="918" y="704" width="178" height="74" rx="10"/></clipPath><a href="../gamedev/gamedev.html" class="nd-link" target="_blank" rel="noopener"><title>gamedev kit</title><g class="nd-inner"><rect class="box" x="918" y="704" width="178" height="74" rx="10"/><rect x="919" y="713" width="3" height="56" rx="1.5" class="nd-bar"/><text x="1083" y="722" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-gamedev)"><text x="940" y="735.5" class="nd-label">gamedev kit</text><text x="940" y="756.5" class="nd-sub">genres + skill packs</text></g></g></a></g><g class="node" id="n-content" data-node="content" data-kind="tool"><clipPath id="clip-architecture-content"><rect class="box" x="222" y="812" width="178" height="74" rx="10"/></clipPath><a href="../content-engine/content-engine.html" class="nd-link" target="_blank" rel="noopener"><title>Content Engine</title><g class="nd-inner"><rect class="box" x="222" y="812" width="178" height="74" rx="10"/><rect x="223" y="821" width="3" height="56" rx="1.5" class="nd-bar"/><text x="387" y="830" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-content)"><text x="244" y="843.5" class="nd-label">Content Engine</text><text x="244" y="864.5" class="nd-sub">video→clips pipeline</text></g></g></a></g><g class="node" id="n-platform" data-node="platform" data-kind="tool"><clipPath id="clip-architecture-platform"><rect class="box" x="496" y="812" width="186" height="74" rx="10"/></clipPath><a href="../shaddai/shaddai.html" class="nd-link" target="_blank" rel="noopener"><title>Platform</title><g class="nd-inner"><rect class="box" x="496" y="812" width="186" height="74" rx="10"/><rect x="497" y="821" width="3" height="56" rx="1.5" class="nd-bar"/><text x="669" y="830" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-platform)"><text x="518" y="843.5" class="nd-label">Platform</text><text x="518" y="864.5" class="nd-sub">user·agent·bot → brain</text></g></g></a></g><g class="node" id="n-seq" data-node="seq" data-kind="tool"><clipPath id="clip-architecture-seq"><rect class="box" x="778" y="812" width="178" height="74" rx="10"/></clipPath><a href="../mcp/seq-rag-nav.html" class="nd-link" target="_blank" rel="noopener"><title>rag_nav lifecycle</title><g class="nd-inner"><rect class="box" x="778" y="812" width="178" height="74" rx="10"/><rect x="779" y="821" width="3" height="56" rx="1.5" class="nd-bar"/><text x="943" y="830" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-seq)"><text x="800" y="843.5" class="nd-label">rag_nav lifecycle</text><text x="800" y="864.5" class="nd-sub">ask→answer trace</text></g></g></a></g><g class="node" id="n-simulator" data-node="simulator" data-kind="database"><clipPath id="clip-architecture-simulator"><rect class="box" x="197" y="920" width="204" height="74" rx="10"/></clipPath><a href="../hub/simulator.html" class="nd-link" target="_blank" rel="noopener"><title>Simulator</title><g class="nd-inner"><rect class="box" x="197" y="920" width="204" height="74" rx="10"/><rect x="198" y="929" width="3" height="56" rx="1.5" class="nd-bar"/><text x="388" y="938" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-simulator)"><text x="219" y="951.5" class="nd-label">Simulator</text><text x="219" y="972.5" class="nd-sub">customers × days × prices</text></g></g></a></g><g class="node" id="n-dossier" data-node="dossier" data-kind="database"><clipPath id="clip-architecture-dossier"><rect class="box" x="497" y="920" width="210" height="74" rx="10"/></clipPath><a href="../hub/dossier.html" class="nd-link" target="_blank" rel="noopener"><title>Dossier</title><g class="nd-inner"><rect class="box" x="497" y="920" width="210" height="74" rx="10"/><rect x="498" y="929" width="3" height="56" rx="1.5" class="nd-bar"/><text x="694" y="938" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-dossier)"><text x="519" y="951.5" class="nd-label">Dossier</text><text x="519" y="972.5" class="nd-sub">whitepaper + prices + wall</text></g></g></a></g><g class="node" id="n-realm" data-node="realm" data-kind="database"><clipPath id="clip-architecture-realm"><rect class="box" x="803" y="920" width="178" height="74" rx="10"/></clipPath><a href="../hub/realm.html" class="nd-link" target="_blank" rel="noopener"><title>3D Realm</title><g class="nd-inner"><rect class="box" x="803" y="920" width="178" height="74" rx="10"/><rect x="804" y="929" width="3" height="56" rx="1.5" class="nd-bar"/><text x="968" y="938" class="nd-chip">database</text><g class="nd-text" clip-path="url(#clip-architecture-realm)"><text x="825" y="951.5" class="nd-label">3D Realm</text><text x="825" y="972.5" class="nd-sub">clickable economy</text></g></g></a></g><g class="node" id="n-setup_once" data-node="setup_once" data-kind="tool"><clipPath id="clip-architecture-setup_once"><rect class="box" x="181" y="1028" width="180" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="setup_once"><title>Setup, one-time — $499 · brand-in-a-box</title><g class="nd-inner"><rect class="box" x="181" y="1028" width="180" height="74" rx="10"/><rect x="182" y="1037" width="3" height="56" rx="1.5" class="nd-bar"/><text x="348" y="1046" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-setup_once)"><text x="203" y="1059.5" class="nd-label">Setup, one-time</text><text x="203" y="1080.5" class="nd-sub">$499 · brand-in-a-box</text></g></g></g></g><g class="node" id="n-maintained" data-node="maintained" data-kind="tool"><clipPath id="clip-architecture-maintained"><rect class="box" x="457" y="1028" width="204" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="maintained"><title>Maintained plans — $99–499/mo · done-for-you</title><g class="nd-inner"><rect class="box" x="457" y="1028" width="204" height="74" rx="10"/><rect x="458" y="1037" width="3" height="56" rx="1.5" class="nd-bar"/><text x="648" y="1046" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-maintained)"><text x="479" y="1059.5" class="nd-label">Maintained plans</text><text x="479" y="1080.5" class="nd-sub">$99–499/mo · done-for-you</text></g></g></g></g><g class="node" id="n-brand_full" data-node="brand_full" data-kind="tool"><clipPath id="clip-architecture-brand_full"><rect class="box" x="757" y="1028" width="240" height="74" rx="10"/></clipPath><g class="nd-hit" data-node="brand_full"><title>Whole brand — $1,999 · identity+content+clips</title><g class="nd-inner"><rect class="box" x="757" y="1028" width="240" height="74" rx="10"/><rect x="758" y="1037" width="3" height="56" rx="1.5" class="nd-bar"/><text x="984" y="1046" class="nd-chip">tool</text><g class="nd-text" clip-path="url(#clip-architecture-brand_full)"><text x="779" y="1059.5" class="nd-label">Whole brand</text><text x="779" y="1080.5" class="nd-sub">$1,999 · identity+content+clips</text></g></g></g></g></g></svg></div>
+
+  <footer>
+    <span>shaddai-diagrams · architecture · 2125×1304px</span>
+    <span>schema v1 · showcase profile</span>
+    <span>4 region(s)</span>
+  </footer>
+</div>
+<script>
+(function(){
+  var svg=document.querySelector('.dg-svg'), stage=document.getElementById('stage');
+  if(!svg) return;
+  var adj={};
+  svg.querySelectorAll('.link').forEach(function(l){
+    var a=l.dataset.from,b=l.dataset.to;
+    (adj[a]=adj[a]||[]).push(b); (adj[b]=adj[b]||[]).push(a);
+  });
+  var sel=null;
+  function clear(){
+    sel=null; stage.classList.remove('trace');
+    svg.querySelectorAll('.keep').forEach(function(e){e.classList.remove('keep')});
+    svg.querySelectorAll('.sel').forEach(function(e){e.classList.remove('sel')});
+    document.querySelectorAll('.bar .on[data-trace]').forEach(function(b){b.classList.remove('on')});
+  }
+  function trace(id){
+    var keep={}; keep[id]=1;
+    (adj[id]||[]).forEach(function(n){keep[n]=1});
+    svg.querySelectorAll('.keep,.sel').forEach(function(e){e.classList.remove('keep','sel')});
+    svg.querySelectorAll('[data-node],[data-from]').forEach(function(e){
+      var k=e.dataset.node||((keep[e.dataset.from]&&keep[e.dataset.to])?'t':null);
+      if(e.dataset.node!==undefined&&keep[e.dataset.node]) {e.classList.add('keep','sel');return;}
+      if(e.dataset.from!==undefined&&keep[e.dataset.from]&&keep[e.dataset.to]) e.classList.add('keep');
+    });
+    stage.classList.add('trace'); sel=id;
+    document.querySelectorAll('.bar [data-trace]').forEach(function(b){b.classList.add('on')});
+  }
+  svg.addEventListener('click',function(ev){
+    var hit=ev.target.closest('[data-node]');
+    if(hit){ var id=hit.dataset.node; if(sel===id) clear(); else trace(id); return; }
+    clear();
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') clear(); });
+  document.querySelectorAll('[data-trace]').forEach(function(b){b.addEventListener('click',clear)});
+  var t=document.getElementById('themeBtn');
+  if(t) t.addEventListener('click',function(){
+    var cur=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
+    document.documentElement.setAttribute('data-theme',cur);
+    t.textContent=cur==='light'?'Dark':'Light';
+  });
+  var f=document.getElementById('fitBtn');
+  if(f) f.addEventListener('click',function(){
+    svg.style.width=''; svg.style.maxWidth='none';
+    var w=stage.clientWidth-40, vb=svg.viewBox.baseVal.width;
+    svg.style.maxWidth=(w<vb?w:vb)+'px';
+    f.classList.toggle('on');
+  });
+  var d=document.getElementById('dlBtn');
+  if(d) d.addEventListener('click',function(){
+    var clone=svg.cloneNode(true);
+    clone.setAttribute('xmlns','http://www.w3.org/2000/svg');
+    var src='<?xml version="1.0" encoding="UTF-8"?>\n'+new XMLSerializer().serializeToString(clone);
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([src],{type:'image/svg+xml'}));
+    a.download=(document.title||'diagram').replace(/[^a-z0-9]+/gi,'-').toLowerCase()+'.svg';
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+  var fit=document.getElementById('fitBtn'); if(fit) fit.click();
+})();
+</script>
+</body>
+</html>
