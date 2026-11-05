@@ -418,13 +418,17 @@ Done (branch `polish/world-finish-p1`, not yet deployed):
 4. ✅ Forge demo, real bodies: the Body step offers the 7 council GLBs (the bodies the world can wear, `VALID_MODELS`). The chosen body builds as a skinned hologram, materialises into its real textures and idles. The field bot is your real body, walking while it works. Verified headless: SHADDAI and NEXUS load, build and materialise.
 5. ✅ Forge demo, flow end: "Enter Shaddai World" registers the operative via `POST /api/operatives` (owner set from the session, model = chosen body), then opens the world. If the server is unreachable it says so and saves on the device. Verified headless end to end (Bind → Body → License → Labor → PayBox 100 Sparks → Enter).
 6. ✅ PIKADON: `POST /api/operatives` now accepts only the creative fields. Before this, a client `id` could overwrite another user's record, and economy/stats/inventory/tokenId were client-settable. Test: `tools/tests/operatives-route.redteam.cjs` (9/9).
+7. ✅ Side popup: the Dragon Shards tracker covered the right side permanently. It is now a one-line chip ("DRAGON SHARDS 0/8 ▸") that opens on click (remembered), peeks open for 6 s on a mission briefing or a shard win, and no longer rebuilds its DOM every 2 s. The award toast said "/7" while the tracker counted 8; it now uses the real count.
+8. ✅ Verified in-game on the local build (headless): 0 shader errors (live had 1); the shards chip is 31 px tall and opens to the full list; F2 hides the crosshair, mode pill, Navi button, key button, chat panel, shards chip and the HP/stamina layer, shows the toast, and a second F2 restores the same set.
 
 Open, in order:
 1. Lag, by measured priority: shadow casting only near the player, hide realm towns beyond 1.2 km and titans beyond 2.5 km, merge static meshes per material (`world-static-batch.js` / `world-merge.js`), lazy-load the council GLBs with LODs (§2.3). Measure before and after each change with `tools/_ui-probe.cjs` on a machine with ≥1.5 GB free (this laptop kept dropping to ~360 MB free with other apps open).
 2. `ZEROX.glb` 12.9 MB: the only council body without meshopt + webp (the others are 0.7–5 MB). Run the same pipeline as NEXUS/ORACLE/QUILL. `ZEROX_packed_old.glb` (4.8 MB) exists and was set aside once, so the owner checks the look before it replaces the live file.
 3. Character select: the cards are 2D portraits. Show the real bodies (one shared renderer, small turntables).
 4. In-game verification still owed (the world could not run headless at session time): O hoverboard + tricks + wall-ride, I mounts & travel, Y Navi open/close smoothing, F2 in every realm and interior.
-5. `rarity` on `POST /api/operatives` is still client-relayed (forge.html passes what `/api/forge` returned). Move it server-side (Phase 7 item 2).
+5. Content: two dragons are both "Verdant Shard / Thorn Dragon" (Meadowfields Halt and Darkvault Station), so the 8 shards include a duplicate name. The darkforest dragon probably wants its own element and shard (owner call).
+6. Spawn time: headless, the world was playable at 111 s but the Source Temple spawn took ~750 s. Software rendering exaggerates this, but it is the slowest step measured; profile it on a real GPU first.
+7. `rarity` on `POST /api/operatives` is still client-relayed (forge.html passes what `/api/forge` returned). Move it server-side (Phase 7 item 2).
 
 ---
 
